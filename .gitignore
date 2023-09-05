@@ -1,0 +1,12 @@
+.DS_STORE
+.idea/
+out/
+build/
+dist/
+steam/
+.project
+.classpath
+.settings/
+*.~lock*
+lib/java/*
+megajump.iml
