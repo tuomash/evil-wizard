@@ -57,7 +57,34 @@ class Renderer
   {
     ScreenUtils.clear(Color.BLACK);
     this.alpha = alpha;
-    renderPlayer();
+    renderTower();
+    renderEnemies();
+  }
+
+  void renderTower()
+  {
+    renderFilledQuad(game.tower.topLeftCornerX,
+                     game.tower.topLeftCornerY,
+                     game.tower.width,
+                     game.tower.height,
+                     Color.RED);
+  }
+
+  void renderEnemies()
+  {
+    for (int i = 0; i < game.enemies.size(); i++)
+    {
+      final Enemy enemy = game.enemies.get(i);
+      final float x = enemy.getX() * alpha + enemy.getPrevX() * (1.0f - alpha);
+      final float y = enemy.getY() * alpha + enemy.getPrevY() * (1.0f - alpha);
+      final float topLeftCornerX = x - enemy.widthOffset;
+      final float topLeftCornerY = y - enemy.heightOffset;
+      renderQuad(topLeftCornerX,
+                 topLeftCornerY,
+                 enemy.width,
+                 enemy.height,
+                 Color.RED);
+    }
   }
 
   void renderPlayer()
@@ -106,6 +133,42 @@ class Renderer
     }
   }
 
+  void renderFilledQuad(float x,
+                        float y,
+                        float width,
+                        float height,
+                        Color color)
+  {
+    renderFilledQuad(x,
+                     y,
+                     width,
+                     height,
+                     color.r,
+                     color.g,
+                     color.b,
+                     color.a);
+  }
+
+  void renderFilledQuad(float x,
+                        float y,
+                        float width,
+                        float height,
+                        float red,
+                        float green,
+                        float blue,
+                        float alpha)
+  {
+    renderQuad(x,
+               y,
+               width,
+               height,
+               red,
+               green,
+               blue,
+               alpha,
+               ShapeRenderer.ShapeType.Filled);
+  }
+
   void renderQuad(float x,
                   float y,
                   float width,
@@ -131,11 +194,32 @@ class Renderer
                   float blue,
                   float alpha)
   {
+    renderQuad(x,
+               y,
+               width,
+               height,
+               red,
+               green,
+               blue,
+               alpha,
+               ShapeRenderer.ShapeType.Line);
+  }
+
+  void renderQuad(float x,
+                  float y,
+                  float width,
+                  float height,
+                  float red,
+                  float green,
+                  float blue,
+                  float alpha,
+                  final ShapeRenderer.ShapeType type)
+  {
     Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
     Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
     shapeRenderer.setProjectionMatrix(camera.combined);
-    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+    shapeRenderer.begin(type);
     shapeRenderer.setColor(red, green, blue, alpha);
     shapeRenderer.rect(x, y, width, height);
     shapeRenderer.end();

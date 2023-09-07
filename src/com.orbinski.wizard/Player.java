@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector3;
 
 class Player
 {
-  float x = -75.0f;
   float y = -30.0f;
+  float x = -75.0f;
   float prevX = x;
   float prevY = y;
   float gravity = -0.4f;
