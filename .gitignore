@@ -9,4 +9,4 @@ steam/
 .settings/
 *.~lock*
 lib/java/*
-megajump.iml
+*.iml
