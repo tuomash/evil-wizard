@@ -27,23 +27,12 @@ class Movable extends Entity
 
     if (moving)
     {
-      if (targetX > getX())
-      {
-        setX(getX() + velocityX * delta);
-      }
-      else if (targetX < getX())
-      {
-        setX(getX() - velocityX * delta);
-      }
+      final float distance = MathUtils.distance(getX(), getY(), targetX, targetY);
+      final float toTargetX = (targetX - getX()) / distance;
+      final float toTargetY = (targetY - getY()) / distance;
 
-      if (targetY > getY())
-      {
-        setY(getY() + velocityY * delta);
-      }
-      else if (targetY < getY())
-      {
-        setY(getY() - velocityY * delta);
-      }
+      setX(getX() + (toTargetX * (velocityX * delta)));
+      setY(getY() + (toTargetY * (velocityY * delta)));
     }
   }
 }

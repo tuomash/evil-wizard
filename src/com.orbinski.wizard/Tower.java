@@ -26,22 +26,41 @@ class Tower extends Entity
   {
     if (!hasTarget() && !enemies.isEmpty())
     {
+      float closestDistance = -1.0f;
+      Enemy closestEnemy = null;
+
       for (int i = 0; i < enemies.size(); i++)
       {
         final Enemy enemy = enemies.get(i);
 
         if (!enemy.dead)
         {
-          target = enemy;
-          final Projectile projectile = new Projectile();
-          projectile.setX(getX());
-          projectile.setY(getY());
-          projectile.moving = true;
-          projectile.target = target;
-          projectile.targetX = target.getX();
-          projectile.targetY = target.getY();
-          return projectile;
+          final float distance = MathUtils.distance(getX(), getY(), enemy.getX(), enemy.getY());
+
+          if (closestDistance < 0.0f)
+          {
+            closestDistance = distance;
+            closestEnemy = enemy;
+          }
+          else if (distance < closestDistance)
+          {
+            closestDistance = distance;
+            closestEnemy = enemy;
+          }
         }
+      }
+
+      if (closestEnemy != null)
+      {
+        target = closestEnemy;
+        final Projectile projectile = new Projectile();
+        projectile.setX(getX());
+        projectile.setY(getY());
+        projectile.moving = true;
+        projectile.target = target;
+        projectile.targetX = target.getX();
+        projectile.targetY = target.getY();
+        return projectile;
       }
     }
 
