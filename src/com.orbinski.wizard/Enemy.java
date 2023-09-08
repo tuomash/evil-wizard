@@ -24,7 +24,7 @@ class Enemy
     setY(-1000.0f);
   }
 
-  void update(float delta)
+  void update(final float delta)
   {
     if (moving)
     {

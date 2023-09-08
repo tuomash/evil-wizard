@@ -32,7 +32,7 @@ class Player
   boolean moving;
   boolean targeting;
 
-  void update(float delta)
+  void update(final float delta)
   {
     if (moving)
     {

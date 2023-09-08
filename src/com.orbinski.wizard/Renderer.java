@@ -30,7 +30,7 @@ class Renderer
 
   float alpha = 1.0f;
 
-  Renderer(Game game)
+  Renderer(final Game game)
   {
     this.game = game;
 
@@ -133,11 +133,11 @@ class Renderer
     }
   }
 
-  void renderFilledQuad(float x,
-                        float y,
-                        float width,
-                        float height,
-                        Color color)
+  void renderFilledQuad(final float x,
+                        final float y,
+                        final float width,
+                        final float height,
+                        final Color color)
   {
     renderFilledQuad(x,
                      y,
@@ -149,14 +149,14 @@ class Renderer
                      color.a);
   }
 
-  void renderFilledQuad(float x,
-                        float y,
-                        float width,
-                        float height,
-                        float red,
-                        float green,
-                        float blue,
-                        float alpha)
+  void renderFilledQuad(final float x,
+                        final float y,
+                        final float width,
+                        final float height,
+                        final float red,
+                        final float green,
+                        final float blue,
+                        final float alpha)
   {
     renderQuad(x,
                y,
@@ -169,11 +169,11 @@ class Renderer
                ShapeRenderer.ShapeType.Filled);
   }
 
-  void renderQuad(float x,
-                  float y,
-                  float width,
-                  float height,
-                  Color color)
+  void renderQuad(final float x,
+                  final float y,
+                  final float width,
+                  final float height,
+                  final Color color)
   {
     renderQuad(x,
                y,
@@ -185,14 +185,14 @@ class Renderer
                color.a);
   }
 
-  void renderQuad(float x,
-                  float y,
-                  float width,
-                  float height,
-                  float red,
-                  float green,
-                  float blue,
-                  float alpha)
+  void renderQuad(final float x,
+                  final float y,
+                  final float width,
+                  final float height,
+                  final float red,
+                  final float green,
+                  final float blue,
+                  final float alpha)
   {
     renderQuad(x,
                y,
@@ -205,14 +205,14 @@ class Renderer
                ShapeRenderer.ShapeType.Line);
   }
 
-  void renderQuad(float x,
-                  float y,
-                  float width,
-                  float height,
-                  float red,
-                  float green,
-                  float blue,
-                  float alpha,
+  void renderQuad(final float x,
+                  final float y,
+                  final float width,
+                  final float height,
+                  final float red,
+                  final float green,
+                  final float blue,
+                  final float alpha,
                   final ShapeRenderer.ShapeType type)
   {
     Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
@@ -227,11 +227,11 @@ class Renderer
     Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
-  void renderLine(float x1,
-                  float y1,
-                  float x2,
-                  float y2,
-                  Color color)
+  void renderLine(final float x1,
+                  final float y1,
+                  final float x2,
+                  final float y2,
+                  final Color color)
   {
     renderLine(x1,
                y1,
@@ -243,14 +243,14 @@ class Renderer
                color.a);
   }
 
-  void renderLine(float x1,
-                  float y1,
-                  float x2,
-                  float y2,
-                  float red,
-                  float green,
-                  float blue,
-                  float alpha)
+  void renderLine(final float x1,
+                  final float y1,
+                  final float x2,
+                  final float y2,
+                  final float red,
+                  final float green,
+                  final float blue,
+                  final float alpha)
   {
     Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
     Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);

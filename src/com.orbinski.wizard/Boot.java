@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
 class Boot
 {
-  public static void main(String[] args)
+  public static void main(final String[] args)
   {
     final Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
     config.setMaximized(true);
@@ -24,7 +24,7 @@ class Boot
         }
       };
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       e.printStackTrace();
     }

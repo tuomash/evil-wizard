@@ -17,7 +17,7 @@ class Tower
   float centerWidthOffset = centerWidth / 2.0f;
   float centerHeightOffset = centerHeight / 2.0f;
 
-  void update(float delta)
+  void update(final float delta)
   {
     topLeftCornerX = x - widthOffset;
     topLeftCornerY = y - heightOffset;

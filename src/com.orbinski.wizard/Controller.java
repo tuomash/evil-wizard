@@ -8,7 +8,7 @@ class Controller
 {
   final Game game;
 
-  Controller(Game game)
+  Controller(final Game game)
   {
     this.game = game;
   }
