@@ -54,6 +54,7 @@ class Listener implements ApplicationListener
     }
 
     final float alpha = accumulator / TIME_STEP_SECONDS;
+    game.interpolate(alpha);
     updates = 0;
     renderer.render(alpha);
   }

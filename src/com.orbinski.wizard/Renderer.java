@@ -63,27 +63,14 @@ class Renderer
 
   void renderTower()
   {
-    renderFilledQuad(game.tower.topLeftCornerX,
-                     game.tower.topLeftCornerY,
-                     game.tower.width,
-                     game.tower.height,
-                     Color.RED);
+    renderFilledEntity(game.tower, Color.GREEN);
   }
 
   void renderEnemies()
   {
     for (int i = 0; i < game.enemies.size(); i++)
     {
-      final Enemy enemy = game.enemies.get(i);
-      final float x = enemy.getX() * alpha + enemy.getPrevX() * (1.0f - alpha);
-      final float y = enemy.getY() * alpha + enemy.getPrevY() * (1.0f - alpha);
-      final float topLeftCornerX = x - enemy.widthOffset;
-      final float topLeftCornerY = y - enemy.heightOffset;
-      renderQuad(topLeftCornerX,
-                 topLeftCornerY,
-                 enemy.width,
-                 enemy.height,
-                 Color.RED);
+      renderEntityBorder(game.enemies.get(i), Color.RED);
     }
   }
 
@@ -131,6 +118,24 @@ class Renderer
                  game.player.y,
                  Color.WHITE);
     }
+  }
+
+  void renderEntityBorder(final Entity entity, final Color borderColor)
+  {
+    renderQuad(entity.getIpTopLeftCornerX(),
+               entity.getIpTopLeftCornerY(),
+               entity.getWidth(),
+               entity.getHeight(),
+               borderColor);
+  }
+
+  void renderFilledEntity(final Entity entity, final Color borderColor)
+  {
+    renderFilledQuad(entity.getIpTopLeftCornerX(),
+                     entity.getIpTopLeftCornerY(),
+                     entity.getWidth(),
+                     entity.getHeight(),
+                     borderColor);
   }
 
   void renderFilledQuad(final float x,

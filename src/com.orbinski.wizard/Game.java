@@ -6,17 +6,38 @@ import java.util.Random;
 
 class Game
 {
+  final List<Entity> entities;
   final Player player;
   final Tower tower;
   final List<Enemy> enemies;
 
   Game()
   {
+    entities = new ArrayList<>();
     player = new Player();
     tower = new Tower();
+    entities.add(tower);
     enemies = new ArrayList<>();
 
     generateEnemies();
+  }
+
+  void update(final float delta)
+  {
+    tower.update(delta);
+
+    for (int i = 0; i < enemies.size(); i++)
+    {
+      enemies.get(i).update(delta);
+    }
+  }
+
+  void interpolate(final float alpha)
+  {
+    for (int i = 0; i < entities.size(); i++)
+    {
+      entities.get(i).interpolate(alpha);
+    }
   }
 
   void generateEnemies()
@@ -48,21 +69,16 @@ class Game
       enemy.setY(yCoordinates.get(random.nextInt(yCoordinates.size())));
       enemy.velocityX = 2.5f;
       enemy.velocityY = 2.5f;
-      enemy.targetX = tower.x;
-      enemy.targetY = tower.y;
+      enemy.targetX = tower.getX();
+      enemy.targetY = tower.getY();
       enemy.moving = true;
-      enemies.add(enemy);
+      addEnemy(enemy);
     }
   }
 
-  void update(final float delta)
+  void addEnemy(final Enemy enemy)
   {
-    player.update(delta);
-    tower.update(delta);
-
-    for (int i = 0; i < enemies.size(); i++)
-    {
-      enemies.get(i).update(delta);
-    }
+    entities.add(enemy);
+    enemies.add(enemy);
   }
 }

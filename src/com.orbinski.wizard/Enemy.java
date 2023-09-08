@@ -1,84 +1,43 @@
 package com.orbinski.wizard;
 
-class Enemy
+class Enemy extends Entity
 {
-  private float y;
-  private float x;
-  private float prevX;
-  private float prevY;
   float targetX;
   float targetY;
-  float velocityX = 0.0f;
-  float velocityY = 0.0f;
-  float topLeftCornerX;
-  float topLeftCornerY;
-  float width = 2.5f;
-  float widthOffset = width / 2.0f;
-  float height = 2.5f;
-  float heightOffset = height / 2.0f;
+  float velocityX;
+  float velocityY;
   boolean moving;
 
   Enemy()
   {
+    super(2.5f, 2.5f);
     setX(-1000.0f);
     setY(-1000.0f);
+    velocityX = 0.0f;
+    velocityY = 0.0f;
   }
 
   void update(final float delta)
   {
     if (moving)
     {
-      if (targetX > x)
+      if (targetX > getX())
       {
-        setX(x + (velocityX * delta));
+        setX(getX() + (velocityX * delta));
       }
-      else if (targetX < x)
+      else if (targetX < getX())
       {
-        setX(x - (velocityX * delta));
+        setX(getX() - (velocityX * delta));
       }
 
-      if (targetY > y)
+      if (targetY > getY())
       {
-        setY(y + (velocityY * delta));
+        setY(getY() + (velocityY * delta));
       }
-      else if (targetY < y)
+      else if (targetY < getY())
       {
-        setY(y - (velocityY * delta));
+        setY(getY() - (velocityY * delta));
       }
     }
-  }
-
-  float getX()
-  {
-    return x;
-  }
-
-  void setX(final float x)
-  {
-    prevX = this.x;
-    this.x = x;
-    topLeftCornerX = x - widthOffset;
-  }
-
-  float getY()
-  {
-    return y;
-  }
-
-  void setY(final float y)
-  {
-    prevY = this.y;
-    this.y = y;
-    topLeftCornerY = y - heightOffset;
-  }
-
-  float getPrevX()
-  {
-    return prevX;
-  }
-
-  float getPrevY()
-  {
-    return prevY;
   }
 }
