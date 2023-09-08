@@ -13,8 +13,8 @@ class Enemy extends Entity
     super(2.5f, 2.5f);
     setX(-1000.0f);
     setY(-1000.0f);
-    velocityX = 0.0f;
-    velocityY = 0.0f;
+    velocityX = 8.0f;
+    velocityY = 8.0f;
   }
 
   void update(final float delta)
@@ -23,20 +23,20 @@ class Enemy extends Entity
     {
       if (targetX > getX())
       {
-        setX(getX() + (velocityX * delta));
+        setX(getX() + velocityX * delta);
       }
       else if (targetX < getX())
       {
-        setX(getX() - (velocityX * delta));
+        setX(getX() - velocityX * delta);
       }
 
       if (targetY > getY())
       {
-        setY(getY() + (velocityY * delta));
+        setY(getY() + velocityY * delta);
       }
       else if (targetY < getY())
       {
-        setY(getY() - (velocityY * delta));
+        setY(getY() - velocityY * delta);
       }
     }
   }

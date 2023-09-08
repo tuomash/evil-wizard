@@ -13,30 +13,16 @@ abstract class Entity
   private float height;
   private float heightOffset;
 
-  // Interpolated variables
-  private float ipX;
-  private float ipY;
-  private float ipTopLeftCornerX;
-  private float ipTopLeftCornerY;
-
-  public Entity()
+  Entity()
   {
     setWidth(2.5f);
     setHeight(2.5f);
   }
 
-  public Entity(final float width, final float height)
+  Entity(final float width, final float height)
   {
-    this.width = width;
-    this.height = height;
-  }
-
-  void interpolate(final float alpha)
-  {
-    ipX = x * alpha + prevX * (1.0f - alpha);
-    ipY = y * alpha + prevY * (1.0f - alpha);
-    ipTopLeftCornerX = x - widthOffset;
-    ipTopLeftCornerY = y - heightOffset;
+    setWidth(width);
+    setHeight(height);
   }
 
   float getX()
@@ -73,55 +59,45 @@ abstract class Entity
     return prevY;
   }
 
-  public float getWidth()
+  float getTopLeftCornerX()
+  {
+    return topLeftCornerX;
+  }
+
+  float getTopLeftCornerY()
+  {
+    return topLeftCornerY;
+  }
+
+  float getWidth()
   {
     return width;
   }
 
-  public void setWidth(final float width)
+  void setWidth(final float width)
   {
     this.width = width;
     widthOffset = width / 2.0f;
   }
 
-  public float getWidthOffset()
+  float getWidthOffset()
   {
     return widthOffset;
   }
 
-  public float getHeight()
+  float getHeight()
   {
     return height;
   }
 
-  public void setHeight(final float height)
+  void setHeight(final float height)
   {
     this.height = height;
     heightOffset = height / 2.0f;
   }
 
-  public float getHeightOffset()
+  float getHeightOffset()
   {
     return heightOffset;
-  }
-
-  public float getIpX()
-  {
-    return ipX;
-  }
-
-  public float getIpY()
-  {
-    return ipY;
-  }
-
-  public float getIpTopLeftCornerX()
-  {
-    return ipTopLeftCornerX;
-  }
-
-  public float getIpTopLeftCornerY()
-  {
-    return ipTopLeftCornerY;
   }
 }

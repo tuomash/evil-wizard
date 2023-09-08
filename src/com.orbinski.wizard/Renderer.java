@@ -28,8 +28,6 @@ class Renderer
   final Texture dwarf;
   final Color background;
 
-  float alpha = 1.0f;
-
   Renderer(final Game game)
   {
     this.game = game;
@@ -53,10 +51,9 @@ class Renderer
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
   }
 
-  void render(final float alpha)
+  void render()
   {
     ScreenUtils.clear(Color.BLACK);
-    this.alpha = alpha;
     renderTower();
     renderEnemies();
   }
@@ -76,8 +73,8 @@ class Renderer
 
   void renderPlayer()
   {
-    final float x = game.player.x * alpha + game.player.prevX * (1.0f - alpha);
-    final float y = game.player.y * alpha + game.player.prevY * (1.0f - alpha);
+    final float x = game.player.x * 1.0f + game.player.prevX * (1.0f - 1.0f);
+    final float y = game.player.y * 1.0f + game.player.prevY * (1.0f - 1.0f);
     final float topLeftCornerX = x - game.player.widthOffset;
     final float topLeftCornerY = y - game.player.heightOffset;
 
@@ -122,8 +119,8 @@ class Renderer
 
   void renderEntityBorder(final Entity entity, final Color borderColor)
   {
-    renderQuad(entity.getIpTopLeftCornerX(),
-               entity.getIpTopLeftCornerY(),
+    renderQuad(entity.getTopLeftCornerX(),
+               entity.getTopLeftCornerY(),
                entity.getWidth(),
                entity.getHeight(),
                borderColor);
@@ -131,8 +128,8 @@ class Renderer
 
   void renderFilledEntity(final Entity entity, final Color borderColor)
   {
-    renderFilledQuad(entity.getIpTopLeftCornerX(),
-                     entity.getIpTopLeftCornerY(),
+    renderFilledQuad(entity.getTopLeftCornerX(),
+                     entity.getTopLeftCornerY(),
                      entity.getWidth(),
                      entity.getHeight(),
                      borderColor);

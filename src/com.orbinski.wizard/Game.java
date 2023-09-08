@@ -32,17 +32,9 @@ class Game
     }
   }
 
-  void interpolate(final float alpha)
-  {
-    for (int i = 0; i < entities.size(); i++)
-    {
-      entities.get(i).interpolate(alpha);
-    }
-  }
-
   void generateEnemies()
   {
-    final int count = 500;
+    final int count = 10;
     final Random random = new Random();
     final List<Float> xCoordinates = new ArrayList<>();
     final List<Float> yCoordinates = new ArrayList<>();
@@ -67,8 +59,6 @@ class Game
       final Enemy enemy = new Enemy();
       enemy.setX(xCoordinates.get(random.nextInt(xCoordinates.size())));
       enemy.setY(yCoordinates.get(random.nextInt(yCoordinates.size())));
-      enemy.velocityX = 2.5f;
-      enemy.velocityY = 2.5f;
       enemy.targetX = tower.getX();
       enemy.targetY = tower.getY();
       enemy.moving = true;
