@@ -6,18 +6,17 @@ import java.util.Random;
 
 class Game
 {
-  final List<Entity> entities;
   final Player player;
   final Tower tower;
   final List<Enemy> enemies;
+  final List<Projectile> projectiles;
 
   Game()
   {
-    entities = new ArrayList<>();
     player = new Player();
     tower = new Tower();
-    entities.add(tower);
     enemies = new ArrayList<>();
+    projectiles = new ArrayList<>();
 
     generateEnemies();
   }
@@ -25,6 +24,16 @@ class Game
   void update(final float delta)
   {
     tower.update(delta);
+
+    if (!tower.hasTarget())
+    {
+      final Projectile projectile = tower.findAndFireAtTarget(enemies);
+
+      if (projectile != null)
+      {
+        projectiles.add(projectile);
+      }
+    }
 
     for (int i = 0; i < enemies.size(); i++)
     {
@@ -37,6 +46,22 @@ class Game
         if (Entity.intersects(tower, enemy))
         {
           enemy.dead = true;
+        }
+      }
+    }
+
+    for (int i = 0; i < projectiles.size(); i++)
+    {
+      final Projectile projectile = projectiles.get(i);
+
+      if (!projectile.dead)
+      {
+        projectile.update(delta);
+
+        if (Entity.intersects(projectile, projectile.target))
+        {
+          projectile.dead = true;
+          projectile.target.dead = true;
         }
       }
     }
@@ -72,13 +97,7 @@ class Game
       enemy.targetX = tower.getX();
       enemy.targetY = tower.getY() - tower.getHeightOffset();
       enemy.moving = true;
-      addEnemy(enemy);
+      enemies.add(enemy);
     }
-  }
-
-  void addEnemy(final Enemy enemy)
-  {
-    entities.add(enemy);
-    enemies.add(enemy);
   }
 }

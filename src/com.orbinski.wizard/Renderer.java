@@ -56,6 +56,7 @@ class Renderer
     ScreenUtils.clear(Color.BLACK);
     renderTower();
     renderEnemies();
+    renderProjectiles();
   }
 
   void renderTower()
@@ -72,6 +73,19 @@ class Renderer
       if (!enemy.dead)
       {
         renderEntityBorder(enemy, Color.RED);
+      }
+    }
+  }
+
+  void renderProjectiles()
+  {
+    for (int i = 0; i < game.projectiles.size(); i++)
+    {
+      final Projectile projectile = game.projectiles.get(i);
+
+      if (!projectile.dead)
+      {
+        renderFilledEntity(projectile, Color.WHITE);
       }
     }
   }

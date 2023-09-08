@@ -4,22 +4,16 @@ import java.awt.geom.Rectangle2D;
 
 abstract class Entity
 {
-  private static Rectangle2D.Float entityA = new Rectangle2D.Float();
-  private static Rectangle2D.Float entityB = new Rectangle2D.Float();
-
-  private float x;
-  private float y;
-  private float prevX;
-  private float prevY;
-  private float topLeftCornerX;
-  private float topLeftCornerY;
-  private float width;
-  private float widthOffset;
-  private float height;
-  private float heightOffset;
+  private static final Rectangle2D.Float entityA = new Rectangle2D.Float();
+  private static final Rectangle2D.Float entityB = new Rectangle2D.Float();
 
   static boolean intersects(final Entity a, final Entity b)
   {
+    if (a == null || b == null)
+    {
+      return false;
+    }
+
     entityA.x = a.topLeftCornerX;
     entityA.y = a.topLeftCornerY;
     entityA.width = a.width;
@@ -32,6 +26,17 @@ abstract class Entity
 
     return entityA.intersects(entityB);
   }
+
+  private float x;
+  private float y;
+  private float prevX;
+  private float prevY;
+  private float topLeftCornerX;
+  private float topLeftCornerY;
+  private float width;
+  private float widthOffset;
+  private float height;
+  private float heightOffset;
 
   Entity()
   {
