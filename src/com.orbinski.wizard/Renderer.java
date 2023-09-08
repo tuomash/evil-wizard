@@ -55,6 +55,7 @@ class Renderer
   {
     ScreenUtils.clear(Color.BLACK);
     renderTower();
+    renderHeroes();
     renderEnemies();
     renderProjectiles();
   }
@@ -62,6 +63,24 @@ class Renderer
   void renderTower()
   {
     renderFilledEntity(game.tower, Color.GREEN);
+  }
+
+  void renderHeroes()
+  {
+    for (int i = 0; i < game.heroes.size(); i++)
+    {
+      final Hero hero = game.heroes.get(i);
+
+      if (!hero.dead)
+      {
+        renderFilledEntity(hero, Color.BLUE);
+
+        if (game.selectedHero == hero)
+        {
+          renderEntityBorder(hero, Color.WHITE);
+        }
+      }
+    }
   }
 
   void renderEnemies()

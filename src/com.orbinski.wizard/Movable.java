@@ -28,6 +28,12 @@ class Movable extends Entity
     if (moving)
     {
       final float distance = MathUtils.distance(getX(), getY(), targetX, targetY);
+
+      if (distance < 0.1)
+      {
+        moving = false;
+      }
+
       final float toTargetX = (targetX - getX()) / distance;
       final float toTargetY = (targetY - getY()) / distance;
 

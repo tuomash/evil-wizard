@@ -27,6 +27,21 @@ abstract class Entity
     return entityA.intersects(entityB);
   }
 
+  static boolean contains(final Entity a, final float x, final float y)
+  {
+    if (a == null)
+    {
+      return false;
+    }
+
+    entityA.x = a.topLeftCornerX;
+    entityA.y = a.topLeftCornerY;
+    entityA.width = a.width;
+    entityA.height = a.height;
+
+    return entityA.contains(x, y);
+  }
+
   private float x;
   private float y;
   private float prevX;

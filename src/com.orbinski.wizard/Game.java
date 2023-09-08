@@ -8,16 +8,21 @@ class Game
 {
   final Player player;
   final Tower tower;
+  final List<Hero> heroes;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
+
+  Hero selectedHero;
 
   Game()
   {
     player = new Player();
     tower = new Tower();
+    heroes = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
 
+    generateHeroes();
     generateEnemies();
   }
 
@@ -32,6 +37,27 @@ class Game
       if (projectile != null)
       {
         projectiles.add(projectile);
+      }
+    }
+
+    for (int i = 0; i < heroes.size(); i++)
+    {
+      final Hero hero = heroes.get(i);
+
+      if (!hero.dead)
+      {
+        hero.update(delta);
+
+        for (int z = 0; z < enemies.size(); z++)
+        {
+          final Enemy enemy = enemies.get(z);
+
+          if (!enemy.dead && Entity.intersects(hero, enemy))
+          {
+            enemy.dead = true;
+            break;
+          }
+        }
       }
     }
 
@@ -67,6 +93,14 @@ class Game
     }
   }
 
+  void generateHeroes()
+  {
+    final Hero hero = new Hero();
+    hero.setX(0.0f);
+    hero.setY(0.0f);
+    heroes.add(hero);
+  }
+
   void generateEnemies()
   {
     final int count = 10;
@@ -98,6 +132,33 @@ class Game
       enemy.targetY = tower.getY() - tower.getHeightOffset();
       enemy.moving = true;
       enemies.add(enemy);
+    }
+  }
+
+  void selectHero(final float x, final float y)
+  {
+    for (int i = 0; i < heroes.size(); i++)
+    {
+      final Hero hero = heroes.get(i);
+
+      if (!hero.dead && Entity.contains(hero, x, y))
+      {
+        selectedHero = hero;
+        return;
+      }
+    }
+
+    // Clear selection
+    selectedHero = null;
+  }
+
+  void moveHero(final float x, final float y)
+  {
+    if (selectedHero != null && !Entity.contains(selectedHero, x, y))
+    {
+      selectedHero.targetX = x;
+      selectedHero.targetY = y;
+      selectedHero.moving = true;
     }
   }
 }

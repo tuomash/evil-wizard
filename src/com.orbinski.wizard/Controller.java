@@ -3,10 +3,12 @@ package com.orbinski.wizard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
 
 class Controller
 {
   final Game game;
+  private final Vector3 mouseScreen = new Vector3();
 
   Controller(final Game game)
   {
@@ -36,14 +38,26 @@ class Controller
 
   void handlePlayerControls()
   {
+    mouseScreen.x = Gdx.input.getX();
+    mouseScreen.y = Gdx.input.getY();
+
     if (Gdx.input.isTouched())
     {
-      if (!game.player.targeting)
+      final Vector3 result = Renderer.unproject(mouseScreen);
+
+      if (result != null)
       {
-        game.player.targeting = true;
+        if (game.selectedHero == null)
+        {
+          game.selectHero(result.x, result.y);
+        }
+        else
+        {
+          game.moveHero(result.x, result.y);
+        }
       }
 
-      game.player.updateMouseLocation(Gdx.input.getX(), Gdx.input.getY());
+      // game.player.updateMouseLocation(Gdx.input.getX(), Gdx.input.getY());
     }
     else if (game.player.targeting)
     {
