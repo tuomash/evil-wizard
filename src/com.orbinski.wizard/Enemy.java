@@ -7,6 +7,7 @@ class Enemy extends Entity
   float velocityX;
   float velocityY;
   boolean moving;
+  boolean dead;
 
   Enemy()
   {
@@ -19,6 +20,11 @@ class Enemy extends Entity
 
   void update(final float delta)
   {
+    if (dead)
+    {
+      return;
+    }
+
     if (moving)
     {
       if (targetX > getX())

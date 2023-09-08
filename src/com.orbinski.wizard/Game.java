@@ -28,7 +28,17 @@ class Game
 
     for (int i = 0; i < enemies.size(); i++)
     {
-      enemies.get(i).update(delta);
+      final Enemy enemy = enemies.get(i);
+
+      if (!enemy.dead)
+      {
+        enemy.update(delta);
+
+        if (Entity.intersects(tower, enemy))
+        {
+          enemy.dead = true;
+        }
+      }
     }
   }
 
@@ -60,7 +70,7 @@ class Game
       enemy.setX(xCoordinates.get(random.nextInt(xCoordinates.size())));
       enemy.setY(yCoordinates.get(random.nextInt(yCoordinates.size())));
       enemy.targetX = tower.getX();
-      enemy.targetY = tower.getY();
+      enemy.targetY = tower.getY() - tower.getHeightOffset();
       enemy.moving = true;
       addEnemy(enemy);
     }

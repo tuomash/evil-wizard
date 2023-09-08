@@ -1,7 +1,12 @@
 package com.orbinski.wizard;
 
+import java.awt.geom.Rectangle2D;
+
 abstract class Entity
 {
+  private static Rectangle2D.Float entityA = new Rectangle2D.Float();
+  private static Rectangle2D.Float entityB = new Rectangle2D.Float();
+
   private float x;
   private float y;
   private float prevX;
@@ -12,6 +17,21 @@ abstract class Entity
   private float widthOffset;
   private float height;
   private float heightOffset;
+
+  static boolean intersects(final Entity a, final Entity b)
+  {
+    entityA.x = a.topLeftCornerX;
+    entityA.y = a.topLeftCornerY;
+    entityA.width = a.width;
+    entityA.height = a.height;
+
+    entityB.x = b.topLeftCornerX;
+    entityB.y = b.topLeftCornerY;
+    entityB.width = b.width;
+    entityB.height = b.height;
+
+    return entityA.intersects(entityB);
+  }
 
   Entity()
   {

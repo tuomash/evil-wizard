@@ -67,7 +67,12 @@ class Renderer
   {
     for (int i = 0; i < game.enemies.size(); i++)
     {
-      renderEntityBorder(game.enemies.get(i), Color.RED);
+      final Enemy enemy = game.enemies.get(i);
+
+      if (!enemy.dead)
+      {
+        renderEntityBorder(enemy, Color.RED);
+      }
     }
   }
 
