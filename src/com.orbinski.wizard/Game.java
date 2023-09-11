@@ -22,7 +22,7 @@ class Game
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
 
-    generateHeroes();
+    generateVillains();
     generateEnemies();
   }
 
@@ -93,12 +93,12 @@ class Game
     }
   }
 
-  void generateHeroes()
+  void generateVillains()
   {
-    final Villain hero = new Villain();
-    hero.setX(0.0f);
-    hero.setY(0.0f);
-    villains.add(hero);
+    final Villain villain = new Villain();
+    villain.setX(0.0f);
+    villain.setY(0.0f);
+    villains.add(villain);
   }
 
   void generateEnemies()
