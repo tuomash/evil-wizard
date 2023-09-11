@@ -8,17 +8,17 @@ class Game
 {
   final Player player;
   final Tower tower;
-  final List<Hero> heroes;
+  final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
 
-  Hero selectedHero;
+  Villain selectedVillain;
 
   Game()
   {
     player = new Player();
     tower = new Tower();
-    heroes = new ArrayList<>();
+    villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
 
@@ -40,9 +40,9 @@ class Game
       }
     }
 
-    for (int i = 0; i < heroes.size(); i++)
+    for (int i = 0; i < villains.size(); i++)
     {
-      final Hero hero = heroes.get(i);
+      final Villain hero = villains.get(i);
 
       if (!hero.dead)
       {
@@ -95,10 +95,10 @@ class Game
 
   void generateHeroes()
   {
-    final Hero hero = new Hero();
+    final Villain hero = new Villain();
     hero.setX(0.0f);
     hero.setY(0.0f);
-    heroes.add(hero);
+    villains.add(hero);
   }
 
   void generateEnemies()
@@ -135,30 +135,30 @@ class Game
     }
   }
 
-  void selectHero(final float x, final float y)
+  void selectVillain(final float x, final float y)
   {
-    for (int i = 0; i < heroes.size(); i++)
+    for (int i = 0; i < villains.size(); i++)
     {
-      final Hero hero = heroes.get(i);
+      final Villain villain = villains.get(i);
 
-      if (!hero.dead && Entity.contains(hero, x, y))
+      if (!villain.dead && Entity.contains(villain, x, y))
       {
-        selectedHero = hero;
+        selectedVillain = villain;
         return;
       }
     }
 
     // Clear selection
-    selectedHero = null;
+    selectedVillain = null;
   }
 
-  void moveHero(final float x, final float y)
+  void moveVillain(final float x, final float y)
   {
-    if (selectedHero != null && !Entity.contains(selectedHero, x, y))
+    if (selectedVillain != null && !Entity.contains(selectedVillain, x, y))
     {
-      selectedHero.targetX = x;
-      selectedHero.targetY = y;
-      selectedHero.moving = true;
+      selectedVillain.targetX = x;
+      selectedVillain.targetY = y;
+      selectedVillain.moving = true;
     }
   }
 }

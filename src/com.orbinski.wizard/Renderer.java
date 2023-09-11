@@ -55,7 +55,7 @@ class Renderer
   {
     ScreenUtils.clear(Color.BLACK);
     renderTower();
-    renderHeroes();
+    renderVillains();
     renderEnemies();
     renderProjectiles();
   }
@@ -65,19 +65,19 @@ class Renderer
     renderFilledEntity(game.tower, Color.GREEN);
   }
 
-  void renderHeroes()
+  void renderVillains()
   {
-    for (int i = 0; i < game.heroes.size(); i++)
+    for (int i = 0; i < game.villains.size(); i++)
     {
-      final Hero hero = game.heroes.get(i);
+      final Villain villain = game.villains.get(i);
 
-      if (!hero.dead)
+      if (!villain.dead)
       {
-        renderFilledEntity(hero, Color.BLUE);
+        renderFilledEntity(villain, Color.BLUE);
 
-        if (game.selectedHero == hero)
+        if (game.selectedVillain == villain)
         {
-          renderEntityBorder(hero, Color.WHITE);
+          renderEntityBorder(villain, Color.WHITE);
         }
       }
     }

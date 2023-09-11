@@ -1,8 +1,8 @@
 package com.orbinski.wizard;
 
-class Hero extends Movable
+class Villain extends Movable
 {
-  public Hero()
+  public Villain()
   {
     super(4.0f, 4.0f);
     setX(0.0f);

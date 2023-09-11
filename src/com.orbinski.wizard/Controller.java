@@ -47,13 +47,13 @@ class Controller
 
       if (result != null)
       {
-        if (game.selectedHero == null)
+        if (game.selectedVillain == null)
         {
-          game.selectHero(result.x, result.y);
+          game.selectVillain(result.x, result.y);
         }
         else
         {
-          game.moveHero(result.x, result.y);
+          game.moveVillain(result.x, result.y);
         }
       }
 
