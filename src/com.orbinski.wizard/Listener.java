@@ -24,6 +24,7 @@ class Listener implements ApplicationListener
   public void resize(final int width, final int height)
   {
     renderer.viewport.update(width, height);
+    renderer.hudViewport.update(width, height, true);
   }
 
   @Override

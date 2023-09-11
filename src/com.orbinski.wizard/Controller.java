@@ -59,6 +59,13 @@ class Controller
 
       // game.player.updateMouseLocation(Gdx.input.getX(), Gdx.input.getY());
     }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.S))
+    {
+      if (game.selectedVillain != null)
+      {
+        game.pickUpVillain();
+      }
+    }
     else if (game.player.targeting)
     {
       game.player.targeting = false;

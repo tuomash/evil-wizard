@@ -42,17 +42,17 @@ class Game
 
     for (int i = 0; i < villains.size(); i++)
     {
-      final Villain hero = villains.get(i);
+      final Villain villain = villains.get(i);
 
-      if (!hero.dead)
+      if (!villain.dead && villain.inAction)
       {
-        hero.update(delta);
+        villain.update(delta);
 
         for (int z = 0; z < enemies.size(); z++)
         {
           final Enemy enemy = enemies.get(z);
 
-          if (!enemy.dead && Entity.intersects(hero, enemy))
+          if (!enemy.dead && Entity.intersects(villain, enemy))
           {
             enemy.dead = true;
             break;
@@ -98,6 +98,7 @@ class Game
     final Villain villain = new Villain();
     villain.setX(0.0f);
     villain.setY(0.0f);
+    villain.inAction = true;
     villains.add(villain);
   }
 
@@ -141,7 +142,7 @@ class Game
     {
       final Villain villain = villains.get(i);
 
-      if (!villain.dead && Entity.contains(villain, x, y))
+      if (!villain.dead && villain.inAction && Entity.contains(villain, x, y))
       {
         selectedVillain = villain;
         return;
@@ -154,11 +155,25 @@ class Game
 
   void moveVillain(final float x, final float y)
   {
-    if (selectedVillain != null && !Entity.contains(selectedVillain, x, y))
+    if (selectedVillain != null && selectedVillain.inAction && !Entity.contains(selectedVillain, x, y))
     {
       selectedVillain.targetX = x;
       selectedVillain.targetY = y;
       selectedVillain.moving = true;
+
+      // Clear selection
+      selectedVillain = null;
+    }
+  }
+
+  void pickUpVillain()
+  {
+    if (selectedVillain != null && selectedVillain.inAction)
+    {
+      selectedVillain.inAction = false;
+
+      // Clear selection
+      selectedVillain = null;
     }
   }
 }

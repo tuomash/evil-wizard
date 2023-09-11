@@ -2,6 +2,8 @@ package com.orbinski.wizard;
 
 class Villain extends Movable
 {
+  boolean inAction;
+
   public Villain()
   {
     super(4.0f, 4.0f);

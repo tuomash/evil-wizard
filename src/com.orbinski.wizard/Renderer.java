@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.File;
@@ -21,10 +22,14 @@ class Renderer
   static Viewport staticViewport;
 
   final Game game;
-  final Viewport viewport;
   final OrthographicCamera camera;
+  final Viewport viewport;
   final ShapeRenderer shapeRenderer;
   final SpriteBatch spriteBatch;
+  final OrthographicCamera hudCamera;
+  final ScreenViewport hudViewport;
+  final ShapeRenderer hudShapeRenderer;
+  final SpriteBatch hudSpriteBatch;
   final Texture dwarf;
   final Color background;
 
@@ -44,6 +49,19 @@ class Renderer
 
     spriteBatch = new SpriteBatch();
     spriteBatch.setProjectionMatrix(camera.combined);
+
+    hudCamera = new OrthographicCamera();
+    hudCamera.setToOrtho(true);
+    hudCamera.update();
+
+    hudViewport = new ScreenViewport(hudCamera);
+
+    hudSpriteBatch = new SpriteBatch();
+    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
+
+    hudShapeRenderer = new ShapeRenderer();
+    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
+    hudShapeRenderer.setAutoShapeType(true);
 
     final File file = new File(System.getProperty("user.dir") + File.separator + "dwarf.png");
     dwarf = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
@@ -73,11 +91,18 @@ class Renderer
 
       if (!villain.dead)
       {
-        renderFilledEntity(villain, Color.BLUE);
-
-        if (game.selectedVillain == villain)
+        if (villain.inAction)
         {
-          renderEntityBorder(villain, Color.WHITE);
+          renderFilledEntity(villain, Color.BLUE);
+
+          if (game.selectedVillain == villain)
+          {
+            renderEntityBorder(villain, Color.WHITE);
+          }
+        }
+        else
+        {
+          renderHudQuad(5.0f, 5.0f, 50.0f, 50.0f, Color.BLUE);
         }
       }
     }
@@ -304,11 +329,79 @@ class Renderer
     Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
+  void renderHudQuad(final float x,
+                     final float y,
+                     final float width,
+                     final float height,
+                     final Color color)
+  {
+    renderHudQuad(x,
+                  y,
+                  width,
+                  height,
+                  color.r,
+                  color.g,
+                  color.b,
+                  color.a);
+  }
+
+  void renderHudQuad(final float x,
+                     final float y,
+                     final float width,
+                     final float height,
+                     final float red,
+                     final float green,
+                     final float blue,
+                     final float alpha)
+  {
+    renderHudQuad(x,
+                  y,
+                  width,
+                  height,
+                  red,
+                  green,
+                  blue,
+                  alpha,
+                  ShapeRenderer.ShapeType.Line);
+  }
+
+  void renderHudQuad(final float x,
+                     final float y,
+                     final float width,
+                     final float height,
+                     final float red,
+                     final float green,
+                     final float blue,
+                     final float alpha,
+                     final ShapeRenderer.ShapeType type)
+  {
+    Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
+    hudShapeRenderer.begin(type);
+    hudShapeRenderer.setColor(red, green, blue, alpha);
+    hudShapeRenderer.rect(x, y, width, height);
+    hudShapeRenderer.end();
+
+    Gdx.gl.glDisable(GL20.GL_BLEND);
+  }
+
   void dispose()
   {
     if (shapeRenderer != null)
     {
       shapeRenderer.dispose();
+    }
+
+    if (spriteBatch != null)
+    {
+      spriteBatch.dispose();
+    }
+
+    if (hudSpriteBatch != null)
+    {
+      hudSpriteBatch.dispose();
     }
   }
 
