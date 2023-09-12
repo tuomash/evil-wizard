@@ -30,8 +30,12 @@ class Renderer
   final ScreenViewport hudViewport;
   final ShapeRenderer hudShapeRenderer;
   final SpriteBatch hudSpriteBatch;
-  final Texture dwarf;
   final Color background;
+
+  final Texture knight;
+  final Texture minotaur;
+  final Texture tower;
+  final Texture orb;
 
   Renderer(final Game game)
   {
@@ -63,8 +67,17 @@ class Renderer
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
     hudShapeRenderer.setAutoShapeType(true);
 
-    final File file = new File(System.getProperty("user.dir") + File.separator + "dwarf.png");
-    dwarf = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    File file = new File(System.getProperty("user.dir") + File.separator + "knight.png");
+    knight = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
+    file = new File(System.getProperty("user.dir") + File.separator + "minotaur.png");
+    minotaur = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
+    file = new File(System.getProperty("user.dir") + File.separator + "tower.png");
+    tower = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
+    file = new File(System.getProperty("user.dir") + File.separator + "orb.jpg");
+    orb = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
   }
@@ -80,7 +93,8 @@ class Renderer
 
   void renderTower()
   {
-    renderFilledEntity(game.tower, Color.GREEN);
+    renderEntity(game.tower, tower);
+    // renderEntityBorder(game.tower, Color.GREEN);
   }
 
   void renderVillains()
@@ -93,7 +107,8 @@ class Renderer
       {
         if (villain.inAction)
         {
-          renderFilledEntity(villain, Color.BLUE);
+          renderEntity(villain, minotaur);
+          renderEntityBorder(villain, Color.BLUE);
 
           if (game.selectedVillain == villain)
           {
@@ -120,6 +135,7 @@ class Renderer
 
       if (!enemy.dead)
       {
+        renderEntity(enemy, knight);
         renderEntityBorder(enemy, Color.RED);
       }
     }
@@ -133,55 +149,21 @@ class Renderer
 
       if (!projectile.dead)
       {
-        renderFilledEntity(projectile, Color.WHITE);
+        renderEntity(projectile, orb);
+        // renderFilledEntity(projectile, Color.WHITE);
       }
     }
   }
 
-  void renderPlayer()
+  void renderEntity(final Entity entity, final Texture texture)
   {
-    final float x = game.player.x * 1.0f + game.player.prevX * (1.0f - 1.0f);
-    final float y = game.player.y * 1.0f + game.player.prevY * (1.0f - 1.0f);
-    final float topLeftCornerX = x - game.player.widthOffset;
-    final float topLeftCornerY = y - game.player.heightOffset;
-
     spriteBatch.begin();
-    spriteBatch.draw(dwarf,
-                     topLeftCornerX,
-                     topLeftCornerY,
-                     game.player.width,
-                     game.player.height);
+    spriteBatch.draw(texture,
+                     entity.getTopLeftCornerX(),
+                     entity.getTopLeftCornerY(),
+                     entity.getWidth(),
+                     entity.getHeight());
     spriteBatch.end();
-
-    /*
-    renderQuad(game.player.centerX,
-               game.player.centerY,
-               game.player.centerWidth,
-               game.player.centerHeight,
-               Color.WHITE);
-
-    renderQuad(game.player.topLeftCornerX,
-               game.player.topLeftCornerY,
-               game.player.width,
-               game.player.height,
-               Color.RED);
-     */
-
-    if (game.player.targeting)
-    {
-      renderQuad(game.player.mouseWorld.x,
-                 game.player.mouseWorld.y,
-                 game.player.cursorWidth,
-                 game.player.cursorHeight,
-                 Color.WHITE);
-
-
-      renderLine(game.player.mouseWorld.x,
-                 game.player.mouseWorld.y,
-                 game.player.x,
-                 game.player.y,
-                 Color.WHITE);
-    }
   }
 
   void renderEntityBorder(final Entity entity, final Color borderColor)

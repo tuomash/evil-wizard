@@ -96,8 +96,8 @@ class Game
   void generateVillains()
   {
     final Villain villain = new Villain();
-    villain.setX(0.0f);
-    villain.setY(0.0f);
+    villain.setX(-10.0f);
+    villain.setY(tower.getY() - tower.getHeightOffset());
     villain.inAction = true;
     villains.add(villain);
   }
