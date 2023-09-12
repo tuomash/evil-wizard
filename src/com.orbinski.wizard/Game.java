@@ -176,4 +176,11 @@ class Game
       selectedVillain = null;
     }
   }
+
+  void resetVillain(final Villain villain)
+  {
+    villain.inAction = true;
+    villain.setX(0.0f);
+    villain.setY(0.0f);
+  }
 }

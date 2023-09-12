@@ -43,21 +43,26 @@ class Controller
 
     if (Gdx.input.isTouched())
     {
-      final Vector3 result = Renderer.unproject(mouseScreen);
-
-      if (result != null)
+      if (!game.villains.get(0).inAction && UserInterface.villainIcon.contains(mouseScreen.x, mouseScreen.y))
       {
-        if (game.selectedVillain == null)
+        game.resetVillain(game.villains.get(0));
+      }
+      else
+      {
+        final Vector3 result = Renderer.unproject(mouseScreen);
+
+        if (result != null)
         {
-          game.selectVillain(result.x, result.y);
-        }
-        else
-        {
-          game.moveVillain(result.x, result.y);
+          if (game.selectedVillain == null)
+          {
+            game.selectVillain(result.x, result.y);
+          }
+          else
+          {
+            game.moveVillain(result.x, result.y);
+          }
         }
       }
-
-      // game.player.updateMouseLocation(Gdx.input.getX(), Gdx.input.getY());
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.S))
     {

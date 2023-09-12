@@ -102,7 +102,11 @@ class Renderer
         }
         else
         {
-          renderHudQuad(5.0f, 5.0f, 50.0f, 50.0f, Color.BLUE);
+          renderHudFilledQuad(UserInterface.villainIcon.x,
+                              UserInterface.villainIcon.y,
+                              UserInterface.villainIcon.width,
+                              UserInterface.villainIcon.height,
+                              Color.BLUE);
         }
       }
     }
@@ -364,6 +368,43 @@ class Renderer
                   alpha,
                   ShapeRenderer.ShapeType.Line);
   }
+
+  void renderHudFilledQuad(final float x,
+                           final float y,
+                           final float width,
+                           final float height,
+                           final Color color)
+  {
+    renderHudFilledQuad(x,
+                        y,
+                        width,
+                        height,
+                        color.r,
+                        color.g,
+                        color.b,
+                        color.a);
+  }
+
+  void renderHudFilledQuad(final float x,
+                           final float y,
+                           final float width,
+                           final float height,
+                           final float red,
+                           final float green,
+                           final float blue,
+                           final float alpha)
+  {
+    renderHudQuad(x,
+                  y,
+                  width,
+                  height,
+                  red,
+                  green,
+                  blue,
+                  alpha,
+                  ShapeRenderer.ShapeType.Filled);
+  }
+
 
   void renderHudQuad(final float x,
                      final float y,

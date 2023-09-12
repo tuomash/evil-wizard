@@ -29,7 +29,7 @@ class Movable extends Entity
     {
       final float distance = MathUtils.distance(getX(), getY(), targetX, targetY);
 
-      if (distance < 0.1)
+      if (distance < 0.5)
       {
         moving = false;
       }
