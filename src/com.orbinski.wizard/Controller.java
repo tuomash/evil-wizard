@@ -71,15 +71,10 @@ class Controller
         game.pickUpVillain();
       }
     }
-    else if (game.player.targeting)
-    {
-      game.player.targeting = false;
-      game.player.jump();
-    }
 
     if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
-      game.player.reset();
+      game.reset();
     }
   }
 }

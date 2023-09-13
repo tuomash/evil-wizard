@@ -6,7 +6,6 @@ import java.util.Random;
 
 class Game
 {
-  final Player player;
   final Tower tower;
   final List<Villain> villains;
   final List<Enemy> enemies;
@@ -16,7 +15,6 @@ class Game
 
   Game()
   {
-    player = new Player();
     tower = new Tower();
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
@@ -182,5 +180,14 @@ class Game
     villain.inAction = true;
     villain.setX(0.0f);
     villain.setY(0.0f);
+  }
+
+  void reset()
+  {
+    tower.target = null;
+    projectiles.clear();
+    enemies.clear();
+
+    generateEnemies();
   }
 }

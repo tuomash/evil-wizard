@@ -9,8 +9,8 @@ class Projectile extends Movable
     super(0.5f, 0.5f);
     setX(-1000.0f);
     setY(-1000.0f);
-    velocityX = 30.0f;
-    velocityY = 30.0f;
+    velocityX = 55.0f;
+    velocityY = 55.0f;
   }
 
   @Override
