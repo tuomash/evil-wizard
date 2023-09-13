@@ -64,7 +64,8 @@ class Controller
         }
       }
     }
-    else if (Gdx.input.isKeyJustPressed(Input.Keys.S))
+
+    if (Gdx.input.isKeyJustPressed(Input.Keys.E))
     {
       if (game.selectedVillain != null)
       {
@@ -78,6 +79,26 @@ class Controller
     else if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
       game.reset();
+    }
+
+    // Camera controls
+
+    if (Gdx.input.isKeyPressed(Input.Keys.W))
+    {
+      game.cameraState.moveUp();
+    }
+    else if (Gdx.input.isKeyPressed(Input.Keys.S))
+    {
+      game.cameraState.moveDown();
+    }
+
+    if (Gdx.input.isKeyPressed(Input.Keys.A))
+    {
+      game.cameraState.moveLeft();
+    }
+    else if (Gdx.input.isKeyPressed(Input.Keys.D))
+    {
+      game.cameraState.moveRight();
     }
   }
 }

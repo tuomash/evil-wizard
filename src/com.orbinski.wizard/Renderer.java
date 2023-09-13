@@ -95,6 +95,10 @@ class Renderer
 
   void render()
   {
+    shapeRenderer.setProjectionMatrix(camera.combined);
+    spriteBatch.setProjectionMatrix(camera.combined);
+    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
+
     ScreenUtils.clear(Color.BLACK);
     renderBackground();
     renderTower();
@@ -114,7 +118,7 @@ class Renderer
     final float tileWidth = 8.0f;
     final float tileHeight = 8.0f;
     final int rows = (int) (WORLD_WIDTH / tileWidth) + 1;
-    final int columns = (int) (WORLD_HEIGHT / tileHeight) + 2;
+    final int columns = (int) (WORLD_HEIGHT / tileHeight) + 3;
 
     spriteBatch.begin();
 

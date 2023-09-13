@@ -11,6 +11,7 @@ class Game
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
+  final CameraState cameraState;
 
   Villain selectedVillain;
   int gold;
@@ -21,6 +22,7 @@ class Game
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
+    cameraState = new CameraState();
     gold = 0;
 
     generateVillains();
@@ -93,6 +95,15 @@ class Game
           projectile.target.dead = true;
         }
       }
+    }
+
+    if (cameraState.moving)
+    {
+      final float x = delta * cameraState.velocityX;
+      final float y = delta * cameraState.velocityY;
+      Renderer.staticViewport.getCamera().translate(x, y, 0.0f);
+      Renderer.staticViewport.apply();
+      cameraState.reset();
     }
   }
 
