@@ -38,6 +38,7 @@ class Renderer
   final Texture minotaur;
   final Texture tower;
   final Texture orb;
+  final Texture tile;
 
   final BitmapFont font;
 
@@ -83,6 +84,9 @@ class Renderer
     file = new File(System.getProperty("user.dir") + File.separator + "orb.jpg");
     orb = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
+    file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
+    tile = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
     font = new BitmapFont(true);
     font.setColor(Color.RED);
 
@@ -92,6 +96,7 @@ class Renderer
   void render()
   {
     ScreenUtils.clear(Color.BLACK);
+    renderBackground();
     renderTower();
     renderVillains();
     renderEnemies();
@@ -100,6 +105,37 @@ class Renderer
     hudSpriteBatch.begin();
     font.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 60);
     hudSpriteBatch.end();
+  }
+
+  void renderBackground()
+  {
+    float x = camera.position.x - WORLD_WIDTH / 2;
+    float y = camera.position.y + WORLD_HEIGHT / 2;
+    final float tileWidth = 8.0f;
+    final float tileHeight = 8.0f;
+    final int rows = (int) (WORLD_WIDTH / tileWidth) + 1;
+    final int columns = (int) (WORLD_HEIGHT / tileHeight) + 2;
+
+    spriteBatch.begin();
+
+    for (int i = 0; i < columns; i++)
+    {
+      for (int z = 0; z < rows; z++)
+      {
+        spriteBatch.draw(tile,
+                         x,
+                         y,
+                         tileWidth,
+                         tileHeight);
+
+        x = x + tileWidth;
+      }
+
+      x = camera.position.x - WORLD_WIDTH / 2;
+      y = y - tileWidth;
+    }
+
+    spriteBatch.end();
   }
 
   void renderTower()
