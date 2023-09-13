@@ -41,7 +41,7 @@ class Controller
     mouseScreen.x = Gdx.input.getX();
     mouseScreen.y = Gdx.input.getY();
 
-    if (Gdx.input.isTouched())
+    if (Gdx.input.justTouched())
     {
       if (!game.villains.get(0).inAction && UserInterface.villainIcon.contains(mouseScreen.x, mouseScreen.y))
       {
