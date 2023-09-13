@@ -13,6 +13,7 @@ class Game
   final List<Projectile> projectiles;
 
   Villain selectedVillain;
+  int gold;
 
   Game()
   {
@@ -20,6 +21,7 @@ class Game
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
+    gold = 0;
 
     generateVillains();
     generateEnemies();
@@ -53,6 +55,7 @@ class Game
 
           if (!enemy.dead && Entity.intersects(villain, enemy))
           {
+            gold = gold + enemy.gold;
             enemy.dead = true;
             break;
           }
@@ -85,6 +88,7 @@ class Game
 
         if (Entity.intersects(projectile, projectile.target))
         {
+          gold = gold + projectile.target.gold;
           projectile.dead = true;
           projectile.target.dead = true;
         }
@@ -103,24 +107,6 @@ class Game
 
   void generateEnemies()
   {
-    final List<Float> xCoordinates = new ArrayList<>();
-    final List<Float> yCoordinates = new ArrayList<>();
-
-    for (int i = -100; i > -120; i--)
-    {
-      xCoordinates.add((float) i);
-    }
-
-    for (int i = 100; i < 120; i++)
-    {
-      xCoordinates.add((float) i);
-    }
-
-    for (int i = 50; i > -50; i--)
-    {
-      yCoordinates.add((float) i);
-    }
-
     final List<List<Point>> sides = new ArrayList<>();
 
     {
@@ -190,7 +176,7 @@ class Game
     final int count = 100;
     final Random random = new Random();
 
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i <= count; i++)
     {
       final Enemy enemy = new Enemy();
       final List<Point> randomSide = sides.get(random.nextInt(sides.size()));
@@ -257,6 +243,7 @@ class Game
     tower.target = null;
     projectiles.clear();
     enemies.clear();
+    gold = 0;
 
     generateEnemies();
   }

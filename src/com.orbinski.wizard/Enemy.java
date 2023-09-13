@@ -7,7 +7,8 @@ class Enemy extends Movable
     super(2.5f, 2.5f);
     setX(-1000.0f);
     setY(-1000.0f);
-    velocityX = 7.0f;
-    velocityY = 7.0f;
+    velocityX = 2.25f;
+    velocityY = 2.25f;
+    gold = 2;
   }
 }

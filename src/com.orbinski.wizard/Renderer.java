@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -37,6 +38,8 @@ class Renderer
   final Texture minotaur;
   final Texture tower;
   final Texture orb;
+
+  final BitmapFont font;
 
   Renderer(final Game game)
   {
@@ -80,17 +83,23 @@ class Renderer
     file = new File(System.getProperty("user.dir") + File.separator + "orb.jpg");
     orb = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
+    font = new BitmapFont(true);
+    font.setColor(Color.RED);
+
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
   }
 
   void render()
   {
     ScreenUtils.clear(Color.BLACK);
-
     renderTower();
     renderVillains();
     renderEnemies();
     renderProjectiles();
+
+    hudSpriteBatch.begin();
+    font.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 60);
+    hudSpriteBatch.end();
   }
 
   void renderTower()
@@ -110,7 +119,7 @@ class Renderer
         if (villain.inAction)
         {
           renderEntity(villain, minotaur);
-          renderEntityBorder(villain, Color.BLUE);
+          // renderEntityBorder(villain, Color.BLUE);
 
           if (game.selectedVillain == villain)
           {
@@ -119,11 +128,11 @@ class Renderer
         }
         else
         {
-          renderHudFilledQuad(UserInterface.villainIcon.x,
-                              UserInterface.villainIcon.y,
-                              UserInterface.villainIcon.width,
-                              UserInterface.villainIcon.height,
-                              Color.BLUE);
+          renderHudTexture(UserInterface.villainIcon.x,
+                           UserInterface.villainIcon.y,
+                           UserInterface.villainIcon.width,
+                           UserInterface.villainIcon.height,
+                           minotaur);
         }
       }
     }
@@ -138,7 +147,7 @@ class Renderer
       if (!enemy.dead)
       {
         renderEntity(enemy, knight);
-        renderEntityBorder(enemy, Color.RED);
+        // renderEntityBorder(enemy, Color.RED);
       }
     }
   }
@@ -315,6 +324,21 @@ class Renderer
     shapeRenderer.end();
 
     Gdx.gl.glDisable(GL20.GL_BLEND);
+  }
+
+  void renderHudTexture(final float x,
+                        final float y,
+                        final float width,
+                        final float height,
+                        final Texture texture)
+  {
+    hudSpriteBatch.begin();
+    hudSpriteBatch.draw(texture,
+                        x,
+                        y,
+                        width,
+                        height);
+    hudSpriteBatch.end();
   }
 
   void renderHudQuad(final float x,

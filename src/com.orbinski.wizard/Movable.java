@@ -8,6 +8,7 @@ class Movable extends Entity
   float velocityY;
   boolean moving;
   boolean dead;
+  int gold;
 
   public Movable()
   {
