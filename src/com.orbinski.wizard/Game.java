@@ -207,6 +207,14 @@ class Game
     selectedVillain = null;
   }
 
+  void hotSelectVillain()
+  {
+    if (selectedVillain == null)
+    {
+      selectedVillain = villains.get(0);
+    }
+  }
+
   void moveVillain(final float x, final float y)
   {
     if (selectedVillain != null && selectedVillain.inAction && !Entity.contains(selectedVillain, x, y))

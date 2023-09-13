@@ -71,8 +71,11 @@ class Controller
         game.pickUpVillain();
       }
     }
-
-    if (Gdx.input.isKeyJustPressed(Input.Keys.R))
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.H))
+    {
+      game.hotSelectVillain();
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
       game.reset();
     }
