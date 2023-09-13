@@ -1,5 +1,6 @@
 package com.orbinski.wizard;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -102,8 +103,6 @@ class Game
 
   void generateEnemies()
   {
-    final int count = 10;
-    final Random random = new Random();
     final List<Float> xCoordinates = new ArrayList<>();
     final List<Float> yCoordinates = new ArrayList<>();
 
@@ -122,11 +121,82 @@ class Game
       yCoordinates.add((float) i);
     }
 
+    final List<List<Point>> sides = new ArrayList<>();
+
+    {
+      final List<Point> leftSide = new ArrayList<>();
+      sides.add(leftSide);
+
+      for (int x = 100; x < 120; x++)
+      {
+        for (int y = 50; y > -50; y--)
+        {
+          final Point point = new Point();
+          point.x = x;
+          point.y = y;
+          leftSide.add(point);
+        }
+      }
+    }
+
+    {
+      final List<Point> rightSide = new ArrayList<>();
+      sides.add(rightSide);
+
+      for (int x = -100; x > -120; x--)
+      {
+        for (int y = 50; y > -50; y--)
+        {
+          final Point point = new Point();
+          point.x = x;
+          point.y = y;
+          rightSide.add(point);
+        }
+      }
+    }
+
+    {
+      final List<Point> topSide = new ArrayList<>();
+      sides.add(topSide);
+
+      for (int x = -125; x < 125; x++)
+      {
+        for (int y = 50; y < 70; y++)
+        {
+          final Point point = new Point();
+          point.x = x;
+          point.y = y;
+          topSide.add(point);
+        }
+      }
+    }
+
+    {
+      final List<Point> bottomSide = new ArrayList<>();
+      sides.add(bottomSide);
+
+      for (int x = -125; x < 125; x++)
+      {
+        for (int y = -50; y > -70; y--)
+        {
+          final Point point = new Point();
+          point.x = x;
+          point.y = y;
+          bottomSide.add(point);
+        }
+      }
+    }
+
+    final int count = 100;
+    final Random random = new Random();
+
     for (int i = 0; i < count; i++)
     {
       final Enemy enemy = new Enemy();
-      enemy.setX(xCoordinates.get(random.nextInt(xCoordinates.size())));
-      enemy.setY(yCoordinates.get(random.nextInt(yCoordinates.size())));
+      final List<Point> randomSide = sides.get(random.nextInt(sides.size()));
+      final Point randomPoint = randomSide.get(random.nextInt(randomSide.size()));
+      enemy.setX(randomPoint.x);
+      enemy.setY(randomPoint.y);
       enemy.targetX = tower.getX();
       enemy.targetY = tower.getY() - tower.getHeightOffset();
       enemy.moving = true;

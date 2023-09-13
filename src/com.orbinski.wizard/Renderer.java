@@ -15,7 +15,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.File;
 
-import static com.orbinski.wizard.Globals.*;
+import static com.orbinski.wizard.Globals.WORLD_HEIGHT;
+import static com.orbinski.wizard.Globals.WORLD_WIDTH;
 
 class Renderer
 {
@@ -85,10 +86,12 @@ class Renderer
   void render()
   {
     ScreenUtils.clear(Color.BLACK);
+    spriteBatch.begin();
     renderTower();
     renderVillains();
     renderEnemies();
     renderProjectiles();
+    spriteBatch.end();
   }
 
   void renderTower()
@@ -157,13 +160,11 @@ class Renderer
 
   void renderEntity(final Entity entity, final Texture texture)
   {
-    spriteBatch.begin();
     spriteBatch.draw(texture,
                      entity.getTopLeftCornerX(),
                      entity.getTopLeftCornerY(),
                      entity.getWidth(),
                      entity.getHeight());
-    spriteBatch.end();
   }
 
   void renderEntityBorder(final Entity entity, final Color borderColor)
