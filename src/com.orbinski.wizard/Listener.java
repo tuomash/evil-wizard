@@ -25,6 +25,8 @@ class Listener implements ApplicationListener
   {
     renderer.viewport.update(width, height);
     renderer.hudViewport.update(width, height, true);
+    SCREEN_WIDTH = width;
+    SCREEN_HEIGHT = height;
   }
 
   @Override

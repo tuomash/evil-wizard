@@ -15,6 +15,7 @@ class Game
 
   Villain selectedVillain;
   int gold;
+  boolean gameOver;
 
   Game()
   {
@@ -31,6 +32,11 @@ class Game
 
   void update(final float delta)
   {
+    if (gameOver)
+    {
+      return;
+    }
+
     tower.update(delta);
 
     {
@@ -75,6 +81,11 @@ class Game
         if (Entity.intersects(tower, enemy))
         {
           tower.doEnemyAttack(enemy);
+
+          if (tower.health <= 0)
+          {
+            gameOver = true;
+          }
         }
       }
     }
@@ -282,6 +293,7 @@ class Game
 
   void reset()
   {
+    gameOver = false;
     tower.target = null;
     tower.reset();
     projectiles.clear();

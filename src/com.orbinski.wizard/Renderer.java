@@ -113,6 +113,16 @@ class Renderer
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
     hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
     renderHud();
+
+    if (game.gameOver)
+    {
+      renderHudDimBackground();
+
+      hudSpriteBatch.begin();
+      font.draw(hudSpriteBatch, "GAME OVER", 100, 100);
+      font.draw(hudSpriteBatch, "Press R to restart", 100, 120);
+      hudSpriteBatch.end();
+    }
   }
 
   void renderBackground()
@@ -462,6 +472,18 @@ class Renderer
     Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
+  private void renderHudDimBackground()
+  {
+    renderHudFilledQuad(0,
+                        0,
+                        Globals.SCREEN_WIDTH,
+                        Globals.SCREEN_HEIGHT,
+                        Color.BLACK.r,
+                        Color.BLACK.g,
+                        Color.BLACK.b,
+                        100 / 255.0f);
+  }
+
   void renderHudTexture(final float x,
                         final float y,
                         final float width,
@@ -587,6 +609,11 @@ class Renderer
     if (hudSpriteBatch != null)
     {
       hudSpriteBatch.dispose();
+    }
+
+    if (hudShapeRenderer != null)
+    {
+      hudShapeRenderer.dispose();
     }
   }
 
