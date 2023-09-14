@@ -7,7 +7,7 @@ class HealthBar extends Entity
   private float healthPercentage;
   private float greenBarWidth;
 
-  public HealthBar(final float offsetX,
+  HealthBar(final float offsetX,
                    final float offsetY,
                    final float width,
                    final float height,
@@ -36,17 +36,17 @@ class HealthBar extends Entity
     greenBarWidth = getWidth();
   }
 
-  public float getOffsetX()
+  float getOffsetX()
   {
     return offsetX;
   }
 
-  public float getOffsetY()
+  float getOffsetY()
   {
     return offsetY;
   }
 
-  public float getGreenBarWidth()
+  float getGreenBarWidth()
   {
     return greenBarWidth;
   }

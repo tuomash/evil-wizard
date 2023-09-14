@@ -68,7 +68,7 @@ abstract class Entity
     setHeight(height);
   }
 
-  public Entity(final float x, final float y, final float width, final float height)
+  Entity(final float x, final float y, final float width, final float height)
   {
     setX(x);
     setY(y);
@@ -162,12 +162,12 @@ abstract class Entity
     return heightOffset;
   }
 
-  public HealthBar getHealthBar()
+  HealthBar getHealthBar()
   {
     return healthBar;
   }
 
-  public void setHealthBar(final HealthBar healthBar)
+  void setHealthBar(final HealthBar healthBar)
   {
     this.healthBar = healthBar;
     healthBar.setX(getX() + healthBar.getOffsetX());

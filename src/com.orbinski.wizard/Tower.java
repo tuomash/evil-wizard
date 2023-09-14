@@ -10,7 +10,7 @@ class Tower extends Entity
   Circle range;
   boolean selected;
 
-  public Tower()
+  Tower()
   {
     super(8.0f, 30.0f);
     setX(0.0f);
