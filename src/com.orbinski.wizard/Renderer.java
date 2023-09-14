@@ -262,8 +262,8 @@ class Renderer
   {
     spriteBatch.begin();
     spriteBatch.draw(texture,
-                     entity.getTopLeftCornerX(),
-                     entity.getTopLeftCornerY(),
+                     entity.getBottomLeftCornerX(),
+                     entity.getBottomLeftCornerY(),
                      entity.getWidth(),
                      entity.getHeight());
     spriteBatch.end();
@@ -271,8 +271,8 @@ class Renderer
 
   void renderEntityBorder(final Entity entity, final Color borderColor)
   {
-    renderQuad(entity.getTopLeftCornerX(),
-               entity.getTopLeftCornerY(),
+    renderQuad(entity.getBottomLeftCornerX(),
+               entity.getBottomLeftCornerY(),
                entity.getWidth(),
                entity.getHeight(),
                borderColor);
@@ -280,8 +280,8 @@ class Renderer
 
   void renderFilledEntity(final Entity entity, final Color borderColor)
   {
-    renderFilledQuad(entity.getTopLeftCornerX(),
-                     entity.getTopLeftCornerY(),
+    renderFilledQuad(entity.getBottomLeftCornerX(),
+                     entity.getBottomLeftCornerY(),
                      entity.getWidth(),
                      entity.getHeight(),
                      borderColor);

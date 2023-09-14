@@ -1,11 +1,11 @@
 package com.orbinski.wizard;
 
-import java.awt.geom.Rectangle2D;
+import com.badlogic.gdx.math.Rectangle;
 
 abstract class Entity
 {
-  private static final Rectangle2D.Float entityA = new Rectangle2D.Float();
-  private static final Rectangle2D.Float entityB = new Rectangle2D.Float();
+  private static final Rectangle entityA = new Rectangle();
+  private static final Rectangle entityB = new Rectangle();
 
   static boolean intersects(final Entity a, final Entity b)
   {
@@ -14,17 +14,17 @@ abstract class Entity
       return false;
     }
 
-    entityA.x = a.topLeftCornerX;
-    entityA.y = a.topLeftCornerY;
+    entityA.x = a.bottomLeftCornerX;
+    entityA.y = a.bottomLeftCornerY;
     entityA.width = a.width;
     entityA.height = a.height;
 
-    entityB.x = b.topLeftCornerX;
-    entityB.y = b.topLeftCornerY;
+    entityB.x = b.bottomLeftCornerX;
+    entityB.y = b.bottomLeftCornerY;
     entityB.width = b.width;
     entityB.height = b.height;
 
-    return entityA.intersects(entityB);
+    return entityA.overlaps(entityB);
   }
 
   static boolean contains(final Entity a, final float x, final float y)
@@ -34,8 +34,8 @@ abstract class Entity
       return false;
     }
 
-    entityA.x = a.topLeftCornerX;
-    entityA.y = a.topLeftCornerY;
+    entityA.x = a.bottomLeftCornerX;
+    entityA.y = a.bottomLeftCornerY;
     entityA.width = a.width;
     entityA.height = a.height;
 
@@ -46,8 +46,8 @@ abstract class Entity
   private float y;
   private float prevX;
   private float prevY;
-  private float topLeftCornerX;
-  private float topLeftCornerY;
+  private float bottomLeftCornerX;
+  private float bottomLeftCornerY;
   private float width;
   private float widthOffset;
   private float height;
@@ -85,7 +85,7 @@ abstract class Entity
   {
     prevX = this.x;
     this.x = x;
-    topLeftCornerX = x - widthOffset;
+    bottomLeftCornerX = x - widthOffset;
 
     if (healthBar != null)
     {
@@ -102,7 +102,7 @@ abstract class Entity
   {
     prevY = this.y;
     this.y = y;
-    topLeftCornerY = y - heightOffset;
+    bottomLeftCornerY = y - heightOffset;
 
     if (healthBar != null)
     {
@@ -120,14 +120,14 @@ abstract class Entity
     return prevY;
   }
 
-  float getTopLeftCornerX()
+  float getBottomLeftCornerX()
   {
-    return topLeftCornerX;
+    return bottomLeftCornerX;
   }
 
-  float getTopLeftCornerY()
+  float getBottomLeftCornerY()
   {
-    return topLeftCornerY;
+    return bottomLeftCornerY;
   }
 
   float getWidth()
