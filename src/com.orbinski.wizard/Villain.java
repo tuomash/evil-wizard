@@ -11,5 +11,13 @@ class Villain extends Movable
     setY(0.0f);
     velocityX = 16.0f;
     velocityY = 16.0f;
+    health = 100;
+    maxHealth = 100;
+    setHealthBar(new HealthBar(-getWidthOffset(),
+                               getHeightOffset() + 0.5f,
+                               getWidth(),
+                               0.5f,
+                               health,
+                               maxHealth));
   }
 }

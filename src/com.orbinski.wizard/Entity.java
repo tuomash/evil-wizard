@@ -52,6 +52,9 @@ abstract class Entity
   private float widthOffset;
   private float height;
   private float heightOffset;
+  int health;
+  int maxHealth;
+  private HealthBar healthBar;
 
   Entity()
   {
@@ -61,6 +64,14 @@ abstract class Entity
 
   Entity(final float width, final float height)
   {
+    setWidth(width);
+    setHeight(height);
+  }
+
+  public Entity(final float x, final float y, final float width, final float height)
+  {
+    setX(x);
+    setY(y);
     setWidth(width);
     setHeight(height);
   }
@@ -75,6 +86,11 @@ abstract class Entity
     prevX = this.x;
     this.x = x;
     topLeftCornerX = x - widthOffset;
+
+    if (healthBar != null)
+    {
+      healthBar.setX(getX() + healthBar.getOffsetX());
+    }
   }
 
   float getY()
@@ -87,6 +103,11 @@ abstract class Entity
     prevY = this.y;
     this.y = y;
     topLeftCornerY = y - heightOffset;
+
+    if (healthBar != null)
+    {
+      healthBar.setY(getY() + healthBar.getOffsetY());
+    }
   }
 
   float getPrevX()
@@ -139,5 +160,17 @@ abstract class Entity
   float getHeightOffset()
   {
     return heightOffset;
+  }
+
+  public HealthBar getHealthBar()
+  {
+    return healthBar;
+  }
+
+  public void setHealthBar(final HealthBar healthBar)
+  {
+    this.healthBar = healthBar;
+    healthBar.setX(getX() + healthBar.getOffsetX());
+    healthBar.setY(getY() + healthBar.getOffsetY());
   }
 }

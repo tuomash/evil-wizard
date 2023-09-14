@@ -75,7 +75,7 @@ class Game
 
         if (Entity.intersects(tower, enemy))
         {
-          enemy.dead = true;
+          tower.doEnemyAttack(enemy);
         }
       }
     }

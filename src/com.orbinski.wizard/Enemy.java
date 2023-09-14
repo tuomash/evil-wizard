@@ -2,6 +2,8 @@ package com.orbinski.wizard;
 
 class Enemy extends Movable
 {
+  int towerDamage;
+
   Enemy()
   {
     super(2.5f, 2.5f);
@@ -10,5 +12,6 @@ class Enemy extends Movable
     velocityX = 2.25f;
     velocityY = 2.25f;
     gold = 2;
+    towerDamage = 5;
   }
 }

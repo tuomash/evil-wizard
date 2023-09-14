@@ -31,11 +31,11 @@ class Renderer
   final SpriteBatch hudSpriteBatch;
   final Color background;
 
-  final Texture knight;
-  final Texture minotaur;
-  final Texture tower;
-  final Texture orb;
-  final Texture tile;
+  final Texture knightTexture;
+  final Texture minotaurTexture;
+  final Texture towerTexture;
+  final Texture orbTexture;
+  final Texture tileTexture;
 
   final BitmapFont font;
 
@@ -70,19 +70,19 @@ class Renderer
     hudShapeRenderer.setAutoShapeType(true);
 
     File file = new File(System.getProperty("user.dir") + File.separator + "knight.png");
-    knight = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    knightTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "minotaur.png");
-    minotaur = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    minotaurTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "tower.png");
-    tower = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    towerTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "orb.jpg");
-    orb = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    orbTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
-    tile = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    tileTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
@@ -105,8 +105,8 @@ class Renderer
 
     renderBackground();
     renderTower();
-    renderVillains();
     renderEnemies();
+    renderVillains();
     renderProjectiles();
 
     hudViewport.apply();
@@ -130,7 +130,7 @@ class Renderer
     {
       for (int z = 0; z < rows; z++)
       {
-        spriteBatch.draw(tile,
+        spriteBatch.draw(tileTexture,
                          x,
                          y,
                          tileWidth,
@@ -148,7 +148,8 @@ class Renderer
 
   void renderTower()
   {
-    renderEntity(game.tower, tower);
+    renderEntity(game.tower, towerTexture);
+    renderHealthBar(game.tower.getHealthBar());
 
     if (game.tower.selected)
     {
@@ -168,7 +169,8 @@ class Renderer
 
       if (!villain.dead && villain.inAction)
       {
-        renderEntity(villain, minotaur);
+        renderEntity(villain, minotaurTexture);
+        renderHealthBar(villain.getHealthBar());
         // renderEntityBorder(villain, Color.BLUE);
 
         if (game.selectedVillain == villain)
@@ -187,7 +189,7 @@ class Renderer
 
       if (!enemy.dead)
       {
-        renderEntity(enemy, knight);
+        renderEntity(enemy, knightTexture);
         // renderEntityBorder(enemy, Color.RED);
       }
     }
@@ -201,10 +203,24 @@ class Renderer
 
       if (!projectile.dead)
       {
-        renderEntity(projectile, orb);
+        renderEntity(projectile, orbTexture);
         // renderFilledEntity(projectile, Color.WHITE);
       }
     }
+  }
+
+  void renderHealthBar(final HealthBar bar)
+  {
+    renderFilledQuad(bar.getX(),
+                     bar.getY(),
+                     bar.getWidth(),
+                     bar.getHeight(),
+                     Color.RED);
+    renderFilledQuad(bar.getX(),
+                     bar.getY(),
+                     bar.getGreenBarWidth(),
+                     bar.getHeight(),
+                     Color.GREEN);
   }
 
   void renderHud()
@@ -219,7 +235,7 @@ class Renderer
                          UserInterface.villainIcon.y,
                          UserInterface.villainIcon.width,
                          UserInterface.villainIcon.height,
-                         minotaur);
+                         minotaurTexture);
       }
     }
 
