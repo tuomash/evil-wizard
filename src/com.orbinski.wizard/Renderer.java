@@ -1,10 +1,7 @@
 package com.orbinski.wizard;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -86,6 +83,11 @@ class Renderer
 
     file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
     tile = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
+    file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
+    final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
+    Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+    pm.dispose();
 
     font = new BitmapFont(true);
     font.setColor(Color.RED);
