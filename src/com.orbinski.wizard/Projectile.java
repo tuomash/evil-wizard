@@ -3,6 +3,7 @@ package com.orbinski.wizard;
 class Projectile extends Movable
 {
   Movable target;
+  int damage;
 
   Projectile()
   {

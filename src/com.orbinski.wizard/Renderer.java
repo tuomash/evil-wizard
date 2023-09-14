@@ -190,6 +190,7 @@ class Renderer
       if (!enemy.dead)
       {
         renderEntity(enemy, knightTexture);
+        renderHealthBar(enemy.getHealthBar());
         // renderEntityBorder(enemy, Color.RED);
       }
     }
@@ -211,16 +212,19 @@ class Renderer
 
   void renderHealthBar(final HealthBar bar)
   {
-    renderFilledQuad(bar.getX(),
-                     bar.getY(),
-                     bar.getWidth(),
-                     bar.getHeight(),
-                     Color.RED);
-    renderFilledQuad(bar.getX(),
-                     bar.getY(),
-                     bar.getGreenBarWidth(),
-                     bar.getHeight(),
-                     Color.GREEN);
+    if (bar != null)
+    {
+      renderFilledQuad(bar.getX(),
+                       bar.getY(),
+                       bar.getWidth(),
+                       bar.getHeight(),
+                       Color.RED);
+      renderFilledQuad(bar.getX(),
+                       bar.getY(),
+                       bar.getGreenBarWidth(),
+                       bar.getHeight(),
+                       Color.GREEN);
+    }
   }
 
   void renderHud()

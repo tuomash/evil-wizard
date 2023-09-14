@@ -9,6 +9,9 @@ class Tower extends Entity
   Enemy target;
   Circle range;
   boolean selected;
+  boolean canFire;
+  float elapsedSinceLastShot;
+  float rateOfFire;
 
   Tower()
   {
@@ -24,10 +27,18 @@ class Tower extends Entity
                                1.0f,
                                health,
                                maxHealth));
+    canFire = true;
+    rateOfFire = 1.1f;
   }
 
   void update(final float delta)
   {
+    elapsedSinceLastShot = elapsedSinceLastShot + delta;
+
+    if (elapsedSinceLastShot >= rateOfFire)
+    {
+      canFire = true;
+    }
   }
 
   boolean hasTarget()
@@ -37,6 +48,11 @@ class Tower extends Entity
 
   Projectile findAndFireAtTarget(final List<Enemy> enemies)
   {
+    if (!canFire)
+    {
+      return null;
+    }
+
     if (!hasTarget() && !enemies.isEmpty())
     {
       float closestDistance = -1.0f;
@@ -66,15 +82,23 @@ class Tower extends Entity
       if (closestEnemy != null)
       {
         target = closestEnemy;
-        final Projectile projectile = new Projectile();
-        projectile.setX(getX());
-        projectile.setY(getY());
-        projectile.moving = true;
-        projectile.target = target;
-        projectile.targetX = target.getX();
-        projectile.targetY = target.getY();
-        return projectile;
       }
+    }
+
+    if (hasTarget())
+    {
+      elapsedSinceLastShot = 0.0f;
+      canFire = false;
+
+      final Projectile projectile = new Projectile();
+      projectile.setX(getX());
+      projectile.setY(getY());
+      projectile.moving = true;
+      projectile.target = target;
+      projectile.targetX = target.getX();
+      projectile.targetY = target.getY();
+      projectile.damage = 5;
+      return projectile;
     }
 
     return null;

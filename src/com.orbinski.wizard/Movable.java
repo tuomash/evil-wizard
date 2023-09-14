@@ -42,4 +42,15 @@ class Movable extends Entity
       setY(getY() + (toTargetY * (velocityY * delta)));
     }
   }
+
+  void doProjectileAttack(final Projectile projectile)
+  {
+    health = health - projectile.damage;
+    getHealthBar().updateBar(health, maxHealth);
+
+    if (health <= 0)
+    {
+      dead = true;
+    }
+  }
 }

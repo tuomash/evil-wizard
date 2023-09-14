@@ -13,5 +13,13 @@ class Enemy extends Movable
     velocityY = 2.25f;
     gold = 2;
     towerDamage = 5;
+    health = 10;
+    maxHealth = 10;
+    setHealthBar(new HealthBar(-getWidthOffset(),
+                               getHeightOffset() + 0.25f,
+                               getWidth(),
+                               0.25f,
+                               health,
+                               maxHealth));
   }
 }

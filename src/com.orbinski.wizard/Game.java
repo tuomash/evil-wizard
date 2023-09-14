@@ -33,7 +33,6 @@ class Game
   {
     tower.update(delta);
 
-    if (!tower.hasTarget())
     {
       final Projectile projectile = tower.findAndFireAtTarget(enemies);
 
@@ -90,9 +89,15 @@ class Game
 
         if (Entity.intersects(projectile, projectile.target))
         {
-          gold = gold + projectile.target.gold;
+          projectile.target.doProjectileAttack(projectile);
+
+          if (projectile.target.dead)
+          {
+            gold = gold + projectile.target.gold;
+          }
+
           projectile.dead = true;
-          projectile.target.dead = true;
+          projectile.target = null;
         }
       }
     }
