@@ -110,4 +110,12 @@ class Tower extends Entity
     getHealthBar().updateBar(health, maxHealth);
     enemy.dead = true;
   }
+
+  void reset()
+  {
+    health = 1000;
+    maxHealth = 1000;
+    getHealthBar().updateBar(health, maxHealth);
+    canFire = true;
+  }
 }

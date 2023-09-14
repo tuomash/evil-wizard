@@ -283,10 +283,12 @@ class Game
   void reset()
   {
     tower.target = null;
+    tower.reset();
     projectiles.clear();
     enemies.clear();
     gold = 0;
 
+    villains.get(0).reset();
     generateEnemies();
   }
 }

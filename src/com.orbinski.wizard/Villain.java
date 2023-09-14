@@ -4,7 +4,7 @@ class Villain extends Movable
 {
   boolean inAction;
 
-  public Villain()
+  Villain()
   {
     super(4.0f, 4.0f);
     setX(0.0f);
@@ -19,5 +19,12 @@ class Villain extends Movable
                                0.5f,
                                health,
                                maxHealth));
+  }
+
+  void reset()
+  {
+    health = 100;
+    maxHealth = 100;
+    getHealthBar().updateBar(health, maxHealth);
   }
 }
