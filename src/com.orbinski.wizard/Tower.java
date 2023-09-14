@@ -1,16 +1,21 @@
 package com.orbinski.wizard;
 
+import com.badlogic.gdx.math.Circle;
+
 import java.util.List;
 
 class Tower extends Entity
 {
   Enemy target;
+  Circle range;
+  boolean selected;
 
   public Tower()
   {
     super(8.0f, 30.0f);
     setX(0.0f);
     setY(0.0f);
+    range = new Circle(getX(), getY(), 40.0f);
   }
 
   void update(final float delta)
@@ -33,7 +38,7 @@ class Tower extends Entity
       {
         final Enemy enemy = enemies.get(i);
 
-        if (!enemy.dead)
+        if (!enemy.dead && range.contains(enemy.getX(), enemy.getY()))
         {
           final float distance = MathUtils.distance(getX(), getY(), enemy.getX(), enemy.getY());
 

@@ -201,7 +201,18 @@ class Game
     }
   }
 
-  void selectVillain(final float x, final float y)
+  boolean selectTower(final float x, final float y)
+  {
+    if (Entity.contains(tower, x, y))
+    {
+      tower.selected = true;
+      return true;
+    }
+
+    return false;
+  }
+
+  boolean selectVillain(final float x, final float y)
   {
     for (int i = 0; i < villains.size(); i++)
     {
@@ -210,11 +221,18 @@ class Game
       if (!villain.dead && villain.inAction && Entity.contains(villain, x, y))
       {
         selectedVillain = villain;
-        return;
+        return true;
       }
     }
 
     // Clear selection
+    selectedVillain = null;
+    return false;
+  }
+
+  public void clearSelections()
+  {
+    tower.selected = false;
     selectedVillain = null;
   }
 

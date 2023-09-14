@@ -53,13 +53,20 @@ class Controller
 
         if (result != null)
         {
-          if (game.selectedVillain == null)
+          if (game.selectedVillain != null)
           {
-            game.selectVillain(result.x, result.y);
+            game.moveVillain(result.x, result.y);
           }
           else
           {
-            game.moveVillain(result.x, result.y);
+            game.clearSelections();
+
+            if (game.selectVillain(result.x, result.y))
+            {
+            }
+            else if (game.selectTower(result.x, result.y))
+            {
+            }
           }
         }
       }

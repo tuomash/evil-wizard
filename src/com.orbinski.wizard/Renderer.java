@@ -149,7 +149,15 @@ class Renderer
   void renderTower()
   {
     renderEntity(game.tower, tower);
-    // renderEntityBorder(game.tower, Color.GREEN);
+
+    if (game.tower.selected)
+    {
+      renderEntityBorder(game.tower, Color.WHITE);
+      renderCircle(game.tower.range.x,
+                   game.tower.range.y,
+                   game.tower.range.radius,
+                   Color.RED);
+    }
   }
 
   void renderVillains()
@@ -338,6 +346,60 @@ class Renderer
     shapeRenderer.begin(type);
     shapeRenderer.setColor(red, green, blue, alpha);
     shapeRenderer.rect(x, y, width, height);
+    shapeRenderer.end();
+
+    Gdx.gl.glDisable(GL20.GL_BLEND);
+  }
+
+  void renderCircle(final float x,
+                    final float y,
+                    final float radius,
+                    final Color color)
+  {
+    renderCircle(x,
+                 y,
+                 radius,
+                 color.r,
+                 color.g,
+                 color.b,
+                 color.a,
+                 ShapeRenderer.ShapeType.Line);
+  }
+
+  void renderCircle(final float x,
+                    final float y,
+                    final float radius,
+                    final float red,
+                    final float green,
+                    final float blue,
+                    final float alpha)
+  {
+    renderCircle(x,
+                 y,
+                 radius,
+                 red,
+                 green,
+                 blue,
+                 alpha,
+                 ShapeRenderer.ShapeType.Line);
+  }
+
+  void renderCircle(final float x,
+                    final float y,
+                    final float radius,
+                    final float red,
+                    final float green,
+                    final float blue,
+                    final float alpha,
+                    final ShapeRenderer.ShapeType type)
+  {
+    Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+    shapeRenderer.setProjectionMatrix(camera.combined);
+    shapeRenderer.begin(type);
+    shapeRenderer.setColor(red, green, blue, alpha);
+    shapeRenderer.circle(x, y, radius);
     shapeRenderer.end();
 
     Gdx.gl.glDisable(GL20.GL_BLEND);
