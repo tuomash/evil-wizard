@@ -253,8 +253,8 @@ class Game
   void resetVillain(final Villain villain)
   {
     villain.inAction = true;
-    villain.setX(0.0f);
-    villain.setY(0.0f);
+    villain.setX(-10.0f);
+    villain.setY(tower.getY() - tower.getHeightOffset());
   }
 
   void reset()

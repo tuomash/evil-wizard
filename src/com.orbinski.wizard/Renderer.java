@@ -95,20 +95,22 @@ class Renderer
 
   void render()
   {
+    ScreenUtils.clear(Color.BLACK);
+
+    viewport.apply();
     shapeRenderer.setProjectionMatrix(camera.combined);
     spriteBatch.setProjectionMatrix(camera.combined);
-    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
 
-    ScreenUtils.clear(Color.BLACK);
     renderBackground();
     renderTower();
     renderVillains();
     renderEnemies();
     renderProjectiles();
 
-    hudSpriteBatch.begin();
-    font.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 60);
-    hudSpriteBatch.end();
+    hudViewport.apply();
+    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
+    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
+    renderHud();
   }
 
   void renderBackground()
@@ -154,25 +156,14 @@ class Renderer
     {
       final Villain villain = game.villains.get(i);
 
-      if (!villain.dead)
+      if (!villain.dead && villain.inAction)
       {
-        if (villain.inAction)
-        {
-          renderEntity(villain, minotaur);
-          // renderEntityBorder(villain, Color.BLUE);
+        renderEntity(villain, minotaur);
+        // renderEntityBorder(villain, Color.BLUE);
 
-          if (game.selectedVillain == villain)
-          {
-            renderEntityBorder(villain, Color.WHITE);
-          }
-        }
-        else
+        if (game.selectedVillain == villain)
         {
-          renderHudTexture(UserInterface.villainIcon.x,
-                           UserInterface.villainIcon.y,
-                           UserInterface.villainIcon.width,
-                           UserInterface.villainIcon.height,
-                           minotaur);
+          renderEntityBorder(villain, Color.WHITE);
         }
       }
     }
@@ -204,6 +195,27 @@ class Renderer
         // renderFilledEntity(projectile, Color.WHITE);
       }
     }
+  }
+
+  void renderHud()
+  {
+    for (int i = 0; i < game.villains.size(); i++)
+    {
+      final Villain villain = game.villains.get(i);
+
+      if (!villain.dead && !villain.inAction)
+      {
+        renderHudTexture(UserInterface.villainIcon.x,
+                         UserInterface.villainIcon.y,
+                         UserInterface.villainIcon.width,
+                         UserInterface.villainIcon.height,
+                         minotaur);
+      }
+    }
+
+    hudSpriteBatch.begin();
+    font.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 60);
+    hudSpriteBatch.end();
   }
 
   void renderEntity(final Entity entity, final Texture texture)
