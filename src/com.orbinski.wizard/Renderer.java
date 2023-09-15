@@ -13,8 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.File;
 
-import static com.orbinski.wizard.Globals.WORLD_HEIGHT;
-import static com.orbinski.wizard.Globals.WORLD_WIDTH;
+import static com.orbinski.wizard.Globals.*;
 
 class Renderer
 {
@@ -36,6 +35,7 @@ class Renderer
   final Texture towerTexture;
   final Texture orbTexture;
   final Texture tileTexture;
+  final Texture jewelTexture;
 
   final BitmapFont font;
 
@@ -84,6 +84,9 @@ class Renderer
     file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
     tileTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
+    file = new File(System.getProperty("user.dir") + File.separator + "gold.png");
+    jewelTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
     file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
     Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
@@ -105,6 +108,7 @@ class Renderer
 
     renderBackground();
     renderTower();
+    renderJewels();
     renderEnemies();
     renderVillains();
     renderProjectiles();
@@ -188,6 +192,15 @@ class Renderer
           renderEntityBorder(villain, Color.WHITE);
         }
       }
+    }
+  }
+
+  void renderJewels()
+  {
+    for (int i = 0; i < game.jewels.size(); i++)
+    {
+      final Jewel jewel = game.jewels.get(i);
+      renderEntity(jewel, jewelTexture);
     }
   }
 

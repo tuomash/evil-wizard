@@ -3,11 +3,13 @@ package com.orbinski.wizard;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import static com.orbinski.wizard.Globals.*;
 
 class Game
 {
   final Tower tower;
+  final List<Jewel> jewels;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -15,11 +17,14 @@ class Game
 
   Villain selectedVillain;
   int gold;
+  float elapsedSinceLastJewel;
+  float rateOfJewels;
   boolean gameOver;
 
   Game()
   {
     tower = new Tower();
+    jewels = new ArrayList<>();
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
@@ -28,6 +33,7 @@ class Game
 
     generateVillains();
     generateEnemies();
+    randomizeRateOfJewels();
   }
 
   void update(final float delta)
@@ -48,6 +54,36 @@ class Game
       }
     }
 
+    elapsedSinceLastJewel = elapsedSinceLastJewel + delta;
+
+    if (elapsedSinceLastJewel >= rateOfJewels && jewels.size() <= 10)
+    {
+      final Jewel jewel = new Jewel();
+      jewel.setX(MathUtils.random(-55, 55));
+      jewel.setY(MathUtils.random(-55, 55));
+      jewels.add(jewel);
+      elapsedSinceLastJewel = 0.0f;
+      randomizeRateOfJewels();
+    }
+
+    int jewelIndexToRemove = -1;
+
+    for (int i = 0; i < jewels.size(); i++)
+    {
+      final Jewel jewel = jewels.get(i);
+      jewel.update(delta);
+
+      if (jewel.hasElapsed())
+      {
+        jewelIndexToRemove = i;
+      }
+    }
+
+    if (jewelIndexToRemove != -1)
+    {
+      jewels.remove(jewelIndexToRemove);
+    }
+
     for (int i = 0; i < villains.size(); i++)
     {
       final Villain villain = villains.get(i);
@@ -56,6 +92,24 @@ class Game
       if (!villain.inAction)
       {
         continue;
+      }
+
+      jewelIndexToRemove = -1;
+
+      for (int z = 0; z < jewels.size(); z++)
+      {
+        final Jewel jewel = jewels.get(z);
+
+        if (Entity.intersects(villain, jewel))
+        {
+          gold = gold + jewel.bounty;
+          jewelIndexToRemove = z;
+        }
+      }
+
+      if (jewelIndexToRemove != -1)
+      {
+        jewels.remove(jewelIndexToRemove);
       }
 
       if (villain.enemyTarget != null)
@@ -229,7 +283,6 @@ class Game
     }
 
     final int count = 100;
-    final Random random = new Random();
 
     for (int i = 0; i <= count; i++)
     {
@@ -243,6 +296,11 @@ class Game
       enemy.moving = true;
       enemies.add(enemy);
     }
+  }
+
+  void randomizeRateOfJewels()
+  {
+    rateOfJewels = random.nextInt(16) + 5;
   }
 
   boolean selectTower(final float x, final float y)
@@ -339,9 +397,11 @@ class Game
     gameOver = false;
     tower.target = null;
     tower.reset();
+    jewels.clear();
     projectiles.clear();
     enemies.clear();
     gold = 500;
+    elapsedSinceLastJewel = 0.0f;
 
     villains.get(0).reset();
     generateEnemies();

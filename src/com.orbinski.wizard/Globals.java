@@ -1,5 +1,7 @@
 package com.orbinski.wizard;
 
+import java.util.Random;
+
 class Globals
 {
   static final float WORLD_WIDTH = 200.0f;
@@ -10,4 +12,6 @@ class Globals
 
   static int SCREEN_WIDTH = 0;
   static int SCREEN_HEIGHT = 0;
+
+  static Random random = new Random();
 }
