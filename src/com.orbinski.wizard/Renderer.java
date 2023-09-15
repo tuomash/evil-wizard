@@ -228,7 +228,7 @@ class Renderer
                        bar.getY(),
                        bar.getWidth(),
                        bar.getHeight(),
-                       Color.RED);
+                       HealthBar.DARK_RED);
       renderFilledQuad(bar.getX(),
                        bar.getY(),
                        bar.getGreenBarWidth(),

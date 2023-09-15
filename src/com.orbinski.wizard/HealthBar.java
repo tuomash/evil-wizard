@@ -1,7 +1,11 @@
 package com.orbinski.wizard;
 
+import com.badlogic.gdx.graphics.Color;
+
 class HealthBar extends Entity
 {
+  static Color DARK_RED = new Color(139.0f / 255.0f, 0.0f, 0.0f, 1.0f);
+
   private float offsetX;
   private float offsetY;
   private float healthPercentage;

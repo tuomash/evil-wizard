@@ -34,11 +34,14 @@ class Villain extends Movable
   {
     super.update(delta);
 
-    elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
-
-    if (elapsedSinceLastAttack >= rateOfAttack)
+    if (inCombatWith != null)
     {
-      canAttack = true;
+      elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
+
+      if (elapsedSinceLastAttack >= rateOfAttack)
+      {
+        canAttack = true;
+      }
     }
   }
 
@@ -61,6 +64,7 @@ class Villain extends Movable
   {
     dead = false;
     inAction = true;
+    canAttack = true;
     setHealth(100);
     setMaxHealth(100);
   }
