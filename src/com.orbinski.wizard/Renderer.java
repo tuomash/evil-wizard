@@ -84,7 +84,7 @@ class Renderer
     file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
     tileTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
-    file = new File(System.getProperty("user.dir") + File.separator + "gold.png");
+    file = new File(System.getProperty("user.dir") + File.separator + "jewel.png");
     jewelTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
