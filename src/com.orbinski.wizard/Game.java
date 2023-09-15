@@ -146,7 +146,6 @@ class Game
       final float x = delta * cameraState.velocityX;
       final float y = delta * cameraState.velocityY;
       Renderer.staticViewport.getCamera().translate(x, y, 0.0f);
-      Renderer.staticViewport.apply();
       cameraState.reset();
     }
   }
