@@ -62,7 +62,8 @@ class Game
 
           if (villain.inCombatWith.dead)
           {
-            gold = gold + villain.inCombatWith.gold;
+            gold = gold + villain.inCombatWith.bounty;
+            villain.inCombatWith.inCombatWith = null;
             villain.inCombatWith = null;
           }
         }
@@ -108,7 +109,7 @@ class Game
         {
           tower.doEnemyAttack(enemy);
 
-          if (tower.health <= 0)
+          if (tower.getHealth() <= 0)
           {
             gameOver = true;
           }
@@ -130,7 +131,7 @@ class Game
 
           if (projectile.target.dead)
           {
-            gold = gold + projectile.target.gold;
+            gold = gold + projectile.target.bounty;
           }
 
           projectile.dead = true;

@@ -16,14 +16,14 @@ class Villain extends Movable
     setY(0.0f);
     velocityX = 16.0f;
     velocityY = 16.0f;
-    health = 100;
-    maxHealth = 100;
+    setHealth(100);
+    setMaxHealth(100);
     setHealthBar(new HealthBar(-getWidthOffset(),
                                getHeightOffset() + 0.5f,
                                getWidth(),
                                0.5f,
-                               health,
-                               maxHealth));
+                               getHealth(),
+                               getMaxHealth()));
     damage = 8;
     canAttack = true;
     rateOfAttack = 1.1f;
@@ -46,12 +46,11 @@ class Villain extends Movable
   {
     if (inCombatWith != null && canAttack)
     {
-      inCombatWith.health = inCombatWith.health - damage;
-      inCombatWith.getHealthBar().updateBar(inCombatWith.health, inCombatWith.maxHealth);
+      inCombatWith.updateHealth(-damage);
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
 
-      if (inCombatWith.health <= 0)
+      if (inCombatWith.getHealth() <= 0)
       {
         inCombatWith.dead = true;
       }
@@ -62,8 +61,7 @@ class Villain extends Movable
   {
     dead = false;
     inAction = true;
-    health = 100;
-    maxHealth = 100;
-    getHealthBar().updateBar(health, maxHealth);
+    setHealth(100);
+    setMaxHealth(100);
   }
 }

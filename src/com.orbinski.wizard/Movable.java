@@ -8,7 +8,7 @@ class Movable extends Entity
   float velocityY;
   boolean moving;
   boolean dead;
-  int gold;
+  int bounty;
 
   public Movable()
   {
@@ -45,10 +45,9 @@ class Movable extends Entity
 
   void doProjectileAttack(final Projectile projectile)
   {
-    health = health - projectile.damage;
-    getHealthBar().updateBar(health, maxHealth);
+    updateHealth(-projectile.damage);
 
-    if (health <= 0)
+    if (getHealth() <= 0)
     {
       dead = true;
     }

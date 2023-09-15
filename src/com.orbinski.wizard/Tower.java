@@ -19,14 +19,14 @@ class Tower extends Entity
     setX(0.0f);
     setY(0.0f);
     range = new Circle(getX(), getY(), 40.0f);
-    health = 1000;
-    maxHealth = 1000;
+    setHealth(1000);
+    setMaxHealth(1000);
     setHealthBar(new HealthBar(-getWidthOffset(),
                                getHeightOffset() + 1.0f,
                                getWidth(),
                                1.0f,
-                               health,
-                               maxHealth));
+                               getHealth(),
+                               getMaxHealth()));
     canAttack = true;
     rateOfAttack = 1.1f;
   }
@@ -106,16 +106,14 @@ class Tower extends Entity
 
   void doEnemyAttack(final Enemy enemy)
   {
-    health = health - enemy.towerDamage;
-    getHealthBar().updateBar(health, maxHealth);
+    updateHealth(-enemy.towerDamage);
     enemy.dead = true;
   }
 
   void reset()
   {
-    health = 1000;
-    maxHealth = 1000;
-    getHealthBar().updateBar(health, maxHealth);
+    setHealth(1000);
+    setMaxHealth(1000);
     canAttack = true;
   }
 }

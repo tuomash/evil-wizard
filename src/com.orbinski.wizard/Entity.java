@@ -52,8 +52,8 @@ abstract class Entity
   private float widthOffset;
   private float height;
   private float heightOffset;
-  int health;
-  int maxHealth;
+  private int health;
+  private int maxHealth;
   private HealthBar healthBar;
 
   Entity()
@@ -160,6 +160,46 @@ abstract class Entity
   float getHeightOffset()
   {
     return heightOffset;
+  }
+
+  public int getHealth()
+  {
+    return health;
+  }
+
+  public void setHealth(final int health)
+  {
+    this.health = health;
+
+    if (healthBar != null)
+    {
+      healthBar.updateBar(health, maxHealth);
+    }
+  }
+
+  void updateHealth(final int amount)
+  {
+    health = health + amount;
+
+    if (healthBar != null)
+    {
+      healthBar.updateBar(health, maxHealth);
+    }
+  }
+
+  public int getMaxHealth()
+  {
+    return maxHealth;
+  }
+
+  public void setMaxHealth(final int maxHealth)
+  {
+    this.maxHealth = maxHealth;
+
+    if (healthBar != null)
+    {
+      healthBar.updateBar(health, maxHealth);
+    }
   }
 
   HealthBar getHealthBar()

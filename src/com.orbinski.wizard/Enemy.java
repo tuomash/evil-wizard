@@ -16,16 +16,16 @@ class Enemy extends Movable
     setY(-1000.0f);
     velocityX = 2.25f;
     velocityY = 2.25f;
-    gold = 2;
+    bounty = 2;
     towerDamage = 5;
-    health = 10;
-    maxHealth = 10;
+    setHealth(10);
+    setMaxHealth(10);
     setHealthBar(new HealthBar(-getWidthOffset(),
                                getHeightOffset() + 0.25f,
                                getWidth(),
                                0.25f,
-                               health,
-                               maxHealth));
+                               getHealth(),
+                               getMaxHealth()));
     damage = 2;
     canAttack = true;
     rateOfAttack = 0.9f;
@@ -48,12 +48,11 @@ class Enemy extends Movable
   {
     if (inCombatWith != null && canAttack)
     {
-      inCombatWith.health = inCombatWith.health - damage;
-      inCombatWith.getHealthBar().updateBar(inCombatWith.health, inCombatWith.maxHealth);
+      inCombatWith.updateHealth(-damage);
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
 
-      if (inCombatWith.health <= 0)
+      if (inCombatWith.getHealth() <= 0)
       {
         inCombatWith.dead = true;
       }

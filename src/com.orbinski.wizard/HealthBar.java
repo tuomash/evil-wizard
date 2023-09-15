@@ -18,8 +18,8 @@ class HealthBar extends Entity
     this.offsetX = offsetX;
     this.offsetY = offsetY;
     this.greenBarWidth = width;
-    this.maxHealth = maxHealth;
-    this.health = health;
+    setHealth(health);
+    setMaxHealth(maxHealth);
 
     updateBar(health, maxHealth);
   }
