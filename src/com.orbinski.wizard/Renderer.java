@@ -243,7 +243,7 @@ class Renderer
     {
       final Villain villain = game.villains.get(i);
 
-      if (!villain.dead && !villain.inAction)
+      if (!villain.inAction)
       {
         renderHudTexture(UserInterface.villainIcon.x,
                          UserInterface.villainIcon.y,

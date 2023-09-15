@@ -56,15 +56,29 @@ class Game
       {
         villain.update(delta);
 
-        for (int z = 0; z < enemies.size(); z++)
+        if (villain.inCombatWith != null)
         {
-          final Enemy enemy = enemies.get(z);
+          villain.doAttack();
 
-          if (!enemy.dead && Entity.intersects(villain, enemy))
+          if (villain.inCombatWith.dead)
           {
-            gold = gold + enemy.gold;
-            enemy.dead = true;
-            break;
+            gold = gold + villain.inCombatWith.gold;
+            villain.inCombatWith = null;
+          }
+        }
+        else
+        {
+          for (int z = 0; z < enemies.size(); z++)
+          {
+            final Enemy enemy = enemies.get(z);
+
+            if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving)
+            {
+              villain.inCombatWith = enemy;
+              enemy.inCombatWith = villain;
+              enemy.moving = false;
+              break;
+            }
           }
         }
       }
@@ -77,6 +91,18 @@ class Game
       if (!enemy.dead)
       {
         enemy.update(delta);
+
+        if (enemy.inCombatWith != null)
+        {
+          enemy.doAttack();
+
+          if (enemy.inCombatWith.dead)
+          {
+            enemy.inCombatWith.inAction = false;
+            enemy.inCombatWith = null;
+            enemy.moving = true;
+          }
+        }
 
         if (Entity.intersects(tower, enemy))
         {
@@ -267,6 +293,13 @@ class Game
       selectedVillain.targetX = x;
       selectedVillain.targetY = y;
       selectedVillain.moving = true;
+
+      // Clear combat
+      if (selectedVillain.inCombatWith != null)
+      {
+        selectedVillain.inCombatWith.moving = true;
+        selectedVillain.inCombatWith = null;
+      }
 
       // Clear selection
       selectedVillain = null;

@@ -3,6 +3,11 @@ package com.orbinski.wizard;
 class Enemy extends Movable
 {
   int towerDamage;
+  Villain inCombatWith;
+  int damage;
+  boolean canAttack;
+  float elapsedSinceLastAttack;
+  float rateOfAttack;
 
   Enemy()
   {
@@ -21,5 +26,37 @@ class Enemy extends Movable
                                0.25f,
                                health,
                                maxHealth));
+    damage = 2;
+    canAttack = true;
+    rateOfAttack = 0.9f;
+  }
+
+  @Override
+  void update(final float delta)
+  {
+    super.update(delta);
+
+    elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
+
+    if (elapsedSinceLastAttack >= rateOfAttack)
+    {
+      canAttack = true;
+    }
+  }
+
+  void doAttack()
+  {
+    if (inCombatWith != null && canAttack)
+    {
+      inCombatWith.health = inCombatWith.health - damage;
+      inCombatWith.getHealthBar().updateBar(inCombatWith.health, inCombatWith.maxHealth);
+      elapsedSinceLastAttack = 0.0f;
+      canAttack = false;
+
+      if (inCombatWith.health <= 0)
+      {
+        inCombatWith.dead = true;
+      }
+    }
   }
 }

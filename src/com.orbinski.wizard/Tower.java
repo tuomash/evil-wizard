@@ -9,9 +9,9 @@ class Tower extends Entity
   Enemy target;
   Circle range;
   boolean selected;
-  boolean canFire;
-  float elapsedSinceLastShot;
-  float rateOfFire;
+  boolean canAttack;
+  float elapsedSinceLastAttack;
+  float rateOfAttack;
 
   Tower()
   {
@@ -27,17 +27,17 @@ class Tower extends Entity
                                1.0f,
                                health,
                                maxHealth));
-    canFire = true;
-    rateOfFire = 1.1f;
+    canAttack = true;
+    rateOfAttack = 1.1f;
   }
 
   void update(final float delta)
   {
-    elapsedSinceLastShot = elapsedSinceLastShot + delta;
+    elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
 
-    if (elapsedSinceLastShot >= rateOfFire)
+    if (elapsedSinceLastAttack >= rateOfAttack)
     {
-      canFire = true;
+      canAttack = true;
     }
   }
 
@@ -48,7 +48,7 @@ class Tower extends Entity
 
   Projectile findAndFireAtTarget(final List<Enemy> enemies)
   {
-    if (!canFire)
+    if (!canAttack)
     {
       return null;
     }
@@ -87,8 +87,8 @@ class Tower extends Entity
 
     if (hasTarget())
     {
-      elapsedSinceLastShot = 0.0f;
-      canFire = false;
+      elapsedSinceLastAttack = 0.0f;
+      canAttack = false;
 
       final Projectile projectile = new Projectile();
       projectile.setX(getX());
@@ -116,6 +116,6 @@ class Tower extends Entity
     health = 1000;
     maxHealth = 1000;
     getHealthBar().updateBar(health, maxHealth);
-    canFire = true;
+    canAttack = true;
   }
 }
