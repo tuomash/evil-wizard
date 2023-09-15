@@ -55,7 +55,14 @@ class Controller
         {
           if (game.selectedVillain != null)
           {
-            game.moveVillain(result.x, result.y);
+            if (game.selectTower(result.x, result.y))
+            {
+              game.selectedVillain = null;
+            }
+            else
+            {
+              game.moveVillain(result.x, result.y);
+            }
           }
           else
           {
