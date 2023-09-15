@@ -319,6 +319,13 @@ class Game
     }
   }
 
+  void centerCamera()
+  {
+    Renderer.staticViewport.getCamera().position.x = 0.0f;
+    Renderer.staticViewport.getCamera().position.y = 0.0f;
+    Renderer.staticViewport.getCamera().update();
+  }
+
   void resetVillain(final Villain villain)
   {
     villain.inAction = true;

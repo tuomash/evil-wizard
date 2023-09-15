@@ -72,7 +72,11 @@ class Controller
       }
     }
 
-    if (Gdx.input.isKeyJustPressed(Input.Keys.E))
+    if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+    {
+      game.centerCamera();
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.E))
     {
       if (game.selectedVillain != null)
       {
