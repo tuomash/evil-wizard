@@ -8,6 +8,9 @@ class Villain extends Movable
   boolean canAttack;
   float elapsedSinceLastAttack;
   float rateOfAttack;
+  float elapsedSinceLastHeal;
+  float rateOfHealing;
+  int regen;
 
   Villain()
   {
@@ -27,6 +30,8 @@ class Villain extends Movable
     damage = 8;
     canAttack = true;
     rateOfAttack = 1.1f;
+    rateOfHealing = 1.3f;
+    regen = 2;
   }
 
   @Override
@@ -41,6 +46,16 @@ class Villain extends Movable
       if (elapsedSinceLastAttack >= rateOfAttack)
       {
         canAttack = true;
+      }
+    }
+    else if (getHealth() < getMaxHealth())
+    {
+      elapsedSinceLastHeal = elapsedSinceLastHeal + delta;
+
+      if (elapsedSinceLastHeal >= rateOfHealing)
+      {
+        updateHealth(regen);
+        elapsedSinceLastHeal = 0.0f;
       }
     }
   }
