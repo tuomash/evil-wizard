@@ -56,15 +56,15 @@ class Game
       {
         villain.update(delta);
 
-        if (villain.inCombatWith != null)
+        if (villain.enemyTarget != null)
         {
           villain.doAttack();
 
-          if (villain.inCombatWith.dead)
+          if (villain.enemyTarget.dead)
           {
-            gold = gold + villain.inCombatWith.bounty;
-            villain.inCombatWith.inCombatWith = null;
-            villain.inCombatWith = null;
+            gold = gold + villain.enemyTarget.bounty;
+            villain.enemyTarget.villainTarget = null;
+            villain.enemyTarget = null;
           }
         }
         else
@@ -73,10 +73,10 @@ class Game
           {
             final Enemy enemy = enemies.get(z);
 
-            if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving)
+            if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving && villain.enemyTarget == null)
             {
-              villain.inCombatWith = enemy;
-              enemy.inCombatWith = villain;
+              villain.enemyTarget = enemy;
+              enemy.villainTarget = villain;
               enemy.moving = false;
               break;
             }
@@ -93,14 +93,15 @@ class Game
       {
         enemy.update(delta);
 
-        if (enemy.inCombatWith != null)
+        if (enemy.villainTarget != null)
         {
           enemy.doAttack();
 
-          if (enemy.inCombatWith.dead)
+          if (enemy.villainTarget.dead)
           {
-            enemy.inCombatWith.inAction = false;
-            enemy.inCombatWith = null;
+            enemy.villainTarget.inAction = false;
+            enemy.villainTarget.enemyTarget = null;
+            enemy.villainTarget = null;
             enemy.moving = true;
           }
         }
@@ -296,10 +297,11 @@ class Game
       selectedVillain.moving = true;
 
       // Clear combat
-      if (selectedVillain.inCombatWith != null)
+      if (selectedVillain.enemyTarget != null)
       {
-        selectedVillain.inCombatWith.moving = true;
-        selectedVillain.inCombatWith = null;
+        selectedVillain.enemyTarget.moving = true;
+        selectedVillain.enemyTarget.villainTarget = null;
+        selectedVillain.enemyTarget = null;
       }
 
       // Clear selection

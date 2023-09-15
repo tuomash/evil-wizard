@@ -3,7 +3,7 @@ package com.orbinski.wizard;
 class Villain extends Movable
 {
   boolean inAction;
-  Enemy inCombatWith;
+  Enemy enemyTarget;
   int damage;
   boolean canAttack;
   float elapsedSinceLastAttack;
@@ -34,7 +34,7 @@ class Villain extends Movable
   {
     super.update(delta);
 
-    if (inCombatWith != null)
+    if (enemyTarget != null)
     {
       elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
 
@@ -47,15 +47,15 @@ class Villain extends Movable
 
   void doAttack()
   {
-    if (inCombatWith != null && canAttack)
+    if (enemyTarget != null && canAttack)
     {
-      inCombatWith.updateHealth(-damage);
+      enemyTarget.updateHealth(-damage);
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
 
-      if (inCombatWith.getHealth() <= 0)
+      if (enemyTarget.getHealth() <= 0)
       {
-        inCombatWith.dead = true;
+        enemyTarget.dead = true;
       }
     }
   }
