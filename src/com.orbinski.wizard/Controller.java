@@ -45,7 +45,7 @@ class Controller
     {
       if (!game.villains.get(0).inAction && UserInterface.villainIcon.contains(mouseScreen.x, mouseScreen.y))
       {
-        game.resetVillain(game.villains.get(0));
+        game.placeVillain(game.villains.get(0));
       }
       else
       {

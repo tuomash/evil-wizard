@@ -51,35 +51,36 @@ class Game
     for (int i = 0; i < villains.size(); i++)
     {
       final Villain villain = villains.get(i);
+      villain.update(delta);
 
-      if (!villain.dead && villain.inAction)
+      if (!villain.inAction)
       {
-        villain.update(delta);
+        continue;
+      }
 
-        if (villain.enemyTarget != null)
+      if (villain.enemyTarget != null)
+      {
+        villain.doAttack();
+
+        if (villain.enemyTarget.dead)
         {
-          villain.doAttack();
-
-          if (villain.enemyTarget.dead)
-          {
-            gold = gold + villain.enemyTarget.bounty;
-            villain.enemyTarget.villainTarget = null;
-            villain.enemyTarget = null;
-          }
+          gold = gold + villain.enemyTarget.bounty;
+          villain.enemyTarget.villainTarget = null;
+          villain.enemyTarget = null;
         }
-        else
+      }
+      else
+      {
+        for (int z = 0; z < enemies.size(); z++)
         {
-          for (int z = 0; z < enemies.size(); z++)
-          {
-            final Enemy enemy = enemies.get(z);
+          final Enemy enemy = enemies.get(z);
 
-            if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving && villain.enemyTarget == null)
-            {
-              villain.enemyTarget = enemy;
-              enemy.villainTarget = villain;
-              enemy.moving = false;
-              break;
-            }
+          if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving && villain.enemyTarget == null)
+          {
+            villain.enemyTarget = enemy;
+            enemy.villainTarget = villain;
+            enemy.moving = false;
+            break;
           }
         }
       }
@@ -319,18 +320,18 @@ class Game
     }
   }
 
+  void placeVillain(final Villain villain)
+  {
+    villain.inAction = true;
+    villain.setX(-10.0f);
+    villain.setY(tower.getY() - tower.getHeightOffset());
+  }
+
   void centerCamera()
   {
     Renderer.staticViewport.getCamera().position.x = 0.0f;
     Renderer.staticViewport.getCamera().position.y = 0.0f;
     Renderer.staticViewport.getCamera().update();
-  }
-
-  void resetVillain(final Villain villain)
-  {
-    villain.inAction = true;
-    villain.setX(-10.0f);
-    villain.setY(tower.getY() - tower.getHeightOffset());
   }
 
   void reset()

@@ -11,6 +11,8 @@ class Villain extends Movable
   float elapsedSinceLastHeal;
   float rateOfHealing;
   int regen;
+  float elapsedDeath;
+  float rateOfRespawn;
 
   Villain()
   {
@@ -32,6 +34,7 @@ class Villain extends Movable
     rateOfAttack = 1.1f;
     rateOfHealing = 1.3f;
     regen = 2;
+    rateOfRespawn = 8.0f;
   }
 
   @Override
@@ -39,7 +42,18 @@ class Villain extends Movable
   {
     super.update(delta);
 
-    if (enemyTarget != null)
+    if (!inAction)
+    {
+      elapsedDeath = elapsedDeath + delta;
+
+      if (elapsedDeath >= rateOfRespawn)
+      {
+        reset();
+        setX(-10.0f);
+        setY(0.0f);
+      }
+    }
+    else if (enemyTarget != null)
     {
       elapsedSinceLastAttack = elapsedSinceLastAttack + delta;
 
@@ -80,6 +94,9 @@ class Villain extends Movable
     dead = false;
     inAction = true;
     canAttack = true;
+    elapsedSinceLastAttack = 0.0f;
+    elapsedSinceLastHeal = 0.0f;
+    elapsedDeath = 0.0f;
     setHealth(100);
     setMaxHealth(100);
   }
