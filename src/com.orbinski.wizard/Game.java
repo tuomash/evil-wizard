@@ -24,7 +24,7 @@ class Game
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
     cameraState = new CameraState();
-    gold = 0;
+    gold = 500;
 
     generateVillains();
     generateEnemies();
@@ -298,7 +298,7 @@ class Game
     tower.reset();
     projectiles.clear();
     enemies.clear();
-    gold = 0;
+    gold = 500;
 
     villains.get(0).reset();
     generateEnemies();
