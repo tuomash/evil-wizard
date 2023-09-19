@@ -36,6 +36,7 @@ class Renderer
   final Texture orbTexture;
   final Texture tileTexture;
   final Texture jewelTexture;
+  final Texture lightningBoltTexture;
 
   final BitmapFont font;
 
@@ -87,6 +88,9 @@ class Renderer
     file = new File(System.getProperty("user.dir") + File.separator + "jewel.png");
     jewelTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
+    file = new File(System.getProperty("user.dir") + File.separator + "lightning-bolt.png");
+    lightningBoltTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
     file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
     Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
@@ -112,6 +116,7 @@ class Renderer
     renderEnemies();
     renderVillains();
     renderProjectiles();
+    renderSpell();
 
     hudViewport.apply();
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
@@ -230,6 +235,19 @@ class Renderer
         renderEntity(projectile, orbTexture);
         // renderFilledEntity(projectile, Color.WHITE);
       }
+    }
+  }
+
+  void renderSpell()
+  {
+    if (game.selectedSpell != null)
+    {
+      renderEntity(game.selectedSpell, lightningBoltTexture);
+      // renderEntityBorder(game.selectedSpell, Color.RED);
+      renderCircle(game.selectedSpell.range.x,
+                   game.selectedSpell.range.y,
+                   game.selectedSpell.range.radius,
+                   Color.RED);
     }
   }
 

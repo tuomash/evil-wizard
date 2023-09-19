@@ -1,5 +1,7 @@
 package com.orbinski.wizard;
 
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 abstract class Entity
@@ -7,7 +9,7 @@ abstract class Entity
   private static final Rectangle entityA = new Rectangle();
   private static final Rectangle entityB = new Rectangle();
 
-  static boolean intersects(final Entity a, final Entity b)
+  static boolean overlaps(final Entity a, final Entity b)
   {
     if (a == null || b == null)
     {
@@ -42,6 +44,21 @@ abstract class Entity
     return entityA.contains(x, y);
   }
 
+  static boolean overlaps(final Circle circle, final Entity a)
+  {
+    if (circle == null || a == null)
+    {
+      return false;
+    }
+
+    entityA.x = a.bottomLeftCornerX;
+    entityA.y = a.bottomLeftCornerY;
+    entityA.width = a.width;
+    entityA.height = a.height;
+
+    return Intersector.overlaps(circle, entityA);
+  }
+
   private float x;
   private float y;
   private float prevX;
@@ -55,6 +72,7 @@ abstract class Entity
   private int health;
   private int maxHealth;
   private HealthBar healthBar;
+  private Damage damage;
 
   float targetX;
   float targetY;
@@ -63,7 +81,6 @@ abstract class Entity
   boolean moving;
   boolean dead;
   int bounty;
-  private Damage damage;
 
   Entity()
   {

@@ -41,6 +41,16 @@ class Controller
     mouseScreen.x = Gdx.input.getX();
     mouseScreen.y = Gdx.input.getY();
 
+    if (game.selectedSpell != null)
+    {
+      final Vector3 result = Renderer.unproject(mouseScreen);
+
+      if (result != null)
+      {
+        game.moveSpell(result.x, result.y);
+      }
+    }
+
     if (Gdx.input.justTouched())
     {
       if (!game.villains.get(0).inAction && UserInterface.villainIcon.contains(mouseScreen.x, mouseScreen.y))
@@ -53,7 +63,11 @@ class Controller
 
         if (result != null)
         {
-          if (game.selectedVillain != null)
+          if (game.selectedSpell != null)
+          {
+            game.shootSpell();
+          }
+          else if (game.selectedVillain != null)
           {
             if (game.selectTower(result.x, result.y))
             {
@@ -77,18 +91,20 @@ class Controller
           }
         }
       }
+
     }
 
-    if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
+    {
+      game.selectSpell();
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.C))
     {
       game.centerCamera();
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.E))
     {
-      if (game.selectedVillain != null)
-      {
-        game.pickUpVillain();
-      }
+      game.pickUpVillain();
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.H))
     {
@@ -97,6 +113,10 @@ class Controller
     else if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
       game.reset();
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+    {
+      game.clearSelections();
     }
 
     // Camera controls

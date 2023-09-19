@@ -16,8 +16,10 @@ class Game
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
+  final List<Spell> spells;
   final CameraState cameraState;
 
+  Spell selectedSpell;
   Villain selectedVillain;
   int gold;
   float elapsedSinceLastJewel;
@@ -30,12 +32,14 @@ class Game
     jewels = new Jewel[MAX_JEWELS];
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
+    spells = new ArrayList<>();
     projectiles = new ArrayList<>();
     cameraState = new CameraState();
     gold = 500;
 
     generateVillains();
     generateEnemies();
+    createSpells();
     randomizeRateOfJewels();
   }
 
@@ -98,7 +102,7 @@ class Game
       {
         final Jewel jewel = jewels[z];
 
-        if (jewel != null && Entity.intersects(villain, jewel))
+        if (jewel != null && Entity.overlaps(villain, jewel))
         {
           gold = gold + jewel.bounty;
           jewels[z] = null;
@@ -122,7 +126,7 @@ class Game
         {
           final Enemy enemy = enemies.get(z);
 
-          if (!enemy.dead && Entity.intersects(villain, enemy) && !villain.moving && villain.enemyTarget == null)
+          if (!enemy.dead && Entity.overlaps(villain, enemy) && !villain.moving && villain.enemyTarget == null)
           {
             villain.enemyTarget = enemy;
             enemy.villainTarget = villain;
@@ -154,7 +158,7 @@ class Game
           }
         }
 
-        if (Entity.intersects(tower, enemy))
+        if (Entity.overlaps(tower, enemy))
         {
           tower.doEnemyAttack(enemy);
 
@@ -174,7 +178,7 @@ class Game
       {
         projectile.update(delta);
 
-        if (Entity.intersects(projectile, projectile.target))
+        if (Entity.overlaps(projectile, projectile.target))
         {
           projectile.target.doProjectileAttack(projectile);
 
@@ -188,6 +192,13 @@ class Game
         }
       }
     }
+
+    for (int i = 0; i < spells.size(); i++)
+    {
+      final Spell spell = spells.get(i);
+      spell.update(delta);
+    }
+
 
     if (cameraState.moving)
     {
@@ -291,6 +302,12 @@ class Game
     }
   }
 
+  void createSpells()
+  {
+    final Spell spell = new Spell();
+    spells.add(spell);
+  }
+
   int canAddJewel()
   {
     for (int i = 0; i < jewels.length; i++)
@@ -341,6 +358,38 @@ class Game
     return false;
   }
 
+  boolean selectSpell()
+  {
+    if (selectedSpell == null)
+    {
+      selectedSpell = spells.get(0);
+    }
+
+    return true;
+  }
+
+  boolean unselectSpell()
+  {
+    selectedSpell = null;
+    return true;
+  }
+
+  void moveSpell(final float x, final float y)
+  {
+    if (selectedSpell != null)
+    {
+      selectedSpell.move(x, y);
+    }
+  }
+
+  void shootSpell()
+  {
+    if (selectedSpell != null)
+    {
+      selectedSpell.doAttack(enemies);
+    }
+  }
+
   boolean selectVillain(final float x, final float y)
   {
     for (int i = 0; i < villains.size(); i++)
@@ -362,11 +411,14 @@ class Game
   public void clearSelections()
   {
     tower.selected = false;
+    selectedSpell = null;
     selectedVillain = null;
   }
 
   void hotSelectVillain()
   {
+    clearSelections();
+
     if (selectedVillain == null)
     {
       selectedVillain = villains.get(0);
