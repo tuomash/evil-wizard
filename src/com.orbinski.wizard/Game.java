@@ -2,14 +2,17 @@ package com.orbinski.wizard;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.orbinski.wizard.Globals.*;
 
 class Game
 {
+  static final int MAX_JEWELS = 10;
+
   final Tower tower;
-  final List<Jewel> jewels;
+  final Jewel[] jewels;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -24,7 +27,7 @@ class Game
   Game()
   {
     tower = new Tower();
-    jewels = new ArrayList<>();
+    jewels = new Jewel[MAX_JEWELS];
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
@@ -56,32 +59,29 @@ class Game
 
     elapsedSinceLastJewel = elapsedSinceLastJewel + delta;
 
-    if (elapsedSinceLastJewel >= rateOfJewels && jewels.size() <= 10)
+    if (elapsedSinceLastJewel >= rateOfJewels && canAddJewel() != -1)
     {
       final Jewel jewel = new Jewel();
       jewel.setX(MathUtils.random(-55, 55));
       jewel.setY(MathUtils.random(-55, 55));
-      jewels.add(jewel);
+      addJewel(jewel);
       elapsedSinceLastJewel = 0.0f;
       randomizeRateOfJewels();
     }
 
-    int jewelIndexToRemove = -1;
-
-    for (int i = 0; i < jewels.size(); i++)
+    for (int i = 0; i < jewels.length; i++)
     {
-      final Jewel jewel = jewels.get(i);
-      jewel.update(delta);
+      final Jewel jewel = jewels[i];
 
-      if (jewel.hasElapsed())
+      if (jewel != null)
       {
-        jewelIndexToRemove = i;
-      }
-    }
+        jewel.update(delta);
 
-    if (jewelIndexToRemove != -1)
-    {
-      jewels.remove(jewelIndexToRemove);
+        if (jewel.hasElapsed())
+        {
+          jewels[i] = null;
+        }
+      }
     }
 
     for (int i = 0; i < villains.size(); i++)
@@ -94,22 +94,15 @@ class Game
         continue;
       }
 
-      jewelIndexToRemove = -1;
-
-      for (int z = 0; z < jewels.size(); z++)
+      for (int z = 0; z < jewels.length; z++)
       {
-        final Jewel jewel = jewels.get(z);
+        final Jewel jewel = jewels[z];
 
-        if (Entity.intersects(villain, jewel))
+        if (jewel != null && Entity.intersects(villain, jewel))
         {
           gold = gold + jewel.bounty;
-          jewelIndexToRemove = z;
+          jewels[z] = null;
         }
-      }
-
-      if (jewelIndexToRemove != -1)
-      {
-        jewels.remove(jewelIndexToRemove);
       }
 
       if (villain.enemyTarget != null)
@@ -298,6 +291,40 @@ class Game
     }
   }
 
+  int canAddJewel()
+  {
+    for (int i = 0; i < jewels.length; i++)
+    {
+      final Jewel reference = jewels[i];
+
+      if (reference == null)
+      {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  void addJewel(final Jewel jewel)
+  {
+    for (int i = 0; i < jewels.length; i++)
+    {
+      final Jewel reference = jewels[i];
+
+      if (reference == null)
+      {
+        jewels[i] = jewel;
+        break;
+      }
+    }
+  }
+
+  void clearJewels()
+  {
+    Arrays.fill(jewels, null);
+  }
+
   void randomizeRateOfJewels()
   {
     rateOfJewels = random.nextInt(16) + 5;
@@ -397,7 +424,7 @@ class Game
     gameOver = false;
     tower.target = null;
     tower.reset();
-    jewels.clear();
+    clearJewels();
     projectiles.clear();
     enemies.clear();
     gold = 500;

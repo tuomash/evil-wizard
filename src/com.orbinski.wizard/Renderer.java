@@ -197,9 +197,9 @@ class Renderer
 
   void renderJewels()
   {
-    for (int i = 0; i < game.jewels.size(); i++)
+    for (int i = 0; i < game.jewels.length; i++)
     {
-      final Jewel jewel = game.jewels.get(i);
+      final Jewel jewel = game.jewels[i];
       renderEntity(jewel, jewelTexture);
     }
   }
@@ -273,13 +273,16 @@ class Renderer
 
   void renderEntity(final Entity entity, final Texture texture)
   {
-    spriteBatch.begin();
-    spriteBatch.draw(texture,
-                     entity.getBottomLeftCornerX(),
-                     entity.getBottomLeftCornerY(),
-                     entity.getWidth(),
-                     entity.getHeight());
-    spriteBatch.end();
+    if (entity != null)
+    {
+      spriteBatch.begin();
+      spriteBatch.draw(texture,
+                       entity.getBottomLeftCornerX(),
+                       entity.getBottomLeftCornerY(),
+                       entity.getWidth(),
+                       entity.getHeight());
+      spriteBatch.end();
+    }
   }
 
   void renderEntityBorder(final Entity entity, final Color borderColor)
