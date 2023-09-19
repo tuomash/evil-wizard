@@ -1,6 +1,6 @@
 package com.orbinski.wizard;
 
-class Villain extends Movable
+class Villain extends Entity
 {
   boolean inAction;
   Enemy enemyTarget;

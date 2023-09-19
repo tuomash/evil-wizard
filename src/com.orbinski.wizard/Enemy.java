@@ -1,6 +1,6 @@
 package com.orbinski.wizard;
 
-class Enemy extends Movable
+class Enemy extends Entity
 {
   int towerDamage;
   Villain villainTarget;

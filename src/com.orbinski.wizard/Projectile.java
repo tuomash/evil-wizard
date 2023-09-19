@@ -1,8 +1,8 @@
 package com.orbinski.wizard;
 
-class Projectile extends Movable
+class Projectile extends Entity
 {
-  Movable target;
+  Entity target;
   int damage;
 
   Projectile()
