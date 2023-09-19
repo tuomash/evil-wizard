@@ -3,7 +3,6 @@ package com.orbinski.wizard;
 class Projectile extends Entity
 {
   Entity target;
-  int damage;
 
   Projectile()
   {

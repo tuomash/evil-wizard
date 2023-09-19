@@ -63,6 +63,7 @@ abstract class Entity
   boolean moving;
   boolean dead;
   int bounty;
+  private Damage damage;
 
   Entity()
   {
@@ -110,12 +111,7 @@ abstract class Entity
 
   void doProjectileAttack(final Projectile projectile)
   {
-    updateHealth(-projectile.damage);
-
-    if (getHealth() <= 0)
-    {
-      dead = true;
-    }
+    updateHealth(-projectile.getDamage().calculate());
   }
 
   float getX()
@@ -227,14 +223,19 @@ abstract class Entity
     {
       healthBar.updateBar(health, maxHealth);
     }
+
+    if (health <= 0)
+    {
+      dead = true;
+    }
   }
 
-  public int getMaxHealth()
+  int getMaxHealth()
   {
     return maxHealth;
   }
 
-  public void setMaxHealth(final int maxHealth)
+  void setMaxHealth(final int maxHealth)
   {
     this.maxHealth = maxHealth;
 
@@ -254,5 +255,22 @@ abstract class Entity
     this.healthBar = healthBar;
     healthBar.setX(getX() + healthBar.getOffsetX());
     healthBar.setY(getY() + healthBar.getOffsetY());
+  }
+
+  public Damage getDamage()
+  {
+    return damage;
+  }
+
+  void setDamage(final int min, final int max)
+  {
+    if (damage == null)
+    {
+      damage = new Damage(min, max);
+    }
+    else
+    {
+      damage.set(min, max);
+    }
   }
 }

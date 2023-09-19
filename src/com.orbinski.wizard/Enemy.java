@@ -4,7 +4,6 @@ class Enemy extends Entity
 {
   int towerDamage;
   Villain villainTarget;
-  int damage;
   boolean canAttack;
   float elapsedSinceLastAttack;
   float rateOfAttack;
@@ -26,7 +25,7 @@ class Enemy extends Entity
                                0.25f,
                                getHealth(),
                                getMaxHealth()));
-    damage = 2;
+    setDamage(1, 3);
     canAttack = true;
     rateOfAttack = 0.9f;
   }
@@ -48,14 +47,9 @@ class Enemy extends Entity
   {
     if (villainTarget != null && canAttack)
     {
-      villainTarget.updateHealth(-damage);
+      villainTarget.updateHealth(-getDamage().calculate());
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
-
-      if (villainTarget.getHealth() <= 0)
-      {
-        villainTarget.dead = true;
-      }
     }
   }
 }

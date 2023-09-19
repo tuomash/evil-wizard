@@ -4,7 +4,6 @@ class Villain extends Entity
 {
   boolean inAction;
   Enemy enemyTarget;
-  int damage;
   boolean canAttack;
   float elapsedSinceLastAttack;
   float rateOfAttack;
@@ -29,7 +28,7 @@ class Villain extends Entity
                                0.5f,
                                getHealth(),
                                getMaxHealth()));
-    damage = 8;
+    setDamage(7, 9);
     canAttack = true;
     rateOfAttack = 1.1f;
     rateOfHealing = 1.3f;
@@ -78,14 +77,9 @@ class Villain extends Entity
   {
     if (enemyTarget != null && canAttack)
     {
-      enemyTarget.updateHealth(-damage);
+      enemyTarget.updateHealth(-getDamage().calculate());
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
-
-      if (enemyTarget.getHealth() <= 0)
-      {
-        enemyTarget.dead = true;
-      }
     }
   }
 
