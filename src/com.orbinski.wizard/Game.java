@@ -302,9 +302,18 @@ class Game
     }
   }
 
+  void loadTextureReferences(final Renderer renderer)
+  {
+    for (int i = 0; i < spells.size(); i++)
+    {
+      final Spell spell = spells.get(i);
+      spell.loadTextureReference(renderer);
+    }
+  }
+
   void createSpells()
   {
-    final Spell spell = new Spell();
+    final Spell spell = new LightningBolt();
     spells.add(spell);
   }
 

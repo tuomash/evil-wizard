@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Circle;
 
 import java.util.List;
 
-class Spell extends Entity
+abstract class Spell extends Entity
 {
   Circle range;
   boolean canAttack;
@@ -16,7 +16,6 @@ class Spell extends Entity
   public Spell()
   {
     super(8.0f, 30.0f);
-    applyHeightOffset = false;
     range = new Circle(getX(), getY(), 5.0f);
     setDamage(6, 10);
     canAttack = true;
@@ -59,4 +58,6 @@ class Spell extends Entity
       canAttack = false;
     }
   }
+
+  abstract void loadTextureReference(final Renderer renderer);
 }

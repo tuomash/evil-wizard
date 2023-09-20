@@ -100,6 +100,8 @@ class Renderer
     font.setColor(Color.RED);
 
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
+
+    game.loadTextureReferences(this);
   }
 
   void render()
@@ -242,7 +244,7 @@ class Renderer
   {
     if (game.selectedSpell != null)
     {
-      renderEntity(game.selectedSpell, lightningBoltTexture);
+      renderEntity(game.selectedSpell, game.selectedSpell.texture);
       // renderEntityBorder(game.selectedSpell, Color.RED);
       // renderCircle(game.selectedSpell.range.x,
       //             game.selectedSpell.range.y,
