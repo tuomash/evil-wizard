@@ -17,9 +17,11 @@ class Game
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
   final List<Spell> spells;
+  final List<AreaEffect> areaEffects;
   final CameraState cameraState;
 
   Spell selectedSpell;
+  int selectedSpellIndex;
   Villain selectedVillain;
   int gold;
   float elapsedSinceLastJewel;
@@ -32,8 +34,9 @@ class Game
     jewels = new Jewel[MAX_JEWELS];
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
-    spells = new ArrayList<>();
     projectiles = new ArrayList<>();
+    spells = new ArrayList<>();
+    areaEffects = new ArrayList<>();
     cameraState = new CameraState();
     gold = 500;
 
@@ -86,6 +89,12 @@ class Game
           jewels[i] = null;
         }
       }
+    }
+
+    for (int i = 0; i < areaEffects.size(); i++)
+    {
+      final AreaEffect effect = areaEffects.get(i);
+      effect.update(delta);
     }
 
     for (int i = 0; i < villains.size(); i++)
@@ -143,6 +152,14 @@ class Game
 
       if (!enemy.dead)
       {
+        enemy.slowdown = false;
+
+        for (int z = 0; z < areaEffects.size(); z++)
+        {
+          final AreaEffect effect = areaEffects.get(z);
+          effect.apply(enemy);
+        }
+
         enemy.update(delta);
 
         if (enemy.villainTarget != null)
@@ -313,8 +330,13 @@ class Game
 
   void createSpells()
   {
-    final Spell spell = new LightningBolt();
-    spells.add(spell);
+    selectedSpellIndex = -1;
+
+    final Spell lightningBolt = new LightningBolt();
+    spells.add(lightningBolt);
+
+    final Spell oilGrease = new OilGrease();
+    spells.add(oilGrease);
   }
 
   int canAddJewel()
@@ -367,11 +389,12 @@ class Game
     return false;
   }
 
-  boolean selectSpell()
+  boolean selectSpell(final int index)
   {
-    if (selectedSpell == null)
+    if (selectedSpellIndex != index)
     {
-      selectedSpell = spells.get(0);
+      selectedSpell = spells.get(index);
+      selectedSpellIndex = index;
       return true;
     }
 
@@ -396,7 +419,7 @@ class Game
   {
     if (selectedSpell != null)
     {
-      selectedSpell.doAttack(enemies);
+      selectedSpell.attack(this);
     }
   }
 
@@ -472,6 +495,11 @@ class Game
     villain.inAction = true;
     villain.setX(-10.0f);
     villain.setY(tower.getY() - tower.getHeightOffset());
+  }
+
+  void addAreaEffect(final AreaEffect effect)
+  {
+    areaEffects.add(effect);
   }
 
   void centerCamera()

@@ -82,6 +82,7 @@ abstract class Entity
   float velocityY;
   boolean moving;
   boolean dead;
+  boolean slowdown;
   int bounty;
 
   Entity()
@@ -113,18 +114,30 @@ abstract class Entity
 
     if (moving)
     {
-      final float distance = MathUtils.distance(getX(), getY(), targetX, targetY);
+      final float distanceToTarget = MathUtils.distance(getX(), getY(), targetX, targetY);
 
-      if (distance < 0.5)
+      if (distanceToTarget < 0.5)
       {
         moving = false;
       }
 
-      final float toTargetX = (targetX - getX()) / distance;
-      final float toTargetY = (targetY - getY()) / distance;
+      final float toTargetX = (targetX - getX()) / distanceToTarget;
+      final float toTargetY = (targetY - getY()) / distanceToTarget;
 
-      setX(getX() + (toTargetX * (velocityX * delta)));
-      setY(getY() + (toTargetY * (velocityY * delta)));
+      float velocityX = this.velocityX;
+      float velocityY = this.velocityY;
+
+      if (slowdown)
+      {
+        velocityX = velocityX * 0.5f;
+        velocityY = velocityY * 0.5f;
+      }
+
+      final float distanceX = velocityX * delta;
+      final float distanceY = velocityY * delta;
+
+      setX(getX() + (toTargetX * distanceX));
+      setY(getY() + (toTargetY * distanceY));
     }
   }
 

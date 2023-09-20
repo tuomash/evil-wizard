@@ -114,6 +114,7 @@ class Renderer
 
     renderBackground();
     renderTower();
+    renderAreaEffects();
     renderJewels();
     renderEnemies();
     renderVillains();
@@ -182,6 +183,22 @@ class Renderer
     }
   }
 
+  void renderAreaEffects()
+  {
+    for (int i = 0; i < game.areaEffects.size(); i++)
+    {
+      final AreaEffect effect = game.areaEffects.get(i);
+
+      if (!effect.dead)
+      {
+        renderCircle(effect.area.x,
+                     effect.area.y,
+                     effect.area.radius,
+                     Color.BLACK);
+      }
+    }
+  }
+
   void renderVillains()
   {
     for (int i = 0; i < game.villains.size(); i++)
@@ -244,12 +261,20 @@ class Renderer
   {
     if (game.selectedSpell != null)
     {
-      renderEntity(game.selectedSpell, game.selectedSpell.texture);
+      if (game.selectedSpell.texture != null)
+      {
+        renderEntity(game.selectedSpell, game.selectedSpell.texture);
+      }
+
       // renderEntityBorder(game.selectedSpell, Color.RED);
-      // renderCircle(game.selectedSpell.range.x,
-      //             game.selectedSpell.range.y,
-      //             game.selectedSpell.range.radius,
-      //             Color.RED);
+
+      if (game.selectedSpell.showRange)
+      {
+        renderCircle(game.selectedSpell.range.x,
+                     game.selectedSpell.range.y,
+                     game.selectedSpell.range.radius,
+                     Color.RED);
+      }
     }
   }
 

@@ -3,21 +3,21 @@ package com.orbinski.wizard;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 
-import java.util.List;
-
 abstract class Spell extends Entity
 {
   Circle range;
+  boolean showRange;
   boolean canAttack;
   float elapsedSinceLastAttack;
   float rateOfAttack;
   Texture texture;
 
-  public Spell()
+  public Spell(final float width, final float height)
   {
-    super(8.0f, 30.0f);
+    super(width, height);
     range = new Circle(getX(), getY(), 5.0f);
-    setDamage(6, 10);
+    setDamage(1, 5);
+    showRange = false;
     canAttack = true;
     rateOfAttack = 2.5f;
   }
@@ -40,24 +40,17 @@ abstract class Spell extends Entity
     range.y = y;
   }
 
-  void doAttack(final List<Enemy> enemies)
+  void attack(final Game game)
   {
     if (canAttack)
     {
-      for (int i = 0; i < enemies.size(); i++)
-      {
-        final Enemy enemy = enemies.get(i);
-
-        if (Entity.overlaps(range, enemy))
-        {
-          enemy.updateHealth(-getDamage().calculate());
-        }
-      }
-
+      attack2(game);
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
     }
   }
+
+  abstract void attack2(final Game game);
 
   abstract void loadTextureReference(final Renderer renderer);
 }
