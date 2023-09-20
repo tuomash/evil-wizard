@@ -244,10 +244,10 @@ class Renderer
     {
       renderEntity(game.selectedSpell, lightningBoltTexture);
       // renderEntityBorder(game.selectedSpell, Color.RED);
-      renderCircle(game.selectedSpell.range.x,
-                   game.selectedSpell.range.y,
-                   game.selectedSpell.range.radius,
-                   Color.RED);
+      // renderCircle(game.selectedSpell.range.x,
+      //             game.selectedSpell.range.y,
+      //             game.selectedSpell.range.radius,
+      //             Color.RED);
     }
   }
 

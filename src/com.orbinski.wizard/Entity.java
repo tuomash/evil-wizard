@@ -74,6 +74,8 @@ abstract class Entity
   private HealthBar healthBar;
   private Damage damage;
 
+  boolean applyWidthOffset = true;
+  boolean applyHeightOffset = true;
   float targetX;
   float targetY;
   float velocityX;
@@ -140,7 +142,15 @@ abstract class Entity
   {
     prevX = this.x;
     this.x = x;
-    bottomLeftCornerX = x - widthOffset;
+
+    if (applyWidthOffset)
+    {
+      bottomLeftCornerX = x - widthOffset;
+    }
+    else
+    {
+      bottomLeftCornerX = x;
+    }
 
     if (healthBar != null)
     {
@@ -157,7 +167,15 @@ abstract class Entity
   {
     prevY = this.y;
     this.y = y;
-    bottomLeftCornerY = y - heightOffset;
+
+    if (applyHeightOffset)
+    {
+      bottomLeftCornerY = y - heightOffset;
+    }
+    else
+    {
+      bottomLeftCornerY = y;
+    }
 
     if (healthBar != null)
     {

@@ -16,6 +16,7 @@ class Spell extends Entity
   public Spell()
   {
     super(8.0f, 30.0f);
+    applyHeightOffset = false;
     range = new Circle(getX(), getY(), 5.0f);
     setDamage(6, 10);
     canAttack = true;
