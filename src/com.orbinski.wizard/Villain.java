@@ -67,7 +67,7 @@ class Villain extends Entity
 
       if (elapsedSinceLastHeal >= rateOfHealing)
       {
-        updateHealth(regen);
+        increaseHealth(regen);
         elapsedSinceLastHeal = 0.0f;
       }
     }
@@ -77,7 +77,7 @@ class Villain extends Entity
   {
     if (enemyTarget != null && canAttack)
     {
-      enemyTarget.updateHealth(-getDamage().calculate());
+      enemyTarget.decreaseHealth(getDamage().calculate());
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
     }

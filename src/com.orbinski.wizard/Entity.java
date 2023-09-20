@@ -263,7 +263,17 @@ abstract class Entity
     }
   }
 
-  void updateHealth(final int amount)
+  void increaseHealth(final int amount)
+  {
+    updateHealth(-amount);
+  }
+
+  void decreaseHealth(final int amount)
+  {
+    updateHealth(-amount);
+  }
+
+  private void updateHealth(final int amount)
   {
     health = health + amount;
 

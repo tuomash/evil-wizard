@@ -106,7 +106,7 @@ class Tower extends Entity
 
   void doEnemyAttack(final Enemy enemy)
   {
-    updateHealth(-enemy.towerDamage);
+    decreaseHealth(enemy.towerDamage);
     enemy.dead = true;
   }
 

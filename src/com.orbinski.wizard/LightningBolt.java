@@ -30,7 +30,7 @@ class LightningBolt extends Spell
 
       if (Entity.overlaps(range, enemy))
       {
-        enemy.updateHealth(-getDamage().calculate());
+        enemy.decreaseHealth(getDamage().calculate());
       }
     }
   }

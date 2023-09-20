@@ -47,7 +47,7 @@ class Enemy extends Entity
   {
     if (villainTarget != null && canAttack)
     {
-      villainTarget.updateHealth(-getDamage().calculate());
+      villainTarget.decreaseHealth(getDamage().calculate());
       elapsedSinceLastAttack = 0.0f;
       canAttack = false;
     }
