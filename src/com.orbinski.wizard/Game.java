@@ -382,6 +382,7 @@ class Game
   {
     if (Entity.contains(tower, x, y))
     {
+      clearSelections();
       tower.selected = true;
       return true;
     }
@@ -393,6 +394,7 @@ class Game
   {
     if (selectedSpellIndex != index)
     {
+      clearSelections();
       selectedSpell = spells.get(index);
       selectedSpellIndex = index;
       return true;
@@ -445,6 +447,7 @@ class Game
   {
     tower.selected = false;
     selectedSpell = null;
+    selectedSpellIndex = -1;
     selectedVillain = null;
   }
 
