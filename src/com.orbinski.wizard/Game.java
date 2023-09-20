@@ -363,9 +363,10 @@ class Game
     if (selectedSpell == null)
     {
       selectedSpell = spells.get(0);
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   boolean unselectSpell()

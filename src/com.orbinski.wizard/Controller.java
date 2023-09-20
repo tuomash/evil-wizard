@@ -96,7 +96,16 @@ class Controller
 
     if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
     {
-      game.selectSpell();
+      if (game.selectSpell())
+      {
+        final Vector3 result = Renderer.unproject(mouseScreen);
+
+        // Update spell location to prevent visual glitch
+        if (result != null)
+        {
+          game.moveSpell(result.x, result.y);
+        }
+      }
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.C))
     {
