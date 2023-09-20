@@ -266,7 +266,7 @@ abstract class Entity
 
   void increaseHealth(final int amount)
   {
-    updateHealth(-amount);
+    updateHealth(amount);
   }
 
   void decreaseHealth(final int amount)
