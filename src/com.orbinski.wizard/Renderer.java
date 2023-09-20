@@ -326,7 +326,7 @@ class Renderer
 
   void renderEntity(final Entity entity, final Texture texture)
   {
-    if (entity != null)
+    if (entity != null && entity.visible)
     {
       spriteBatch.begin();
       spriteBatch.draw(texture,
