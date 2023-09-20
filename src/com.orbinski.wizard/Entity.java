@@ -80,6 +80,7 @@ abstract class Entity
   float targetY;
   float velocityX;
   float velocityY;
+  boolean showBorder = false;
   boolean moving;
   boolean dead;
   boolean slowdown;

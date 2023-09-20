@@ -37,6 +37,7 @@ class Renderer
   final Texture tileTexture;
   final Texture jewelTexture;
   final Texture lightningBoltTexture;
+  final Texture oilGreaseTexture;
 
   final BitmapFont font;
 
@@ -90,6 +91,9 @@ class Renderer
 
     file = new File(System.getProperty("user.dir") + File.separator + "lightning-bolt.png");
     lightningBoltTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+
+    file = new File(System.getProperty("user.dir") + File.separator + "oil-grease.png");
+    oilGreaseTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
 
     file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
@@ -191,6 +195,7 @@ class Renderer
 
       if (!effect.dead)
       {
+        renderEntity(effect, effect.texture);
         renderCircle(effect.area.x,
                      effect.area.y,
                      effect.area.radius,
@@ -266,7 +271,10 @@ class Renderer
         renderEntity(game.selectedSpell, game.selectedSpell.texture);
       }
 
-      // renderEntityBorder(game.selectedSpell, Color.RED);
+      if (game.selectedSpell.showBorder)
+      {
+        renderEntityBorder(game.selectedSpell, Color.RED);
+      }
 
       if (game.selectedSpell.showRange)
       {

@@ -1,12 +1,14 @@
 package com.orbinski.wizard;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 
 class AreaEffect extends Entity
 {
   final Circle area;
-  float elapsed;
   final float aliveFor;
+  float elapsed;
+  Texture texture;
 
   AreaEffect(final Circle area, final float width, final float height)
   {
