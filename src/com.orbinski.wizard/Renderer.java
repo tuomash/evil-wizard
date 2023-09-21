@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -13,12 +15,17 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.File;
 
-import static com.orbinski.wizard.Globals.*;
+import static com.orbinski.wizard.Globals.WORLD_HEIGHT;
+import static com.orbinski.wizard.Globals.WORLD_WIDTH;
 
 class Renderer
 {
-  static Viewport staticViewport;
+  static Viewport gameViewportRef;
+  static Viewport hudViewportRef;
   static Texture lightningBoltTexture;
+
+  static BitmapFont font24White;
+  static BitmapFont font12Yellow;
 
   final Game game;
   final OrthographicCamera camera;
@@ -39,8 +46,6 @@ class Renderer
   final Texture jewelTexture;
   final Texture oilGreaseTexture;
 
-  final BitmapFont font;
-
   Renderer(final Game game)
   {
     this.game = game;
@@ -49,7 +54,7 @@ class Renderer
     camera.update();
 
     viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-    staticViewport = viewport;
+    gameViewportRef = viewport;
 
     shapeRenderer = new ShapeRenderer();
     shapeRenderer.setProjectionMatrix(camera.combined);
@@ -59,10 +64,10 @@ class Renderer
     spriteBatch.setProjectionMatrix(camera.combined);
 
     hudCamera = new OrthographicCamera();
-    hudCamera.setToOrtho(true);
     hudCamera.update();
 
     hudViewport = new ScreenViewport(hudCamera);
+    hudViewportRef = hudViewport;
 
     hudSpriteBatch = new SpriteBatch();
     hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
@@ -80,17 +85,34 @@ class Renderer
     lightningBoltTexture = loadTexture("lightning-bolt.png");
     oilGreaseTexture = loadTexture("oil-grease.png");
 
-    final File file = new File(System.getProperty("user.dir")
-                                   + File.separator
-                                   + "graphics"
-                                   + File.separator
-                                   + "hand_32.png");
+    File file = new File(System.getProperty("user.dir")
+                             + File.separator
+                             + "graphics"
+                             + File.separator
+                             + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
     Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
     pm.dispose();
 
-    font = new BitmapFont(true);
-    font.setColor(Color.RED);
+    font24White = new BitmapFont(true);
+    font24White.setColor(Color.RED);
+
+    file = new File(System.getProperty("user.dir")
+                        + File.separator
+                        + "graphics"
+                        + File.separator
+                        + "lunchds.ttf");
+    final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(file.getAbsolutePath()));
+
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    parameter.size = 24;
+    parameter.color = com.badlogic.gdx.graphics.Color.WHITE;
+    font24White = generator.generateFont(parameter);
+
+    parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    parameter.size = 18;
+    parameter.color = Color.YELLOW;
+    font12Yellow = generator.generateFont(parameter);
 
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
 
@@ -135,8 +157,8 @@ class Renderer
       renderHudDimBackground();
 
       hudSpriteBatch.begin();
-      font.draw(hudSpriteBatch, "GAME OVER", 100, 100);
-      font.draw(hudSpriteBatch, "Press R to restart", 100, 120);
+      font24White.draw(hudSpriteBatch, "GAME OVER", 100, 100);
+      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 120);
       hudSpriteBatch.end();
     }
   }
@@ -269,7 +291,7 @@ class Renderer
       // TODO: render spell icon
       // if (game.selectedSpell.texture != null)
       // {
-        // renderEntity(game.selectedSpell, game.selectedSpell.texture);
+      // renderEntity(game.selectedSpell, game.selectedSpell.texture);
       // }
 
       if (game.selectedSpell.showBorder)
@@ -329,8 +351,16 @@ class Renderer
       }
     }
 
+
     hudSpriteBatch.begin();
-    font.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 60);
+    font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
+
+    for (int i = 0; i < game.textEffects.size(); i++)
+    {
+      final TextEffect effect = game.textEffects.get(i);
+      effect.font.draw(hudSpriteBatch, effect.text, effect.screen.x, effect.screen.y);
+    }
+
     hudSpriteBatch.end();
   }
 
@@ -698,9 +728,19 @@ class Renderer
 
   public static Vector3 unproject(final Vector3 screen)
   {
-    if (staticViewport != null)
+    if (gameViewportRef != null)
     {
-      return staticViewport.unproject(screen);
+      return gameViewportRef.unproject(screen);
+    }
+
+    return null;
+  }
+
+  public static Vector2 project(final Vector2 world)
+  {
+    if (gameViewportRef != null)
+    {
+      return gameViewportRef.project(world);
     }
 
     return null;

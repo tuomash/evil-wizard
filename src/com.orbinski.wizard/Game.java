@@ -19,6 +19,7 @@ class Game
   final List<Spell> spells;
   final List<AreaEffect> areaEffects;
   final List<SpellEffect> spellEffects;
+  final List<TextEffect> textEffects;
   final CameraState cameraState;
 
   Spell selectedSpell;
@@ -39,6 +40,7 @@ class Game
     spells = new ArrayList<>();
     areaEffects = new ArrayList<>();
     spellEffects = new ArrayList<>();
+    textEffects = new ArrayList<>();
     cameraState = new CameraState();
     gold = 500;
 
@@ -117,6 +119,7 @@ class Game
         {
           gold = gold + jewel.bounty;
           jewels[z] = null;
+          textEffects.add(new TextEffect(jewel.getX(), jewel.getY(), 1.9f, jewel.bounty + "G", Renderer.font12Yellow));
         }
       }
 
@@ -236,11 +239,29 @@ class Game
       spellEffects.remove(spellEffectIndexToRemove);
     }
 
+    int textEffectIndexToRemove = -1;
+
+    for (int i = 0; i < textEffects.size(); i++)
+    {
+      final TextEffect effect = textEffects.get(i);
+      effect.update(delta);
+
+      if (effect.finished)
+      {
+        textEffectIndexToRemove = i;
+      }
+    }
+
+    if (textEffectIndexToRemove != -1)
+    {
+      textEffects.remove(textEffectIndexToRemove);
+    }
+
     if (cameraState.moving)
     {
       final float x = delta * cameraState.velocityX;
       final float y = delta * cameraState.velocityY;
-      Renderer.staticViewport.getCamera().translate(x, y, 0.0f);
+      Renderer.gameViewportRef.getCamera().translate(x, y, 0.0f);
       cameraState.reset();
     }
   }
@@ -526,9 +547,9 @@ class Game
 
   void centerCamera()
   {
-    Renderer.staticViewport.getCamera().position.x = 0.0f;
-    Renderer.staticViewport.getCamera().position.y = 0.0f;
-    Renderer.staticViewport.getCamera().update();
+    Renderer.gameViewportRef.getCamera().position.x = 0.0f;
+    Renderer.gameViewportRef.getCamera().position.y = 0.0f;
+    Renderer.gameViewportRef.getCamera().update();
   }
 
   void reset()
