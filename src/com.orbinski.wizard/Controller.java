@@ -9,6 +9,7 @@ class Controller
 {
   final Game game;
   private final Vector2 mouseScreen = new Vector2();
+  private final Vector2 hudMouseScreen = new Vector2();
 
   Controller(final Game game)
   {
@@ -40,84 +41,76 @@ class Controller
   {
     mouseScreen.x = Gdx.input.getX();
     mouseScreen.y = Gdx.input.getY();
+    hudMouseScreen.x = Gdx.input.getX();
+    hudMouseScreen.y = Gdx.input.getY();
+
+    final Vector2 result = Renderer.unproject(mouseScreen);
+    final Vector2 hudResult = Renderer.hudUnproject(hudMouseScreen);
+
+    if (result == null || hudResult == null)
+    {
+      return;
+    }
 
     if (game.selectedSpell != null)
     {
-      final Vector2 result = Renderer.unproject(mouseScreen);
-
-      if (result != null)
-      {
-        game.moveSpell(result.x, result.y);
-      }
+      game.moveSpell(result.x, result.y);
     }
 
     if (Gdx.input.justTouched())
     {
-      if (!game.villains.get(0).inAction && UserInterface.villainIcon.contains(mouseScreen.x, mouseScreen.y))
+      if (UserInterface.lightningSpellIcon.contains((int) hudResult.x, (int) hudResult.y))
       {
-        game.placeVillain(game.villains.get(0));
+        game.selectSpell(0);
+      }
+      else if (UserInterface.greaseSpellIcon.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.selectSpell(1);
       }
       else
       {
-        final Vector2 result = Renderer.unproject(mouseScreen);
-
-        if (result != null)
+        if (game.selectedSpell != null)
         {
-          if (game.selectedSpell != null)
+          game.shootSpell();
+        }
+        else if (game.selectedVillain != null)
+        {
+          if (game.selectTower(result.x, result.y))
           {
-            game.shootSpell();
-          }
-          else if (game.selectedVillain != null)
-          {
-            if (game.selectTower(result.x, result.y))
-            {
-              game.selectedVillain = null;
-            }
-            else
-            {
-              game.moveVillain(result.x, result.y);
-            }
+            game.selectedVillain = null;
           }
           else
           {
-            game.clearSelections();
-
-            if (game.selectVillain(result.x, result.y))
-            {
-            }
-            else if (game.selectTower(result.x, result.y))
-            {
-            }
+            game.moveVillain(result.x, result.y);
           }
         }
-      }
+        else
+        {
+          game.clearSelections();
 
+          if (game.selectVillain(result.x, result.y))
+          {
+          }
+          else if (game.selectTower(result.x, result.y))
+          {
+          }
+        }
+
+      }
     }
 
     if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
     {
       if (game.selectSpell(0))
       {
-        final Vector2 result = Renderer.unproject(mouseScreen);
-
-        // Update spell location to prevent visual glitch
-        if (result != null)
-        {
-          game.moveSpell(result.x, result.y);
-        }
+        game.moveSpell(result.x, result.y);
       }
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2))
     {
       if (game.selectSpell(1))
       {
-        final Vector2 result = Renderer.unproject(mouseScreen);
-
-        // Update spell location to prevent visual glitch
-        if (result != null)
-        {
-          game.moveSpell(result.x, result.y);
-        }
+        game.moveSpell(result.x, result.y);
       }
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.C))

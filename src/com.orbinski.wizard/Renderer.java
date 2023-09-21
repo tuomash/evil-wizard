@@ -22,6 +22,8 @@ class Renderer
   static Viewport gameViewportRef;
   static Viewport hudViewportRef;
   static Texture lightningBoltTexture;
+  static Texture uiLightningBoltIconTexture;
+  static Texture uiGreaseIconTexture;
 
   static BitmapFont font24White;
   static BitmapFont font12Yellow;
@@ -83,6 +85,9 @@ class Renderer
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
     greaseTexture = loadTexture("grease.png");
+
+    uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
+    uiGreaseIconTexture = loadTexture("ui-spell-grease-icon.png");
 
     File file = new File(System.getProperty("user.dir")
                              + File.separator
@@ -361,6 +366,24 @@ class Renderer
     }
 
     hudSpriteBatch.end();
+
+    renderUIElement(UserInterface.lightningSpellIcon);
+    renderUIElement(UserInterface.greaseSpellIcon);
+  }
+
+  void renderUIElement(final UIElement element)
+  {
+    if (element != null)
+    {
+      if (element.backgroundColor != null)
+      {
+        renderHudFilledQuad(element.x, element.y, element.width, element.height, element.backgroundColor);
+      }
+
+      hudSpriteBatch.begin();
+      hudSpriteBatch.draw(element.texture, element.x, element.y, element.width, element.height);
+      hudSpriteBatch.end();
+    }
   }
 
   void renderEntity(final Entity entity, final Texture texture)
@@ -740,6 +763,16 @@ class Renderer
     if (gameViewportRef != null)
     {
       return gameViewportRef.project(world);
+    }
+
+    return null;
+  }
+
+  public static Vector2 hudUnproject(final Vector2 screen)
+  {
+    if (hudViewportRef != null)
+    {
+      return hudViewportRef.unproject(screen);
     }
 
     return null;
