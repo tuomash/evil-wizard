@@ -156,8 +156,8 @@ class Renderer
       renderHudDimBackground();
 
       hudSpriteBatch.begin();
-      font24White.draw(hudSpriteBatch, "GAME OVER", 100, 100);
-      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 120);
+      font24White.draw(hudSpriteBatch, "GAME OVER", 100, 400);
+      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
       hudSpriteBatch.end();
     }
   }
