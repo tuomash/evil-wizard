@@ -11,7 +11,6 @@ class LightningBolt extends Spell
     setDamage(6, 10);
     canAttack = true;
     rateOfAttack = 2.5f;
-
     applyHeightOffset = false;
   }
 
@@ -33,11 +32,19 @@ class LightningBolt extends Spell
         enemy.decreaseHealth(getDamage().calculate());
       }
     }
+
+    final SpellEffect spellEffect = new SpellEffect(getWidth(), getHeight(), 0.4f);
+    spellEffect.applyHeightOffset = false;
+    spellEffect.setX(getX());
+    spellEffect.setY(getY());
+    spellEffect.texture = Renderer.lightningBoltTexture;
+    spellEffect.soundEffect = Audio.lightningBolt;
+    game.spellEffects.add(spellEffect);
   }
 
   @Override
   void loadTextureReference(final Renderer renderer)
   {
-    texture = renderer.lightningBoltTexture;
+    texture = Renderer.lightningBoltTexture;
   }
 }

@@ -18,6 +18,7 @@ class Listener implements ApplicationListener
     game = new Game();
     controller = new Controller(game);
     renderer = new Renderer(game);
+    Audio.load();
   }
 
   @Override

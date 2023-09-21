@@ -18,6 +18,7 @@ class Game
   final List<Projectile> projectiles;
   final List<Spell> spells;
   final List<AreaEffect> areaEffects;
+  final List<SpellEffect> spellEffects;
   final CameraState cameraState;
 
   Spell selectedSpell;
@@ -37,6 +38,7 @@ class Game
     projectiles = new ArrayList<>();
     spells = new ArrayList<>();
     areaEffects = new ArrayList<>();
+    spellEffects = new ArrayList<>();
     cameraState = new CameraState();
     gold = 500;
 
@@ -216,6 +218,23 @@ class Game
       spell.update(delta);
     }
 
+    int spellEffectIndexToRemove = -1;
+
+    for (int i = 0; i < spellEffects.size(); i++)
+    {
+      final SpellEffect effect = spellEffects.get(i);
+      effect.update(delta);
+
+      if (effect.finished)
+      {
+        spellEffectIndexToRemove = i;
+      }
+    }
+
+    if (spellEffectIndexToRemove != -1)
+    {
+      spellEffects.remove(spellEffectIndexToRemove);
+    }
 
     if (cameraState.moving)
     {

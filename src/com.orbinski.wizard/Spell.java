@@ -17,7 +17,7 @@ abstract class Spell extends Entity
     super(width, height);
     range = new Circle(getX(), getY(), 5.0f);
     setDamage(1, 5);
-    showRange = false;
+    showRange = true;
     canAttack = true;
     rateOfAttack = 2.5f;
   }

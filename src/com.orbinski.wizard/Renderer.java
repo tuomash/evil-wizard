@@ -18,6 +18,7 @@ import static com.orbinski.wizard.Globals.*;
 class Renderer
 {
   static Viewport staticViewport;
+  static Texture lightningBoltTexture;
 
   final Game game;
   final OrthographicCamera camera;
@@ -36,7 +37,6 @@ class Renderer
   final Texture orbTexture;
   final Texture tileTexture;
   final Texture jewelTexture;
-  final Texture lightningBoltTexture;
   final Texture oilGreaseTexture;
 
   final BitmapFont font;
@@ -71,31 +71,20 @@ class Renderer
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
     hudShapeRenderer.setAutoShapeType(true);
 
-    File file = new File(System.getProperty("user.dir") + File.separator + "knight.png");
-    knightTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+    knightTexture = loadTexture("knight.png");
+    minotaurTexture = loadTexture("minotaur.png");
+    towerTexture = loadTexture("tower.png");
+    orbTexture = loadTexture("orb.jpg");
+    tileTexture = loadTexture("tileable_grass2.png");
+    jewelTexture = loadTexture("jewel.png");
+    lightningBoltTexture = loadTexture("lightning-bolt.png");
+    oilGreaseTexture = loadTexture("oil-grease.png");
 
-    file = new File(System.getProperty("user.dir") + File.separator + "minotaur.png");
-    minotaurTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "tower.png");
-    towerTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "orb.jpg");
-    orbTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "tileable_grass2.png");
-    tileTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "jewel.png");
-    jewelTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "lightning-bolt.png");
-    lightningBoltTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "oil-grease.png");
-    oilGreaseTexture = new Texture(Gdx.files.absolute(file.getAbsolutePath()));
-
-    file = new File(System.getProperty("user.dir") + File.separator + "hand_32.png");
+    final File file = new File(System.getProperty("user.dir")
+                                   + File.separator
+                                   + "graphics"
+                                   + File.separator
+                                   + "hand_32.png");
     final Pixmap pm = new Pixmap(Gdx.files.absolute(file.getAbsolutePath()));
     Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
     pm.dispose();
@@ -108,6 +97,16 @@ class Renderer
     game.loadTextureReferences(this);
   }
 
+  private Texture loadTexture(final String fileName)
+  {
+    final File file = new File(System.getProperty("user.dir")
+                                   + File.separator
+                                   + "graphics"
+                                   + File.separator
+                                   + fileName);
+    return new Texture(Gdx.files.absolute(file.getAbsolutePath()));
+  }
+
   void render()
   {
     ScreenUtils.clear(Color.BLACK);
@@ -117,13 +116,14 @@ class Renderer
     spriteBatch.setProjectionMatrix(camera.combined);
 
     renderBackground();
-    renderTower();
     renderAreaEffects();
+    renderTower();
     renderJewels();
     renderEnemies();
     renderVillains();
     renderProjectiles();
     renderSpell();
+    renderSpellEffects();
 
     hudViewport.apply();
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
@@ -266,10 +266,11 @@ class Renderer
   {
     if (game.selectedSpell != null)
     {
-      if (game.selectedSpell.texture != null)
-      {
-        renderEntity(game.selectedSpell, game.selectedSpell.texture);
-      }
+      // TODO: render spell icon
+      // if (game.selectedSpell.texture != null)
+      // {
+        // renderEntity(game.selectedSpell, game.selectedSpell.texture);
+      // }
 
       if (game.selectedSpell.showBorder)
       {
@@ -283,6 +284,15 @@ class Renderer
                      game.selectedSpell.range.radius,
                      Color.RED);
       }
+    }
+  }
+
+  void renderSpellEffects()
+  {
+    for (int i = 0; i < game.spellEffects.size(); i++)
+    {
+      final SpellEffect effect = game.spellEffects.get(i);
+      renderEntity(effect, effect.texture);
     }
   }
 
@@ -326,7 +336,7 @@ class Renderer
 
   void renderEntity(final Entity entity, final Texture texture)
   {
-    if (entity != null && entity.visible)
+    if (entity != null && entity.visible && texture != null)
     {
       spriteBatch.begin();
       spriteBatch.draw(texture,

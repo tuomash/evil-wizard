@@ -8,7 +8,6 @@ class OilGrease extends Spell
   {
     super(30.0f, 30.0f);
     range = new Circle(getX(), getY(), 15.0f);
-    showRange = false;
     canAttack = true;
     rateOfAttack = 4.5f;
   }
