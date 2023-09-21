@@ -2,9 +2,9 @@ package com.orbinski.wizard;
 
 import com.badlogic.gdx.math.Circle;
 
-class OilGrease extends Spell
+class Grease extends Spell
 {
-  OilGrease()
+  Grease()
   {
     super(30.0f, 30.0f);
     range = new Circle(getX(), getY(), 15.0f);
@@ -31,6 +31,6 @@ class OilGrease extends Spell
   @Override
   void loadTextureReference(final Renderer renderer)
   {
-    texture = renderer.oilGreaseTexture;
+    texture = renderer.greaseTexture;
   }
 }

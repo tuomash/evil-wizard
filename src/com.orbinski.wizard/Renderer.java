@@ -43,7 +43,7 @@ class Renderer
   final Texture orbTexture;
   final Texture tileTexture;
   final Texture jewelTexture;
-  final Texture oilGreaseTexture;
+  final Texture greaseTexture;
 
   Renderer(final Game game)
   {
@@ -82,7 +82,7 @@ class Renderer
     tileTexture = loadTexture("tileable_grass2.png");
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
-    oilGreaseTexture = loadTexture("oil-grease.png");
+    greaseTexture = loadTexture("grease.png");
 
     File file = new File(System.getProperty("user.dir")
                              + File.separator

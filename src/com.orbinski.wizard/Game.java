@@ -375,8 +375,8 @@ class Game
     final Spell lightningBolt = new LightningBolt();
     spells.add(lightningBolt);
 
-    final Spell oilGrease = new OilGrease();
-    spells.add(oilGrease);
+    final Spell grease = new Grease();
+    spells.add(grease);
   }
 
   int canAddJewel()
