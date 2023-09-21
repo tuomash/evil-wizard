@@ -7,6 +7,8 @@ import java.io.File;
 
 class Audio
 {
+  static boolean mute = false;
+  static float volume = 1.0f;
   static Sound lightningBolt;
 
   static void load()
@@ -22,5 +24,13 @@ class Audio
                                    + File.separator
                                    + fileName);
     return Gdx.audio.newSound(Gdx.files.absolute(file.getAbsolutePath()));
+  }
+
+  static void playSound(final Sound sound)
+  {
+    if (!mute && sound != null)
+    {
+      sound.play(volume);
+    }
   }
 }

@@ -31,7 +31,7 @@ class SpellEffect extends Entity
 
     if (soundEffect != null && !soundEffectPlayed)
     {
-      soundEffect.play();
+      Audio.playSound(soundEffect);
       soundEffectPlayed = true;
     }
 
