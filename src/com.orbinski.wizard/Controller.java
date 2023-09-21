@@ -3,12 +3,12 @@ package com.orbinski.wizard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 
 class Controller
 {
   final Game game;
-  private final Vector3 mouseScreen = new Vector3();
+  private final Vector2 mouseScreen = new Vector2();
 
   Controller(final Game game)
   {
@@ -43,7 +43,7 @@ class Controller
 
     if (game.selectedSpell != null)
     {
-      final Vector3 result = Renderer.unproject(mouseScreen);
+      final Vector2 result = Renderer.unproject(mouseScreen);
 
       if (result != null)
       {
@@ -59,7 +59,7 @@ class Controller
       }
       else
       {
-        final Vector3 result = Renderer.unproject(mouseScreen);
+        final Vector2 result = Renderer.unproject(mouseScreen);
 
         if (result != null)
         {
@@ -98,7 +98,7 @@ class Controller
     {
       if (game.selectSpell(0))
       {
-        final Vector3 result = Renderer.unproject(mouseScreen);
+        final Vector2 result = Renderer.unproject(mouseScreen);
 
         // Update spell location to prevent visual glitch
         if (result != null)
@@ -111,7 +111,7 @@ class Controller
     {
       if (game.selectSpell(1))
       {
-        final Vector3 result = Renderer.unproject(mouseScreen);
+        final Vector2 result = Renderer.unproject(mouseScreen);
 
         // Update spell location to prevent visual glitch
         if (result != null)
