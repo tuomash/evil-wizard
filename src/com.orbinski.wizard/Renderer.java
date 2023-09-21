@@ -355,7 +355,6 @@ class Renderer
       }
     }
 
-
     hudSpriteBatch.begin();
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
 
@@ -371,6 +370,14 @@ class Renderer
     renderUIElement(UserInterface.greaseSpellIcon);
   }
 
+  void renderOverlay(final Overlay overlay)
+  {
+    if (overlay != null && overlay.visible)
+    {
+      renderHudFilledQuad(overlay.x, overlay.y, overlay.width * overlay.percentage, overlay.height, overlay.color);
+    }
+  }
+
   void renderUIElement(final UIElement element)
   {
     if (element != null)
@@ -383,6 +390,11 @@ class Renderer
       hudSpriteBatch.begin();
       hudSpriteBatch.draw(element.texture, element.x, element.y, element.width, element.height);
       hudSpriteBatch.end();
+
+      if (element.getOverlay() != null)
+      {
+        renderOverlay(element.getOverlay());
+      }
     }
   }
 

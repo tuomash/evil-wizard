@@ -16,6 +16,24 @@ class Grease extends Spell
   void update(final float delta)
   {
     super.update(delta);
+
+    if (canAttack)
+    {
+      UserInterface.greaseSpellIcon.getOverlay().visible = false;
+    }
+    else
+    {
+      float percentage = elapsedSinceLastAttack / rateOfAttack;
+      percentage = 1.0f - percentage;
+
+      if (percentage < 0.0f)
+      {
+        percentage = 0.0f;
+      }
+
+      UserInterface.greaseSpellIcon.getOverlay().percentage = percentage;
+      UserInterface.greaseSpellIcon.getOverlay().visible = true;
+    }
   }
 
   @Override

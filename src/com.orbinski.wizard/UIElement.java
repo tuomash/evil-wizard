@@ -44,10 +44,13 @@ abstract class UIElement
     return elementA.contains(x, y);
   }
 
+  private Overlay overlay;
+
   int x;
   int y;
   int width;
   int height;
+  boolean visible = true;
   Color backgroundColor;
   Texture texture;
 
@@ -67,5 +70,23 @@ abstract class UIElement
   boolean contains(final int x, final int y)
   {
     return contains(this, x, y);
+  }
+
+  public Overlay getOverlay()
+  {
+    return overlay;
+  }
+
+  public void setOverlay(final Overlay overlay)
+  {
+    this.overlay = overlay;
+
+    if (overlay != null)
+    {
+      overlay.x = x;
+      overlay.y = y;
+      overlay.width = width;
+      overlay.height = height;
+    }
   }
 }

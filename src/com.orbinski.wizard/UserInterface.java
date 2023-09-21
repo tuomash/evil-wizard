@@ -23,10 +23,12 @@ class UserInterface
   {
     lightningSpellIcon = new Icon(300, 60, Renderer.uiLightningBoltIconTexture);
     lightningSpellIcon.backgroundColor = Color.BLACK;
+    lightningSpellIcon.setOverlay(new Overlay());
 
     greaseSpellIcon = new Icon(lightningSpellIcon.x + lightningSpellIcon.width + 10,
                                lightningSpellIcon.y,
                                Renderer.uiGreaseIconTexture);
     greaseSpellIcon.backgroundColor = Color.WHITE;
+    greaseSpellIcon.setOverlay(new Overlay());
   }
 }
