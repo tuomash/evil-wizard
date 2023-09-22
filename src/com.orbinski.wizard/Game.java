@@ -30,6 +30,7 @@ class Game
   float elapsedSinceLastJewel;
   float rateOfJewels;
   boolean gameOver;
+  boolean victory;
   boolean allEnemiesDead = false;
 
   Game()
@@ -57,7 +58,7 @@ class Game
 
   void update(final float delta)
   {
-    if (gameOver)
+    if (gameOver || victory)
     {
       return;
     }
@@ -206,8 +207,15 @@ class Game
 
     if (allEnemiesDead)
     {
-      this.allEnemiesDead = true;
-      waves.nextWave();
+      if (waves.isFinished())
+      {
+        victory = true;
+      }
+      else
+      {
+        this.allEnemiesDead = true;
+        waves.nextWave();
+      }
     }
 
     for (int i = 0; i < projectiles.size(); i++)
@@ -549,6 +557,7 @@ class Game
   void reset()
   {
     gameOver = false;
+    victory = false;
     tower.target = null;
     tower.reset();
     clearJewels();

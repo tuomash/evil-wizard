@@ -167,6 +167,15 @@ class Renderer
       font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
       hudSpriteBatch.end();
     }
+    else if (game.victory)
+    {
+      renderHudDimBackground();
+
+      hudSpriteBatch.begin();
+      font24White.draw(hudSpriteBatch, "CONGRATULATIONS! YOU HAVE DESTROYED THE FORCES OF GOOD.", 100, 400);
+      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
+      hudSpriteBatch.end();
+    }
   }
 
   void renderBackground()

@@ -77,7 +77,7 @@ class Waves
 
   void nextWave()
   {
-    if (waveNumber == maxWaves || !game.allEnemiesDead)
+    if (isFinished() || !game.allEnemiesDead)
     {
       return;
     }
@@ -239,5 +239,10 @@ class Waves
   void reset()
   {
     waveNumber = 0;
+  }
+
+  boolean isFinished()
+  {
+    return waveNumber == 1;
   }
 }
