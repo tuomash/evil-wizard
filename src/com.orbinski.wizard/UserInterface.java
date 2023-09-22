@@ -6,6 +6,8 @@ import java.awt.*;
 
 class UserInterface
 {
+  static Help help;
+
   static final Rectangle villainIcon = new Rectangle();
 
   static Icon hotBarIconLightningSpell;
@@ -23,6 +25,8 @@ class UserInterface
 
   static void create()
   {
+    help = new Help();
+
     hotBarIconLightningSpell = new Icon(300, 60, Renderer.uiLightningBoltIconTexture);
     hotBarIconLightningSpell.backgroundColor = Color.BLACK;
     hotBarIconLightningSpell.setOverlay(new Overlay());

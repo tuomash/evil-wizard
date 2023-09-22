@@ -103,7 +103,11 @@ class Controller
       }
     }
 
-    if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
+    if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+    {
+      game.help = !game.help;
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1))
     {
       if (game.selectSpell(0))
       {
@@ -136,6 +140,11 @@ class Controller
     else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
     {
       game.clearSelections();
+
+      if (game.help)
+      {
+        game.help = false;
+      }
     }
 
     // Camera controls

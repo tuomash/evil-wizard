@@ -31,7 +31,8 @@ class Game
   float rateOfJewels;
   boolean gameOver;
   boolean victory;
-  boolean allEnemiesDead = false;
+  boolean allEnemiesDead;
+  boolean help;
 
   Game()
   {

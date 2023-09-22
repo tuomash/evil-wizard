@@ -148,39 +148,59 @@ class Renderer
     shapeRenderer.setProjectionMatrix(camera.combined);
     spriteBatch.setProjectionMatrix(camera.combined);
 
-    renderBackground();
-    renderAreaEffects();
-    renderTrees();
-    renderTower();
-    renderJewels();
-    renderEnemies();
-    renderVillains();
-    renderProjectiles();
-    renderSpell();
-    renderSpellEffects();
+    if (!game.help)
+    {
+      renderBackground();
+      renderAreaEffects();
+      renderTrees();
+      renderTower();
+      renderJewels();
+      renderEnemies();
+      renderVillains();
+      renderProjectiles();
+      renderSpell();
+      renderSpellEffects();
+    }
 
     hudViewport.apply();
     hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
     hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
-    renderHud();
 
-    if (game.gameOver)
+    if (!game.help)
     {
-      renderHudDimBackground();
+      renderHud();
 
-      hudSpriteBatch.begin();
-      font24White.draw(hudSpriteBatch, "GAME OVER", 100, 400);
-      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
-      hudSpriteBatch.end();
+      if (game.gameOver)
+      {
+        renderHudDimBackground();
+
+        hudSpriteBatch.begin();
+        font24White.draw(hudSpriteBatch, "GAME OVER", 100, 400);
+        font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
+        hudSpriteBatch.end();
+      }
+      else if (game.victory)
+      {
+        renderHudDimBackground();
+
+        hudSpriteBatch.begin();
+        font24White.draw(hudSpriteBatch, "CONGRATULATIONS! YOU HAVE DESTROYED THE FORCES OF GOOD.", 100, 400);
+        font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
+        hudSpriteBatch.end();
+      }
     }
-    else if (game.victory)
+    else
     {
-      renderHudDimBackground();
+      renderHelp();
+    }
+  }
 
-      hudSpriteBatch.begin();
-      font24White.draw(hudSpriteBatch, "CONGRATULATIONS! YOU HAVE DESTROYED THE FORCES OF GOOD.", 100, 400);
-      font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
-      hudSpriteBatch.end();
+  void renderHelp()
+  {
+    for (int i = 0; i < UserInterface.help.texts.size(); i++)
+    {
+      final Text text = UserInterface.help.texts.get(i);
+      renderText(text);
     }
   }
 
@@ -407,6 +427,20 @@ class Renderer
                           overlay.getWidth(),
                           overlay.getHeight(),
                           overlay.color);
+    }
+  }
+
+  void renderText(final Text text)
+  {
+    if (text != null && text.visible && text.font != null && text.text != null && !text.text.isEmpty())
+    {
+      renderUIElement(text);
+      hudSpriteBatch.begin();
+      text.font.draw(hudSpriteBatch,
+                     text.text,
+                     text.getX(),
+                     text.getY());
+      hudSpriteBatch.end();
     }
   }
 
