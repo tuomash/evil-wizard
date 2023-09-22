@@ -13,6 +13,7 @@ class Game
 
   final Tower tower;
   final Jewel[] jewels;
+  final List<Tree> trees;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -34,6 +35,7 @@ class Game
   {
     tower = new Tower();
     jewels = new Jewel[MAX_JEWELS];
+    trees = new ArrayList<>();
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
@@ -44,6 +46,7 @@ class Game
     cameraState = new CameraState();
     gold = 500;
 
+    generateTrees();
     generateVillains();
     generateEnemies();
     createSpells();
@@ -266,6 +269,57 @@ class Game
     }
   }
 
+  void generateTrees()
+  {
+    // Top left side of tower
+    for (int x = -100; x < -25; x = x + 4)
+    {
+      for (int y = 100; y > 25; y = y - 4)
+      {
+        final Tree tree = new Tree();
+        tree.setX(x);
+        tree.setY(y);
+        trees.add(tree);
+      }
+    }
+
+    // Top right side of tower
+    for (int x = 25; x < 125; x = x + 4)
+    {
+      for (int y = 100; y > 25; y = y - 4)
+      {
+        final Tree tree = new Tree();
+        tree.setX(x);
+        tree.setY(y);
+        trees.add(tree);
+      }
+    }
+
+    // Bottom left side of tower
+    for (int x = -100; x < -25; x = x + 4)
+    {
+      for (int y = -25; y > -100; y = y - 4)
+      {
+        final Tree tree = new Tree();
+        tree.setX(x);
+        tree.setY(y);
+        trees.add(tree);
+      }
+    }
+
+    // Bottom right side of tower
+    for (int x = 25; x < 125; x = x + 4)
+    {
+      for (int y = -25; y > -100; y = y - 4)
+      {
+        final Tree tree = new Tree();
+        tree.setX(x);
+        tree.setY(y);
+        trees.add(tree);
+      }
+    }
+  }
+
   void generateVillains()
   {
     final Villain villain = new Villain();
@@ -283,9 +337,9 @@ class Game
       final List<Point> leftSide = new ArrayList<>();
       sides.add(leftSide);
 
-      for (int x = 100; x < 120; x++)
+      for (int x = 100; x < 150; x++)
       {
-        for (int y = 50; y > -50; y--)
+        for (int y = 20; y > -20; y--)
         {
           final Point point = new Point();
           point.x = x;
@@ -299,9 +353,9 @@ class Game
       final List<Point> rightSide = new ArrayList<>();
       sides.add(rightSide);
 
-      for (int x = -100; x > -120; x--)
+      for (int x = -100; x > -150; x--)
       {
-        for (int y = 50; y > -50; y--)
+        for (int y = 20; y > -20; y--)
         {
           final Point point = new Point();
           point.x = x;
@@ -315,9 +369,9 @@ class Game
       final List<Point> topSide = new ArrayList<>();
       sides.add(topSide);
 
-      for (int x = -125; x < 125; x++)
+      for (int x = -20; x < 20; x++)
       {
-        for (int y = 50; y < 70; y++)
+        for (int y = 100; y < 150; y++)
         {
           final Point point = new Point();
           point.x = x;
@@ -331,9 +385,9 @@ class Game
       final List<Point> bottomSide = new ArrayList<>();
       sides.add(bottomSide);
 
-      for (int x = -125; x < 125; x++)
+      for (int x = -20; x < 20; x++)
       {
-        for (int y = -50; y > -70; y--)
+        for (int y = -100; y > -150; y--)
         {
           final Point point = new Point();
           point.x = x;

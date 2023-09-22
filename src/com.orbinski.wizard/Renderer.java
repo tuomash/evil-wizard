@@ -30,6 +30,7 @@ class Renderer
   static Texture jewelTexture;
   static Texture lightningBoltTexture;
   static Texture greaseTexture;
+  static Texture treeTexture;
 
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
@@ -86,6 +87,7 @@ class Renderer
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
     greaseTexture = loadTexture("grease.png");
+    treeTexture = loadTexture("tree.png");
 
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon.png");
@@ -142,6 +144,7 @@ class Renderer
 
     renderBackground();
     renderAreaEffects();
+    renderTrees();
     renderTower();
     renderJewels();
     renderEnemies();
@@ -209,6 +212,15 @@ class Renderer
                    game.tower.range.y,
                    game.tower.range.radius,
                    Color.RED);
+    }
+  }
+
+  void renderTrees()
+  {
+    for (int i = 0; i < game.trees.size(); i++)
+    {
+      final Tree tree = game.trees.get(i);
+      renderEntity(tree, treeTexture);
     }
   }
 
