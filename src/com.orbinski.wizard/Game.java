@@ -1,6 +1,5 @@
 package com.orbinski.wizard;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +20,7 @@ class Game
   final List<AreaEffect> areaEffects;
   final List<SpellEffect> spellEffects;
   final List<TextEffect> textEffects;
+  final Waves waves;
   final CameraState cameraState;
 
   Spell selectedSpell;
@@ -30,6 +30,7 @@ class Game
   float elapsedSinceLastJewel;
   float rateOfJewels;
   boolean gameOver;
+  boolean allEnemiesDead = false;
 
   Game()
   {
@@ -44,13 +45,14 @@ class Game
     spellEffects = new ArrayList<>();
     textEffects = new ArrayList<>();
     cameraState = new CameraState();
+    waves = new Waves(this);
     gold = 500;
 
     generateTrees();
     generateVillains();
-    generateEnemies();
     createSpells();
     randomizeRateOfJewels();
+    waves.nextWave();
   }
 
   void update(final float delta)
@@ -154,12 +156,15 @@ class Game
       }
     }
 
+    boolean allEnemiesDead = true;
+
     for (int i = 0; i < enemies.size(); i++)
     {
       final Enemy enemy = enemies.get(i);
 
       if (!enemy.dead)
       {
+        allEnemiesDead = false;
         enemy.slowdown = false;
 
         for (int z = 0; z < areaEffects.size(); z++)
@@ -193,6 +198,12 @@ class Game
           }
         }
       }
+    }
+
+    if (allEnemiesDead)
+    {
+      this.allEnemiesDead = true;
+      waves.nextWave();
     }
 
     for (int i = 0; i < projectiles.size(); i++)
@@ -327,90 +338,6 @@ class Game
     villain.setY(tower.getY() - tower.getHeightOffset());
     villain.inAction = true;
     villains.add(villain);
-  }
-
-  void generateEnemies()
-  {
-    final List<List<Point>> sides = new ArrayList<>();
-
-    {
-      final List<Point> leftSide = new ArrayList<>();
-      sides.add(leftSide);
-
-      for (int x = 100; x < 150; x++)
-      {
-        for (int y = 20; y > -20; y--)
-        {
-          final Point point = new Point();
-          point.x = x;
-          point.y = y;
-          leftSide.add(point);
-        }
-      }
-    }
-
-    {
-      final List<Point> rightSide = new ArrayList<>();
-      sides.add(rightSide);
-
-      for (int x = -100; x > -150; x--)
-      {
-        for (int y = 20; y > -20; y--)
-        {
-          final Point point = new Point();
-          point.x = x;
-          point.y = y;
-          rightSide.add(point);
-        }
-      }
-    }
-
-    {
-      final List<Point> topSide = new ArrayList<>();
-      sides.add(topSide);
-
-      for (int x = -20; x < 20; x++)
-      {
-        for (int y = 100; y < 150; y++)
-        {
-          final Point point = new Point();
-          point.x = x;
-          point.y = y;
-          topSide.add(point);
-        }
-      }
-    }
-
-    {
-      final List<Point> bottomSide = new ArrayList<>();
-      sides.add(bottomSide);
-
-      for (int x = -20; x < 20; x++)
-      {
-        for (int y = -100; y > -150; y--)
-        {
-          final Point point = new Point();
-          point.x = x;
-          point.y = y;
-          bottomSide.add(point);
-        }
-      }
-    }
-
-    final int count = 100;
-
-    for (int i = 0; i <= count; i++)
-    {
-      final Enemy enemy = new Enemy();
-      final List<Point> randomSide = sides.get(random.nextInt(sides.size()));
-      final Point randomPoint = randomSide.get(random.nextInt(randomSide.size()));
-      enemy.setX(randomPoint.x);
-      enemy.setY(randomPoint.y);
-      enemy.targetX = tower.getX();
-      enemy.targetY = tower.getY() - tower.getHeightOffset();
-      enemy.moving = true;
-      enemies.add(enemy);
-    }
   }
 
   void loadTextureReferences()
@@ -627,6 +554,7 @@ class Game
     elapsedSinceLastJewel = 0.0f;
 
     villains.get(0).reset();
-    generateEnemies();
+    waves.reset();
+    waves.nextWave();
   }
 }

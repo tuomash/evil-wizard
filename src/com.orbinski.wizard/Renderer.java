@@ -367,6 +367,7 @@ class Renderer
     }
 
     hudSpriteBatch.begin();
+    font24White.draw(hudSpriteBatch, "Wave " + game.waves.waveNumber + " / " + game.waves.maxWaves, 5, 120);
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
 
     for (int i = 0; i < game.textEffects.size(); i++)
