@@ -73,16 +73,20 @@ class Game
       }
     }
 
-    elapsedSinceLastJewel = elapsedSinceLastJewel + delta;
-
-    if (elapsedSinceLastJewel >= rateOfJewels && canAddJewel() != -1)
+    // Only create new jewels when there is an active wave
+    if (!allEnemiesDead)
     {
-      final Jewel jewel = new Jewel();
-      jewel.setX(MathUtils.random(-55, 55));
-      jewel.setY(MathUtils.random(-55, 55));
-      addJewel(jewel);
-      elapsedSinceLastJewel = 0.0f;
-      randomizeRateOfJewels();
+      elapsedSinceLastJewel = elapsedSinceLastJewel + delta;
+
+      if (elapsedSinceLastJewel >= rateOfJewels && canAddJewel() != -1)
+      {
+        final Jewel jewel = new Jewel();
+        jewel.setX(MathUtils.random(-55, 55));
+        jewel.setY(MathUtils.random(-55, 55));
+        addJewel(jewel);
+        elapsedSinceLastJewel = 0.0f;
+        randomizeRateOfJewels();
+      }
     }
 
     for (int i = 0; i < jewels.length; i++)
