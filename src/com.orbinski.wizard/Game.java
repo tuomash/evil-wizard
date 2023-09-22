@@ -81,8 +81,8 @@ class Game
       if (elapsedSinceLastJewel >= rateOfJewels && canAddJewel() != -1)
       {
         final Jewel jewel = new Jewel();
-        jewel.setX(MathUtils.random(-55, 55));
-        jewel.setY(MathUtils.random(-55, 55));
+        jewel.setX(MathUtils.random(-100, 100));
+        jewel.setY(MathUtils.random(-25, 25));
         addJewel(jewel);
         elapsedSinceLastJewel = 0.0f;
         randomizeRateOfJewels();
