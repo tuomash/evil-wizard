@@ -16,7 +16,7 @@ class Enemy extends Entity
     velocityX = 2.25f;
     velocityY = 2.25f;
     bounty = 2;
-    towerDamage = 5;
+    towerDamage = 50;
     setHealth(10);
     setMaxHealth(10);
     setHealthBar(new HealthBar(-getWidthOffset(),

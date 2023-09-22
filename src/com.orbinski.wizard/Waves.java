@@ -243,6 +243,6 @@ class Waves
 
   boolean isFinished()
   {
-    return waveNumber == 1;
+    return waveNumber == maxWaves;
   }
 }
