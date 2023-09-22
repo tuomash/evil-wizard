@@ -21,8 +21,16 @@ class Renderer
 {
   static Viewport gameViewportRef;
   static Viewport hudViewportRef;
+
+  static Texture knightTexture;
+  static Texture minotaurTexture;
+  static Texture towerTexture;
+  static Texture orbTexture;
+  static Texture tileTexture;
+  static Texture jewelTexture;
   static Texture lightningBoltTexture;
   static Texture greaseTexture;
+
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
 
@@ -39,13 +47,6 @@ class Renderer
   final ShapeRenderer hudShapeRenderer;
   final SpriteBatch hudSpriteBatch;
   final Color background;
-
-  final Texture knightTexture;
-  final Texture minotaurTexture;
-  final Texture towerTexture;
-  final Texture orbTexture;
-  final Texture tileTexture;
-  final Texture jewelTexture;
 
   Renderer(final Game game)
   {
