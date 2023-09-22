@@ -11,6 +11,8 @@ class UserInterface
   static Icon hotBarIconLightningSpell;
   static Icon hotBarIconGreaseSpell;
 
+  static TextButton nextWaveButton;
+
   static
   {
     villainIcon.x = 5;
@@ -30,5 +32,17 @@ class UserInterface
                                      Renderer.uiGreaseIconTexture);
     hotBarIconGreaseSpell.backgroundColor = Color.WHITE;
     hotBarIconGreaseSpell.setOverlay(new Overlay());
+
+    nextWaveButton = new TextButton();
+    nextWaveButton.textOffsetX = 20;
+    nextWaveButton.textOffsetY = 40;
+    nextWaveButton.setX(600);
+    nextWaveButton.setY(60);
+    nextWaveButton.setWidth(160);
+    nextWaveButton.setHeight(64);
+    nextWaveButton.backgroundColor = Color.BLACK;
+    nextWaveButton.text = "NEXT WAVE";
+    nextWaveButton.font = Renderer.font24White;
+    nextWaveButton.visible = false;
   }
 }

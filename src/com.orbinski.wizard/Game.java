@@ -214,7 +214,7 @@ class Game
       else
       {
         this.allEnemiesDead = true;
-        waves.nextWave();
+        UserInterface.nextWaveButton.visible = true;
       }
     }
 

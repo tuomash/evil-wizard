@@ -91,6 +91,8 @@ class Waves
     }
 
     generateEnemies();
+
+    UserInterface.nextWaveButton.visible = false;
   }
 
   private void generateEnemies()

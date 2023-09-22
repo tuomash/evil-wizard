@@ -67,6 +67,10 @@ class Controller
       {
         game.selectSpell(1);
       }
+      else if (UserInterface.nextWaveButton.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.waves.nextWave();
+      }
       else
       {
         if (game.selectedSpell != null)

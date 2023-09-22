@@ -36,6 +36,7 @@ class Renderer
   static Texture uiGreaseIconTexture;
 
   static BitmapFont font24White;
+  static BitmapFont font16White;
   static BitmapFont font12Yellow;
 
   final Game game;
@@ -115,6 +116,11 @@ class Renderer
     parameter.size = 24;
     parameter.color = com.badlogic.gdx.graphics.Color.WHITE;
     font24White = generator.generateFont(parameter);
+
+    parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    parameter.size = 16;
+    parameter.color = Color.WHITE;
+    font16White = generator.generateFont(parameter);
 
     parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
     parameter.size = 18;
@@ -389,6 +395,7 @@ class Renderer
 
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     renderUIElement(UserInterface.hotBarIconGreaseSpell);
+    renderTextButton(UserInterface.nextWaveButton);
   }
 
   void renderOverlay(final Overlay overlay)
@@ -400,6 +407,20 @@ class Renderer
                           overlay.getWidth(),
                           overlay.getHeight(),
                           overlay.color);
+    }
+  }
+
+  void renderTextButton(final TextButton button)
+  {
+    if (button != null && button.visible)
+    {
+      renderUIElement(button);
+      hudSpriteBatch.begin();
+      button.font.draw(hudSpriteBatch,
+                       UserInterface.nextWaveButton.text,
+                       UserInterface.nextWaveButton.getTextX(),
+                       UserInterface.nextWaveButton.getTextY());
+      hudSpriteBatch.end();
     }
   }
 
@@ -416,9 +437,12 @@ class Renderer
                             element.backgroundColor);
       }
 
-      hudSpriteBatch.begin();
-      hudSpriteBatch.draw(element.texture, element.getX(), element.getY(), element.getWidth(), element.getHeight());
-      hudSpriteBatch.end();
+      if (element.texture != null)
+      {
+        hudSpriteBatch.begin();
+        hudSpriteBatch.draw(element.texture, element.getX(), element.getY(), element.getWidth(), element.getHeight());
+        hudSpriteBatch.end();
+      }
 
       if (element.getOverlay() != null)
       {
