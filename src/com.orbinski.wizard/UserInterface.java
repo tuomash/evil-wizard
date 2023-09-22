@@ -8,8 +8,8 @@ class UserInterface
 {
   static final Rectangle villainIcon = new Rectangle();
 
-  static Icon lightningSpellIcon;
-  static Icon greaseSpellIcon;
+  static Icon hotBarIconLightningSpell;
+  static Icon hotBarIconGreaseSpell;
 
   static
   {
@@ -21,14 +21,14 @@ class UserInterface
 
   static void create()
   {
-    lightningSpellIcon = new Icon(300, 60, Renderer.uiLightningBoltIconTexture);
-    lightningSpellIcon.backgroundColor = Color.BLACK;
-    lightningSpellIcon.setOverlay(new Overlay());
+    hotBarIconLightningSpell = new Icon(300, 60, Renderer.uiLightningBoltIconTexture);
+    hotBarIconLightningSpell.backgroundColor = Color.BLACK;
+    hotBarIconLightningSpell.setOverlay(new Overlay());
 
-    greaseSpellIcon = new Icon(lightningSpellIcon.x + lightningSpellIcon.width + 10,
-                               lightningSpellIcon.y,
-                               Renderer.uiGreaseIconTexture);
-    greaseSpellIcon.backgroundColor = Color.WHITE;
-    greaseSpellIcon.setOverlay(new Overlay());
+    hotBarIconGreaseSpell = new Icon(hotBarIconLightningSpell.getX() + hotBarIconLightningSpell.getWidth() + 10,
+                                     hotBarIconLightningSpell.getY(),
+                                     Renderer.uiGreaseIconTexture);
+    hotBarIconGreaseSpell.backgroundColor = Color.WHITE;
+    hotBarIconGreaseSpell.setOverlay(new Overlay());
   }
 }

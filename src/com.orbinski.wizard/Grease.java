@@ -19,7 +19,7 @@ class Grease extends Spell
 
     if (canAttack)
     {
-      UserInterface.greaseSpellIcon.getOverlay().visible = false;
+      UserInterface.hotBarIconGreaseSpell.getOverlay().visible = false;
     }
     else
     {
@@ -31,8 +31,8 @@ class Grease extends Spell
         percentage = 0.0f;
       }
 
-      UserInterface.greaseSpellIcon.getOverlay().percentage = percentage;
-      UserInterface.greaseSpellIcon.getOverlay().visible = true;
+      UserInterface.hotBarIconGreaseSpell.getOverlay().updateWidth(percentage);
+      UserInterface.hotBarIconGreaseSpell.getOverlay().visible = true;
     }
   }
 
@@ -47,8 +47,14 @@ class Grease extends Spell
   }
 
   @Override
-  void loadTextureReference(final Renderer renderer)
+  void loadTextureReferences()
   {
-    texture = renderer.greaseTexture;
+    texture = Renderer.greaseTexture;
+  }
+
+  @Override
+  void loadUIReferences()
+  {
+    hotBarIcon = UserInterface.hotBarIconGreaseSpell;
   }
 }

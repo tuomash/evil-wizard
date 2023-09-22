@@ -20,6 +20,8 @@ class Listener implements ApplicationListener
     renderer = new Renderer(game);
     Audio.load();
     UserInterface.create();
+    game.loadTextureReferences();
+    game.loadUIReferences();
   }
 
   @Override

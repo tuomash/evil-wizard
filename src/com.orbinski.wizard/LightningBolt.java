@@ -15,30 +15,6 @@ class LightningBolt extends Spell
   }
 
   @Override
-  void update(final float delta)
-  {
-    super.update(delta);
-
-    if (canAttack)
-    {
-      UserInterface.lightningSpellIcon.getOverlay().visible = false;
-    }
-    else
-    {
-      float percentage = elapsedSinceLastAttack / rateOfAttack;
-      percentage = 1.0f - percentage;
-
-      if (percentage < 0.0f)
-      {
-        percentage = 0.0f;
-      }
-
-      UserInterface.lightningSpellIcon.getOverlay().percentage = percentage;
-      UserInterface.lightningSpellIcon.getOverlay().visible = true;
-    }
-  }
-
-  @Override
   void attack2(final Game game)
   {
     for (int i = 0; i < game.enemies.size(); i++)
@@ -61,8 +37,14 @@ class LightningBolt extends Spell
   }
 
   @Override
-  void loadTextureReference(final Renderer renderer)
+  void loadTextureReferences()
   {
     texture = Renderer.lightningBoltTexture;
+  }
+
+  @Override
+  void loadUIReferences()
+  {
+    hotBarIcon = UserInterface.hotBarIconLightningSpell;
   }
 }

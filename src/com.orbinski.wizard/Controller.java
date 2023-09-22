@@ -59,11 +59,11 @@ class Controller
 
     if (Gdx.input.justTouched())
     {
-      if (UserInterface.lightningSpellIcon.contains((int) hudResult.x, (int) hudResult.y))
+      if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(0);
       }
-      else if (UserInterface.greaseSpellIcon.contains((int) hudResult.x, (int) hudResult.y))
+      else if (UserInterface.hotBarIconGreaseSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(1);
       }

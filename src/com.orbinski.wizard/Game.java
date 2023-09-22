@@ -359,12 +359,21 @@ class Game
     }
   }
 
-  void loadTextureReferences(final Renderer renderer)
+  void loadTextureReferences()
   {
     for (int i = 0; i < spells.size(); i++)
     {
       final Spell spell = spells.get(i);
-      spell.loadTextureReference(renderer);
+      spell.loadTextureReferences();
+    }
+  }
+
+  void loadUIReferences()
+  {
+    for (int i = 0; i < spells.size(); i++)
+    {
+      final Spell spell = spells.get(i);
+      spell.loadUIReferences();
     }
   }
 

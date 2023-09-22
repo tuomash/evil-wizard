@@ -11,6 +11,7 @@ abstract class Spell extends Entity
   float elapsedSinceLastAttack;
   float rateOfAttack;
   Texture texture;
+  Icon hotBarIcon;
 
   public Spell(final float width, final float height)
   {
@@ -29,6 +30,27 @@ abstract class Spell extends Entity
     if (elapsedSinceLastAttack >= rateOfAttack)
     {
       canAttack = true;
+    }
+
+    if (hotBarIcon != null)
+    {
+      if (canAttack)
+      {
+        hotBarIcon.getOverlay().visible = false;
+      }
+      else
+      {
+        float percentage = elapsedSinceLastAttack / rateOfAttack;
+        percentage = 1.0f - percentage;
+
+        if (percentage < 0.0f)
+        {
+          percentage = 0.0f;
+        }
+
+        hotBarIcon.getOverlay().updateWidth(percentage);
+        hotBarIcon.getOverlay().visible = true;
+      }
     }
   }
 
@@ -52,5 +74,7 @@ abstract class Spell extends Entity
 
   abstract void attack2(final Game game);
 
-  abstract void loadTextureReference(final Renderer renderer);
+  abstract void loadTextureReferences();
+
+  abstract void loadUIReferences();
 }

@@ -22,6 +22,7 @@ class Renderer
   static Viewport gameViewportRef;
   static Viewport hudViewportRef;
   static Texture lightningBoltTexture;
+  static Texture greaseTexture;
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
 
@@ -45,7 +46,6 @@ class Renderer
   final Texture orbTexture;
   final Texture tileTexture;
   final Texture jewelTexture;
-  final Texture greaseTexture;
 
   Renderer(final Game game)
   {
@@ -119,8 +119,6 @@ class Renderer
     font12Yellow = generator.generateFont(parameter);
 
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
-
-    game.loadTextureReferences(this);
   }
 
   private Texture loadTexture(final String fileName)
@@ -366,15 +364,19 @@ class Renderer
 
     hudSpriteBatch.end();
 
-    renderUIElement(UserInterface.lightningSpellIcon);
-    renderUIElement(UserInterface.greaseSpellIcon);
+    renderUIElement(UserInterface.hotBarIconLightningSpell);
+    renderUIElement(UserInterface.hotBarIconGreaseSpell);
   }
 
   void renderOverlay(final Overlay overlay)
   {
     if (overlay != null && overlay.visible)
     {
-      renderHudFilledQuad(overlay.x, overlay.y, overlay.width * overlay.percentage, overlay.height, overlay.color);
+      renderHudFilledQuad(overlay.getX(),
+                          overlay.getY(),
+                          overlay.getWidth(),
+                          overlay.getHeight(),
+                          overlay.color);
     }
   }
 
@@ -384,11 +386,15 @@ class Renderer
     {
       if (element.backgroundColor != null)
       {
-        renderHudFilledQuad(element.x, element.y, element.width, element.height, element.backgroundColor);
+        renderHudFilledQuad(element.getX(),
+                            element.getY(),
+                            element.getWidth(),
+                            element.getHeight(),
+                            element.backgroundColor);
       }
 
       hudSpriteBatch.begin();
-      hudSpriteBatch.draw(element.texture, element.x, element.y, element.width, element.height);
+      hudSpriteBatch.draw(element.texture, element.getX(), element.getY(), element.getWidth(), element.getHeight());
       hudSpriteBatch.end();
 
       if (element.getOverlay() != null)

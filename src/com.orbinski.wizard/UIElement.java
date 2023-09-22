@@ -46,10 +46,10 @@ abstract class UIElement
 
   private Overlay overlay;
 
-  int x;
-  int y;
-  int width;
-  int height;
+  private int x;
+  private int y;
+  private int width;
+  private int height;
   boolean visible = true;
   Color backgroundColor;
   Texture texture;
@@ -72,21 +72,61 @@ abstract class UIElement
     return contains(this, x, y);
   }
 
-  public Overlay getOverlay()
+  int getX()
+  {
+    return x;
+  }
+
+  void setX(final int x)
+  {
+    this.x = x;
+  }
+
+  int getY()
+  {
+    return y;
+  }
+
+  void setY(final int y)
+  {
+    this.y = y;
+  }
+
+  int getWidth()
+  {
+    return width;
+  }
+
+  void setWidth(final int width)
+  {
+    this.width = width;
+  }
+
+  int getHeight()
+  {
+    return height;
+  }
+
+  void setHeight(final int height)
+  {
+    this.height = height;
+  }
+
+  Overlay getOverlay()
   {
     return overlay;
   }
 
-  public void setOverlay(final Overlay overlay)
+  void setOverlay(final Overlay overlay)
   {
     this.overlay = overlay;
 
     if (overlay != null)
     {
-      overlay.x = x;
-      overlay.y = y;
-      overlay.width = width;
-      overlay.height = height;
+      overlay.setX(x);
+      overlay.setY(y);
+      overlay.setWidth(width);
+      overlay.setHeight(height);
     }
   }
 }
