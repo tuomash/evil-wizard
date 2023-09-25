@@ -13,6 +13,15 @@ class Help
 
     {
       final Text text = new Text();
+      text.text = "Press N to decrease game speed and M to increase it";
+      text.font = Renderer.font24White;
+      text.setX(20);
+      text.setY(200);
+      texts.add(text);
+    }
+
+    {
+      final Text text = new Text();
       text.text = "Use WASD or number keys to control the camera";
       text.font = Renderer.font24White;
       text.setX(20);
