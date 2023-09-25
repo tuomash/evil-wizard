@@ -465,6 +465,7 @@ class Game
     if (selectedSpell != null)
     {
       selectedSpell.attack(this);
+      clearSelections();
     }
   }
 
