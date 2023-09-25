@@ -32,6 +32,7 @@ class Renderer
   static Texture greaseTexture;
   static Texture treeTexture;
 
+  static Texture uiMinotaurIconTexture;
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
 
@@ -90,6 +91,7 @@ class Renderer
     greaseTexture = loadTexture("grease.png");
     treeTexture = loadTexture("tree.png");
 
+    uiMinotaurIconTexture = loadTexture("ui-villain-minotaur-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon.png");
 
@@ -387,20 +389,6 @@ class Renderer
 
   void renderHud()
   {
-    for (int i = 0; i < game.villains.size(); i++)
-    {
-      final Villain villain = game.villains.get(i);
-
-      if (!villain.inAction)
-      {
-        renderHudTexture(UserInterface.villainIcon.x,
-                         UserInterface.villainIcon.y,
-                         UserInterface.villainIcon.width,
-                         UserInterface.villainIcon.height,
-                         minotaurTexture);
-      }
-    }
-
     hudSpriteBatch.begin();
     font24White.draw(hudSpriteBatch, "Wave " + game.waves.waveNumber + " / " + game.waves.maxWaves, 5, 120);
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
@@ -413,6 +401,7 @@ class Renderer
 
     hudSpriteBatch.end();
 
+    renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     renderUIElement(UserInterface.hotBarIconGreaseSpell);
     renderTextButton(UserInterface.nextWaveButton);

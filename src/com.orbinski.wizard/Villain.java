@@ -12,6 +12,7 @@ class Villain extends Entity
   int regen;
   float elapsedDeath;
   float rateOfRespawn;
+  Icon hotBarIcon;
 
   Villain()
   {
@@ -71,6 +72,27 @@ class Villain extends Entity
         elapsedSinceLastHeal = 0.0f;
       }
     }
+
+    if (hotBarIcon != null)
+    {
+      if (inAction)
+      {
+        hotBarIcon.getOverlay().visible = false;
+      }
+      else
+      {
+        float percentage = elapsedDeath / rateOfRespawn;
+        percentage = 1.0f - percentage;
+
+        if (percentage < 0.0f)
+        {
+          percentage = 0.0f;
+        }
+
+        hotBarIcon.getOverlay().updateWidth(percentage);
+        hotBarIcon.getOverlay().visible = true;
+      }
+    }
   }
 
   void doAttack()
@@ -93,5 +115,10 @@ class Villain extends Entity
     elapsedDeath = 0.0f;
     setHealth(100);
     setMaxHealth(100);
+  }
+
+  void loadUIReferences()
+  {
+    hotBarIcon = UserInterface.hotBarIconMinotaur;
   }
 }

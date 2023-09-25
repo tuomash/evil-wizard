@@ -364,6 +364,12 @@ class Game
 
   void loadUIReferences()
   {
+    for (int i = 0; i < villains.size(); i++)
+    {
+      final Villain villain = villains.get(i);
+      villain.loadUIReferences();
+    }
+
     for (int i = 0; i < spells.size(); i++)
     {
       final Spell spell = spells.get(i);
@@ -487,21 +493,18 @@ class Game
     return false;
   }
 
-  public void clearSelections()
-  {
-    tower.selected = false;
-    selectedSpell = null;
-    selectedSpellIndex = -1;
-    selectedVillain = null;
-  }
-
-  void hotSelectVillain()
+  void selectVillain()
   {
     clearSelections();
 
     if (selectedVillain == null)
     {
-      selectedVillain = villains.get(0);
+      final Villain villain = villains.get(0);
+
+      if (!villain.dead && villain.inAction)
+      {
+        selectedVillain = villains.get(0);
+      }
     }
   }
 
@@ -542,6 +545,14 @@ class Game
     villain.inAction = true;
     villain.setX(-10.0f);
     villain.setY(tower.getY() - tower.getHeightOffset());
+  }
+
+  public void clearSelections()
+  {
+    tower.selected = false;
+    selectedSpell = null;
+    selectedSpellIndex = -1;
+    selectedVillain = null;
   }
 
   void addAreaEffect(final AreaEffect effect)

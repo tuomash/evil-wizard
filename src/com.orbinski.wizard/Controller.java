@@ -59,7 +59,11 @@ class Controller
 
     if (Gdx.input.justTouched())
     {
-      if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
+      if (UserInterface.hotBarIconMinotaur.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.selectVillain();
+      }
+      else if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(0);
       }
@@ -131,7 +135,7 @@ class Controller
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.H))
     {
-      game.hotSelectVillain();
+      game.selectVillain();
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
