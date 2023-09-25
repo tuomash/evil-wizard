@@ -23,6 +23,8 @@ class Game
   final Waves waves;
   final CameraState cameraState;
 
+  private int speed = 1;
+
   Spell selectedSpell;
   int selectedSpellIndex;
   Villain selectedVillain;
@@ -565,6 +567,31 @@ class Game
     Renderer.gameViewportRef.getCamera().position.x = 0.0f;
     Renderer.gameViewportRef.getCamera().position.y = 0.0f;
     Renderer.gameViewportRef.getCamera().update();
+  }
+
+  int getSpeed()
+  {
+    return speed;
+  }
+
+  void increaseSpeed()
+  {
+    speed++;
+
+    if (speed > 10)
+    {
+      speed = 10;
+    }
+  }
+
+  void decreaseSpeed()
+  {
+    speed--;
+
+    if (speed < 1)
+    {
+      speed = 1;
+    }
   }
 
   void reset()

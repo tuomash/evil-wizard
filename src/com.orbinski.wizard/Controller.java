@@ -141,6 +141,14 @@ class Controller
     {
       game.reset();
     }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.N))
+    {
+      game.decreaseSpeed();
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.M))
+    {
+      game.increaseSpeed();
+    }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
     {
       game.clearSelections();

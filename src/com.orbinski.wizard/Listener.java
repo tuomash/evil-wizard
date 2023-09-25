@@ -52,6 +52,23 @@ class Listener implements ApplicationListener
       }
     }
 
+    // Only do speed updates if the game is not lagging
+    if (updates < MAX_UPDATES && game.getSpeed() > 1)
+    {
+      // When speed is set to 1x, don't run extra updates
+      // 1x = regular update which is done above
+      for (int i = 2; i <= game.getSpeed(); i++)
+      {
+        game.update(TIME_STEP_SECONDS);
+        updates++;
+
+        if (updates >= MAX_UPDATES)
+        {
+          break;
+        }
+      }
+    }
+
     updates = 0;
     renderer.render();
   }

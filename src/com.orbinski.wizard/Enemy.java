@@ -25,7 +25,7 @@ class Enemy extends Entity
                                0.25f,
                                getHealth(),
                                getMaxHealth()));
-    setDamage(100, 300);
+    setDamage(1, 3);
     canAttack = true;
     rateOfAttack = 0.9f;
   }
