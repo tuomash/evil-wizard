@@ -14,15 +14,19 @@ class Audio
   static boolean mute = false;
   static boolean fadeOut = false;
   static float sfxVolume = 1.0f;
-  static float musicVolume = 0.3f;
+  static float musicVolume = 0.2f;
 
   static Sound lightningBolt;
+  static Sound minotaurGrowl;
+
   static Music preparation;
   static Music battle;
 
   static void load()
   {
     lightningBolt = loadSound("lightning-bolt.wav");
+    minotaurGrowl = loadSound("minotaur-growl.wav");
+
     preparation = loadMusic("preparation.mp3");
     battle = loadMusic("battle.mp3");
   }

@@ -35,6 +35,7 @@ class Villain extends Entity
     rateOfHealing = 1.3f;
     regen = 2;
     rateOfRespawn = 8.0f;
+    moveSound = Audio.minotaurGrowl;
   }
 
   @Override

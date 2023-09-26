@@ -539,6 +539,8 @@ class Game
         selectedVillain.enemyTarget = null;
       }
 
+      Audio.playSound(selectedVillain.moveSound);
+
       // Clear selection
       selectedVillain = null;
     }
