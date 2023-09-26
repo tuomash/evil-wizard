@@ -57,6 +57,8 @@ class Game
     createSpells();
     randomizeRateOfJewels();
     waves.nextWave();
+
+    Audio.playPreparation();
   }
 
   void update(final float delta)
