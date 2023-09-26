@@ -17,6 +17,7 @@ class Audio
   static float musicVolume = 0.2f;
 
   static Sound lightningBolt;
+  static Sound grease;
   static Sound minotaurGrowl;
 
   static Music preparation;
@@ -25,6 +26,7 @@ class Audio
   static void load()
   {
     lightningBolt = loadSound("lightning-bolt.wav");
+    grease = loadSound("grease.wav");
     minotaurGrowl = loadSound("minotaur-growl.wav");
 
     preparation = loadMusic("preparation.mp3");

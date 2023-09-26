@@ -9,7 +9,7 @@ class Grease extends Spell
     super(30.0f, 30.0f);
     range = new Circle(getX(), getY(), 15.0f);
     canAttack = true;
-    rateOfAttack = 4.5f;
+    rateOfAttack = 12.0f;
   }
 
   @Override
@@ -44,6 +44,8 @@ class Grease extends Spell
     effect.setY(getY());
     effect.texture = this.texture;
     game.addAreaEffect(effect);
+
+    Audio.playSound(Audio.grease);
   }
 
   @Override
