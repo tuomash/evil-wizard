@@ -33,7 +33,7 @@ class Game
   float rateOfJewels;
   boolean gameOver;
   boolean victory;
-  boolean allEnemiesDead;
+  boolean allEnemiesDead = true;
   boolean help;
 
   Game()
@@ -50,19 +50,20 @@ class Game
     textEffects = new ArrayList<>();
     cameraState = new CameraState();
     waves = new Waves(this);
-    gold = 500;
+    gold = 1000;
 
     generateTrees();
     generateVillains();
     createSpells();
     randomizeRateOfJewels();
-    waves.nextWave();
 
     Audio.playPreparation();
   }
 
   void update(final float delta)
   {
+    Audio.update(delta);
+
     if (gameOver || victory)
     {
       return;
@@ -205,20 +206,23 @@ class Game
           if (tower.getHealth() <= 0)
           {
             gameOver = true;
+            Audio.fadeOut = true;
           }
         }
       }
     }
 
-    if (allEnemiesDead)
+    if (allEnemiesDead && !this.allEnemiesDead && !enemies.isEmpty())
     {
+      this.allEnemiesDead = true;
+
       if (waves.isFinished())
       {
         victory = true;
       }
       else
       {
-        this.allEnemiesDead = true;
+        Audio.fadeOut = true;
         UserInterface.nextWaveButton.visible = true;
       }
     }
@@ -355,6 +359,13 @@ class Game
     villain.setY(tower.getY() - tower.getHeightOffset());
     villain.inAction = true;
     villains.add(villain);
+  }
+
+  void nextWave()
+  {
+    Audio.stopPreparation();
+    Audio.playBattle();
+    waves.nextWave();
   }
 
   void loadTextureReferences()
@@ -610,6 +621,7 @@ class Game
 
     villains.get(0).reset();
     waves.reset();
-    waves.nextWave();
+    allEnemiesDead =  true;
+    UserInterface.nextWaveButton.visible = true;
   }
 }

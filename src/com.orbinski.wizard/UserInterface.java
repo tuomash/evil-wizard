@@ -41,6 +41,6 @@ class UserInterface
     nextWaveButton.backgroundColor = Color.BLACK;
     nextWaveButton.text = "NEXT WAVE";
     nextWaveButton.font = Renderer.font24White;
-    nextWaveButton.visible = false;
+    nextWaveButton.visible = true;
   }
 }

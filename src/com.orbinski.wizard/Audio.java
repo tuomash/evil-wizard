@@ -3,14 +3,19 @@ package com.orbinski.wizard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 
 import java.io.File;
 
 class Audio
 {
+  private static float fadeOutElapsed = 0.0f;
+  private static float fadeOutPer = 0.1f;
+
   static boolean mute = false;
-  static float volume = 1.0f;
+  static boolean fadeOut = false;
+  static float sfxVolume = 1.0f;
+  static float musicVolume = 0.3f;
+
   static Sound lightningBolt;
   static Music preparation;
   static Music battle;
@@ -19,6 +24,33 @@ class Audio
   {
     lightningBolt = loadSound("lightning-bolt.wav");
     preparation = loadMusic("preparation.mp3");
+    battle = loadMusic("battle.mp3");
+  }
+
+  static void update(final float delta)
+  {
+    if (!mute && fadeOut && battle != null && battle.isPlaying())
+    {
+      fadeOutElapsed = fadeOutElapsed + delta;
+
+      if (fadeOutElapsed > fadeOutPer)
+      {
+        fadeOutElapsed = 0.0f;
+
+        float battleVolume = battle.getVolume();
+        battleVolume = battleVolume - 0.01f;
+
+        if (battleVolume < 0.0f)
+        {
+          battleVolume = 0.0f;
+          battle.stop();
+          playPreparation();
+          fadeOut = false;
+        }
+
+        battle.setVolume(battleVolume);
+      }
+    }
   }
 
   private static Sound loadSound(final String fileName)
@@ -45,17 +77,43 @@ class Audio
   {
     if (!mute && sound != null)
     {
-      sound.play(volume);
+      sound.play(sfxVolume);
     }
   }
 
   static void playPreparation()
   {
-    if (!mute && preparation != null)
+    if (!mute && preparation != null && !preparation.isPlaying())
     {
-      preparation.setVolume(volume);
+      preparation.setVolume(musicVolume);
       preparation.setLooping(true);
       preparation.play();
+    }
+  }
+
+  static void stopPreparation()
+  {
+    if (preparation != null && preparation.isPlaying())
+    {
+      preparation.stop();
+    }
+  }
+
+  static void playBattle()
+  {
+    if (!mute && battle != null && !battle.isPlaying())
+    {
+      battle.setVolume(musicVolume);
+      battle.setLooping(true);
+      battle.play();
+    }
+  }
+
+  static void stopBattle()
+  {
+    if (!mute && battle != null && battle.isPlaying())
+    {
+      battle.stop();
     }
   }
 }

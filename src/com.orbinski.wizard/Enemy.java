@@ -15,7 +15,7 @@ class Enemy extends Entity
     setY(-1000.0f);
     velocityX = 2.25f;
     velocityY = 2.25f;
-    bounty = 2;
+    bounty = 5;
     towerDamage = 50;
     setHealth(10);
     setMaxHealth(10);

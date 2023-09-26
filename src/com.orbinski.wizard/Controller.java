@@ -73,7 +73,7 @@ class Controller
       }
       else if (UserInterface.nextWaveButton.contains((int) hudResult.x, (int) hudResult.y))
       {
-        game.waves.nextWave();
+        game.nextWave();
       }
       else
       {
