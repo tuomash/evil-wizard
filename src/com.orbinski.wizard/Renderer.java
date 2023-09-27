@@ -85,7 +85,7 @@ class Renderer
     minotaurTexture = loadTexture("minotaur.png");
     towerTexture = loadTexture("tower.png");
     orbTexture = loadTexture("orb.jpg");
-    tileTexture = loadTexture("tileable_grass2.png");
+    tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
     greaseTexture = loadTexture("grease.png");
