@@ -10,11 +10,14 @@ class AreaEffect extends Entity
   float elapsed;
   Texture texture;
 
-  AreaEffect(final Circle area, final float width, final float height)
+  AreaEffect(final Circle area,
+             final float width,
+             final float height,
+             final float aliveFor)
   {
     super(width, height);
     this.area = area;
-    aliveFor = 5.0f;
+    this.aliveFor = aliveFor;
   }
 
   void update(final float delta)

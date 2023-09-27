@@ -39,7 +39,7 @@ class Grease extends Spell
   @Override
   void attack2(final Game game)
   {
-    final AreaEffect effect = new AreaEffect(new Circle(range), getWidth(), getHeight());
+    final AreaEffect effect = new AreaEffect(new Circle(range), getWidth(), getHeight(), 5.0f);
     effect.setX(getX());
     effect.setY(getY());
     effect.texture = this.texture;
