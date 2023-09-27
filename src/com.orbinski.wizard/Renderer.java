@@ -88,12 +88,12 @@ class Renderer
     tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
-    greaseTexture = loadTexture("grease.png");
+    greaseTexture = loadTexture("grease2.png");
     treeTexture = loadTexture("tree.png");
 
     uiMinotaurIconTexture = loadTexture("ui-villain-minotaur-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
-    uiGreaseIconTexture = loadTexture("ui-spell-grease-icon.png");
+    uiGreaseIconTexture = loadTexture("ui-spell-grease-icon-2.png");
 
     File file = new File(System.getProperty("user.dir")
                              + File.separator
