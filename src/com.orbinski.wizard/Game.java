@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.orbinski.wizard.Globals.*;
+import static com.orbinski.wizard.Globals.random;
 
 class Game
 {
@@ -35,6 +35,7 @@ class Game
   boolean victory;
   boolean allEnemiesDead = true;
   boolean help;
+  boolean paused;
 
   Game()
   {
@@ -66,6 +67,11 @@ class Game
 
     if (gameOver || victory)
     {
+      return;
+    }
+    else if (paused)
+    {
+      updateCameraState(delta);
       return;
     }
 
@@ -294,6 +300,11 @@ class Game
       textEffects.remove(textEffectIndexToRemove);
     }
 
+    updateCameraState(delta);
+  }
+
+  private void updateCameraState(final float delta)
+  {
     if (cameraState.moving)
     {
       final float x = delta * cameraState.velocityX;
@@ -365,9 +376,12 @@ class Game
 
   void nextWave()
   {
-    Audio.stopPreparation();
-    Audio.playBattle();
-    waves.nextWave();
+    if (!paused)
+    {
+      Audio.stopPreparation();
+      Audio.playBattle();
+      waves.nextWave();
+    }
   }
 
   void loadTextureReferences()
@@ -485,7 +499,7 @@ class Game
 
   void shootSpell()
   {
-    if (selectedSpell != null)
+    if (!paused && selectedSpell != null)
     {
       selectedSpell.attack(this);
       clearSelections();
@@ -527,7 +541,7 @@ class Game
 
   void moveVillain(final float x, final float y)
   {
-    if (selectedVillain != null && selectedVillain.inAction && !Entity.contains(selectedVillain, x, y))
+    if (!paused && selectedVillain != null && selectedVillain.inAction && !Entity.contains(selectedVillain, x, y))
     {
       selectedVillain.targetX = x;
       selectedVillain.targetY = y;
@@ -550,7 +564,7 @@ class Game
 
   void pickUpVillain()
   {
-    if (selectedVillain != null && selectedVillain.inAction)
+    if (!paused && selectedVillain != null && selectedVillain.inAction)
     {
       selectedVillain.inAction = false;
 
@@ -625,7 +639,7 @@ class Game
 
     villains.get(0).reset();
     waves.reset();
-    allEnemiesDead =  true;
+    allEnemiesDead = true;
     UserInterface.nextWaveButton.visible = true;
   }
 }

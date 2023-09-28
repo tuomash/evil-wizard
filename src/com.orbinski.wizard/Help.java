@@ -13,6 +13,15 @@ class Help
 
     {
       final Text text = new Text();
+      text.text = "Press SPACE to pause the game";
+      text.font = Renderer.font24White;
+      text.setX(20);
+      text.setY(240);
+      texts.add(text);
+    }
+
+    {
+      final Text text = new Text();
       text.text = "Press N to decrease game speed and M to increase it";
       text.font = Renderer.font24White;
       text.setX(20);

@@ -170,6 +170,11 @@ class Renderer
 
     if (!game.help)
     {
+      if (game.paused)
+      {
+        renderHudDimBackground();
+      }
+
       renderHud();
 
       if (game.gameOver)
@@ -390,6 +395,12 @@ class Renderer
   void renderHud()
   {
     hudSpriteBatch.begin();
+
+    if (game.paused)
+    {
+      font24White.draw(hudSpriteBatch, "PAUSED", 5, 200);
+    }
+
     font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 160);
     font24White.draw(hudSpriteBatch, "Wave " + game.waves.waveNumber + " / " + game.waves.maxWaves, 5, 120);
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
