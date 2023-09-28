@@ -108,6 +108,7 @@ class Tower extends Entity
   {
     decreaseHealth(enemy.towerDamage);
     enemy.dead = true;
+    Audio.playSound(Audio.towerDamage);
   }
 
   void reset()
