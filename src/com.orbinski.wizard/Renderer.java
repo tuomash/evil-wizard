@@ -84,7 +84,7 @@ class Renderer
     knightTexture = loadTexture("knight.png");
     minotaurTexture = loadTexture("minotaur.png");
     towerTexture = loadTexture("tower.png");
-    orbTexture = loadTexture("orb.jpg");
+    orbTexture = loadTexture("orb.png");
     tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
     lightningBoltTexture = loadTexture("lightning-bolt.png");
