@@ -13,6 +13,11 @@ class Boot
     config.setForegroundFPS(60);
     config.setIdleFPS(30);
 
+    if (args.length > 0 && args[0].equalsIgnoreCase("mute"))
+    {
+      Audio.mute = true;
+    }
+
     try
     {
       new Lwjgl3Application(new Listener(), config)

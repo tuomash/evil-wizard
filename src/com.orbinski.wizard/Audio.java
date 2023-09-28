@@ -9,7 +9,7 @@ import java.io.File;
 class Audio
 {
   private static float fadeOutElapsed = 0.0f;
-  private static float fadeOutPer = 0.1f;
+  private static final float fadeOutPer = 0.1f;
 
   static boolean mute = false;
   static boolean fadeOut = false;
