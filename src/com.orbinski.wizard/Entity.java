@@ -88,6 +88,7 @@ abstract class Entity
   boolean slowdown;
   int bounty;
   Sound moveSound;
+  Sound deathSound;
 
   Entity()
   {
@@ -289,6 +290,7 @@ abstract class Entity
     if (health <= 0)
     {
       dead = true;
+      Audio.playSound(deathSound);
     }
   }
 

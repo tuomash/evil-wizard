@@ -14,12 +14,13 @@ class Audio
   static boolean mute = false;
   static boolean fadeOut = false;
   static float sfxVolume = 1.0f;
-  static float musicVolume = 0.2f;
+  static float musicVolume = 0.1f;
 
   static Sound lightningBolt;
   static Sound grease;
   static Sound minotaurGrowl;
   static Sound orb;
+  static Sound deathNoise;
 
   static Music preparation;
   static Music battle;
@@ -30,6 +31,7 @@ class Audio
     grease = loadSound("grease.wav");
     minotaurGrowl = loadSound("minotaur-growl.wav");
     orb = loadSound("orb.wav");
+    deathNoise = loadSound("death-noise-male.wav");
 
     preparation = loadMusic("preparation.mp3");
     battle = loadMusic("battle.mp3");

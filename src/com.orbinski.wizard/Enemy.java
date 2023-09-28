@@ -28,6 +28,7 @@ class Enemy extends Entity
     setDamage(1, 3);
     canAttack = true;
     rateOfAttack = 0.9f;
+    deathSound = Audio.deathNoise;
   }
 
   @Override
