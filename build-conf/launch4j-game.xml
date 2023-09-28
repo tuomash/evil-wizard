@@ -1,0 +1,29 @@
+<launch4jConfig>
+    <headerType>gui</headerType>
+    <errTitle>Evil Wizard error</errTitle>
+    <chdir></chdir>
+    <supportUrl>https://curbyourcode.com</supportUrl>
+    <stayAlive>false</stayAlive>
+    <icon>evil-wizard.ico</icon>
+    <jre>
+        <path>jre</path>
+        <bundledJre64Bit>true</bundledJre64Bit>
+        <minVersion>1.8.0_201</minVersion>
+        <maxVersion>1.8.0_202</maxVersion>
+        <jdkPreference>jreOnly</jdkPreference>
+        <initialHeapSize>512</initialHeapSize>
+        <maxHeapSize>2048</maxHeapSize>
+    </jre>
+    <versionInfo>
+        <fileVersion>0.1.0.0</fileVersion>
+        <txtFileVersion>0.1.0b</txtFileVersion>
+        <fileDescription>Evil Wizard executable</fileDescription>
+        <copyright>Copyright 2023 Curb Your Code Oy</copyright>
+        <productVersion>0.1.0.0</productVersion>
+        <txtProductVersion>0.1.0b</txtProductVersion>
+        <productName>Evil Wizard</productName>
+        <companyName>Curb Your Code Oy</companyName>
+        <internalName>EvilWizard</internalName>
+        <originalFilename>EvilWizard.exe</originalFilename>
+    </versionInfo>
+</launch4jConfig>

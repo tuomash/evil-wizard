@@ -1,44 +1,20 @@
-<project name="wizard" default="dist-all" basedir=".">
+<project name="wizard" default="build" basedir=".">
     <description>Build file for Evil Wizard.</description>
 
     <tstamp/>
 
     <property name="src" location="src"/>
-    <property name="src.test" location="test"/>
     <property name="build" location="build"/>
-    <property name="build.test" location="build-test"/>
+    <property name="inst" location="inst"/>
+    <property name="inst.jdk" location="${inst}/jdk-17.0.6+10"/>
+    <property name="inst.jre" location="${inst}/jdk-17.0.8.1+1-jre"/>
     <property name="dist" location="dist"/>
+    <property name="dist-zip" location="dist-zip"/>
     <property name="lib" location="lib"/>
     <property name="lib.support" location="lib/support"/>
-    <property name="license" location="license"/>
-    <property name="conf" location="conf"/>
-    <property name="data" location="data"/>
-    <property name="docs" location="docs"/>
-    <property name="docs-api" location="docs/api/"/>
-    <property name="test.results" location="test-results"/>
-
-    <property file="${conf}/game.properties" prefix="game"/>
-    <property file="${conf}/editor.properties" prefix="editor"/>
-
-    <property name="project.name" value="Prisonscape"/>
-    <property name="project.editor.name" value="PrisonscapeEditor"/>
-    <property name="game.jar.name" value="${DSTAMP}-${project.name}-${game.version}.jar"/>
-    <property name="game.zip.name" value="${DSTAMP}-${project.name}-${game.version}.zip"/>
-    <property name="editor.jar.name" value="${DSTAMP}-${project.editor.name}-${editor.version}.jar"/>
-    <property name="editor.zip.name" value="${DSTAMP}-${project.editor.name}-${editor.version}.zip"/>
-    <property name="game.and.editor.zip.name"
-              value="${DSTAMP}-${project.name}-game-${game.version}-editor-${editor.version}.zip"/>
-    <property name="atlasgen.jar.name" value="${DSTAMP}-texture-atlas-generator.jar"/>
-
-    <property name="game.start.command" value="jre\bin\java -Xms512m -Xmx1024m -jar ${game.jar.name}"/>
-    <property name="editor.start.command" value="jre\bin\java -Xms512m -Xmx1024m -jar ${editor.jar.name}"/>
-    <property name="atlasgen.start.command" value="jre\bin\java -Xms512m -Xmx1024m -jar ${atlasgen.jar.name}"/>
-
-    <property name="lib.jdk" location="${lib}/java/windows/64/jdk1.8.0_202"/>
-    <property name="lib.jre" location="${lib}/java/windows/64/jre1.8.0_202"/>
-
-    <property name="project.path" value="com/heaviestmatter/prisonscape"/>
-
+    <property name="game.jar.name" value="EvilWizard.jar"/>
+    <property name="project.name" value="EvilWizard"/>
+    <property name="project.editor.name" value="EvilWizardEditor"/>
     <property environment="env"/>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -65,20 +41,27 @@
         </mapper>
     </pathconvert>
 
-    <property name="launch4j.dir" location="lib/support/launch4j"/>
-
     <taskdef name="launch4j"
              classname="net.sf.launch4j.ant.Launch4jTask"
-             classpath="${lib.support}/launch4j/launch4j.jar:
-                     ${launch4j.dir}/lib/xstream.jar"/>
+             classpath="${inst}/launch4j/launch4j.jar:
+                     ${inst}/launch4j/lib/xstream.jar"/>
 
-    <target name="setup-compile">
-        <property name="executable.ref" value="${lib.jdk}/bin/javac"/>
+    <target name="build" description="Builds the game.">
+        <echo>Building game version ${game.version}.</echo>
+
         <delete dir="${build}" failonerror="true"/>
-        <mkdir dir="${build}"/>
-    </target>
+        <delete dir="${dist}" failonerror="true"/>
+        <delete dir="${dist-zip}" failonerror="true"/>
 
-    <target name="compile" depends="setup-compile">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${dist}"/>
+        <mkdir dir="${dist}/graphics"/>
+        <mkdir dir="${dist}/jre"/>
+        <mkdir dir="${dist}/lib"/>
+        <mkdir dir="${dist}/music"/>
+        <mkdir dir="${dist}/sfx"/>
+
+        <property name="executable.ref" value="${inst.jdk}/bin/javac"/>
         <javac srcdir="${src}"
                destdir="${build}"
                fork="yes"
@@ -87,219 +70,48 @@
                includeantruntime="false"
                verbose="no">
         </javac>
-    </target>
 
-    <target name="setup-dist-folder">
-        <delete dir="${dist}" failonerror="true"/>
-        <mkdir dir="${dist}"/>
-        <mkdir dir="${dist}/conf"/>
-        <mkdir dir="${dist}/data"/>
-        <mkdir dir="${dist}/docs/api"/>
-        <mkdir dir="${dist}/jre"/>
-        <mkdir dir="${dist}/lib"/>
-        <mkdir dir="${dist}/license"/>
-
-        <copy todir="${dist}">
-            <file name="LICENSE.txt"/>
-            <file name="LICENSE-3RD-PARTY.txt"/>
-            <file name="MANUAL.txt"/>
-        </copy>
-
-        <copy todir="${dist}/conf">
-            <fileset dir="${conf}"/>
-        </copy>
-
-        <copy todir="${dist}/data">
-            <fileset dir="${data}" includes="**" excludes="save/*.dat,screenshots/*.png"/>
-        </copy>
-
-        <copy todir="${dist}/docs/api">
-            <fileset dir="${docs-api}"/>
+        <copy todir="${dist}/graphics">
+            <fileset dir="graphics" includes="**"/>
         </copy>
 
         <copy todir="${dist}/jre">
-            <fileset dir="${lib.jre}" includes="**"/>
+            <fileset dir="${inst.jre}" includes="**"/>
         </copy>
 
         <copy todir="${dist}/lib">
             <fileset dir="${lib}" includes="*.jar"/>
         </copy>
 
-        <copy todir="${dist}/license">
-            <fileset dir="${license}" includes="**"/>
+        <copy todir="${dist}/music">
+            <fileset dir="music" includes="**"/>
         </copy>
-    </target>
 
-    <target name="create-game-bat-files">
-        <echo file="${dist}/prisonscape.bat" append="false">${game.start.command}</echo>
-        <echo file="${dist}/prisonscape-combat-test.bat" append="false">${game.start.command} --combat-test
-            --combat-test-level=CountyFight1 --combat-test-blue=MACK --combat-test-red=T-BONE
-        </echo>
-        <echo file="${dist}/prisonscape-debug.bat" append="false">${game.start.command} --debug</echo>
-        <echo file="${dist}/prisonscape-fullscreen.bat" append="false">${game.start.command} --full-screen</echo>
-        <echo file="${dist}/prisonscape-mute-audio.bat" append="false">${game.start.command} --mute-audio</echo>
-        <echo file="${dist}/prisonscape-skip-main-menu.bat" append="false">${game.start.command} --skip-main-menu</echo>
-        <echo file="${dist}/texture-atlas-generator.bat" append="false">${atlasgen.start.command} all</echo>
-    </target>
+        <copy todir="${dist}/sfx">
+            <fileset dir="sfx" includes="**"/>
+        </copy>
 
-    <target name="create-editor-bat-file">
-        <echo file="${dist}/prisonscape-editor.bat" append="false">${editor.start.command.windows}</echo>
-    </target>
-
-    <target name="build-game"
-            depends="compile, setup-dist-folder"
-            description="Build the game.">
-        <echo>Building game version ${game.version}.</echo>
         <jar jarfile="${dist}/${game.jar.name}" basedir="${build}">
             <manifest>
-                <attribute name="Main-Class" value="com.heaviestmatter.prisonscape.game.Boot"/>
+                <attribute name="Main-Class" value="com.orbinski.wizard.Boot"/>
                 <attribute name="Class-Path" value="${manifest.classpath}"/>
             </manifest>
         </jar>
-    </target>
 
-    <target name="build-editor"
-            depends="compile, setup-dist-folder"
-            description="Build the editor.">
-        <echo>Building editor version ${editor.version}.</echo>
-        <jar jarfile="${dist}/${editor.jar.name}" basedir="${build}">
-            <manifest>
-                <attribute name="Main-Class" value="com.heaviestmatter.prisonscape.editor.Boot"/>
-                <attribute name="Class-Path" value="${manifest.classpath}"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="build-atlas-generator"
-            depends="compile, setup-dist-folder"
-            description="Generate the atlas generator.">
-        <echo>Building game version ${game.version}.</echo>
-        <jar jarfile="${dist}/${atlasgen.jar.name}" basedir="${build}">
-            <manifest>
-                <attribute name="Main-Class" value="com.heaviestmatter.engine.resource.TextureAtlasGenerator"/>
-                <attribute name="Class-Path" value="${manifest.classpath}"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="dist-all"
-            depends="compile, doc-api, setup-dist-folder, create-game-bat-files, create-editor-bat-file, build-game, build-editor, build-atlas-generator"
-            description="Distribute both the game and the editor.">
-    </target>
-
-    <target name="dist-zip-all"
-            depends="dist-all"
-            description="Distribute both the game and the editor. Also generates a zip file.">
-        <zip destfile="${dist}/${game.and.editor.zip.name}" basedir="${dist}"/>
-    </target>
-
-    <target name="dist-game"
-            depends="compile, doc-api, setup-dist-folder, create-game-bat-files, build-game"
-            description="Generate the game distribution.">
-    </target>
-
-    <target name="dist-zip-game"
-            depends="dist-game"
-            description="Generate the game distribution. Also generates a zip file.">
-        <zip destfile="${dist}/${game.zip.name}" basedir="${dist}"/>
-    </target>
-
-    <target name="dist-editor"
-            depends="compile, doc-api, setup-dist-folder, create-editor-bat-file, build-editor"
-            description="Generate the editor distribution.">
-    </target>
-
-    <target name="dist-zip-editor"
-            depends="dist-editor"
-            description="Generate the editor distribution. Also generates a zip file.">
-        <zip destfile="${dist}/${editor.zip.name}" basedir="${dist}"/>
-    </target>
-
-    <target name="package-all" depends="compile, setup-dist-folder, build-game, build-editor">
         <launch4j configFile="build-conf/launch4j-game.xml"
                   jar="${dist}/${game.jar.name}"
-                  outfile="${dist}/Prisonscape.exe"/>
+                  outfile="${dist}/EvilWizard.exe"/>
 
-        <launch4j configFile="build-conf/launch4j-editor.xml"
-                  jar="${dist}/${editor.jar.name}"
-                  outfile="${dist}/PrisonscapeEditor.exe"/>
+        <zip destfile="${dist-zip}/EvilWizard.zip" basedir="${dist}"/>
     </target>
 
-    <target name="copy-scripts" description="Only copy scripts to the dist folder.">
-        <copy todir="${dist}/data/scripts">
-            <fileset dir="${data}/scripts"/>
-        </copy>
-    </target>
-
-    <target name="dist-steam" depends="package-all">
-        <exec executable="steam\sdk_151\tools\ContentBuilder\builder\steamcmd.exe"
+    <target name="push-to-steam" depends="build" description="Builds the game and pushes it to Steam.">
+        <exec executable="${inst}\steam\sdk_151\tools\ContentBuilder\builder\steamcmd.exe"
               output="dist-steam/dist-steam.log"
               failonerror="true">
             <arg value="+login ${env.STEAM_USER} ${env.STEAM_PW}"/>
-            <arg value="+run_app_build ..\scripts\prisonscape_build.vdf"/>
+            <arg value="+run_app_build ..\scripts\evil_wizard_build.vdf"/>
             <arg value="+quit"/>
         </exec>
-    </target>
-
-    <target name="clean-docs" description="Clean docs folder.">
-        <delete dir="${docs}" failonerror="false"/>
-    </target>
-
-    <target name="doc-api">
-        <javadoc destdir="docs/api"
-                 author="true"
-                 version="true"
-                 use="true"
-                 windowtitle="Prisonscape API"
-                 classpathref="lib.classpath">
-
-            <packageset dir="src" defaultexcludes="yes">
-                <include name="com/heaviestmatter/prisonscape/game/script/**"/>
-            </packageset>
-
-            <fileset dir="src" defaultexcludes="yes">
-                <include name="com/heaviestmatter/prisonscape/game/cutscene/actions/api/**"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/api/**"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/ArmorType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/CombatAbilityType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/ConsumableType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/DrugItemType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/ItemType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/type/WeaponType.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/ACombatAbility.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/EnemyCombatAbility.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/Gang.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/HenchmanCombatAbility.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/data/NPC.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/combat/api/**"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/combat/buff/ABuff.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/trading/api/**"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/Dialogue.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/DialogueBranch.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/DialogueOption.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/Quest.java"/>
-                <include name="com/heaviestmatter/prisonscape/game/ingame/QuestObjective.java"/>
-            </fileset>
-
-        </javadoc>
-    </target>
-
-    <target name="doc-all" depends="doc-api">
-        <javadoc packagenames="com.heaviestmatter.*"
-                 sourcepath="src"
-                 destdir="docs/all"
-                 author="true"
-                 version="true"
-                 use="true"
-                 windowtitle="Prisonscape"
-                 classpathref="lib.classpath">
-        </javadoc>
-    </target>
-
-    <target name="clean" description="Clean up.">
-        <!-- Delete the ${build}, ${build.test} and ${dist} directory trees -->
-        <delete dir="${build}"/>
-        <delete dir="${build.test}"/>
-        <delete dir="${dist}"/>
     </target>
 </project>

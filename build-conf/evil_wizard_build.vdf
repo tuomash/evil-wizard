@@ -1,0 +1,21 @@
+"AppBuild"
+{
+	"AppID" "1682370"
+	"Desc" "Evil Wizard Steam build"
+
+	"ContentRoot" "..\..\..\..\..\dist\"
+	"BuildOutput" "..\..\..\..\..\dist-steam\"
+
+	"Depots"
+	{
+		"1682371"
+		{
+			"FileMapping"
+			{
+				"LocalPath" "*"
+				"DepotPath" "."
+				"recursive" "1"
+			}
+		}
+	}
+}
