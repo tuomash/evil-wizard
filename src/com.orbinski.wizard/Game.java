@@ -77,6 +77,7 @@ class Game
       if (projectile != null)
       {
         projectiles.add(projectile);
+        Audio.playSound(Audio.orb);
       }
     }
 

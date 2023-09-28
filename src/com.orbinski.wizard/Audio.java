@@ -19,6 +19,7 @@ class Audio
   static Sound lightningBolt;
   static Sound grease;
   static Sound minotaurGrowl;
+  static Sound orb;
 
   static Music preparation;
   static Music battle;
@@ -28,6 +29,7 @@ class Audio
     lightningBolt = loadSound("lightning-bolt.wav");
     grease = loadSound("grease.wav");
     minotaurGrowl = loadSound("minotaur-growl.wav");
+    orb = loadSound("orb.wav");
 
     preparation = loadMusic("preparation.mp3");
     battle = loadMusic("battle.mp3");
