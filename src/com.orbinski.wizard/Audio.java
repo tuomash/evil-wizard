@@ -22,6 +22,7 @@ class Audio
   static Sound orb;
   static Sound deathNoise;
   static Sound towerDamage;
+  static Sound jewelPickup;
 
   static Music preparation;
   static Music battle;
@@ -34,6 +35,7 @@ class Audio
     orb = loadSound("orb.wav");
     deathNoise = loadSound("death-noise-male.wav");
     towerDamage = loadSound("tower-damage.wav");
+    jewelPickup = loadSound("jewel-pickup.wav");
 
     preparation = loadMusic("preparation.mp3");
     battle = loadMusic("battle.mp3");

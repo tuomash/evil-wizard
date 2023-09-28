@@ -137,6 +137,7 @@ class Game
           gold = gold + jewel.bounty;
           jewels[z] = null;
           textEffects.add(new TextEffect(jewel.getX(), jewel.getY(), 1.9f, jewel.bounty + "G", Renderer.font12Yellow));
+          Audio.playSound(Audio.jewelPickup);
         }
       }
 
@@ -440,7 +441,7 @@ class Game
 
   void randomizeRateOfJewels()
   {
-    rateOfJewels = random.nextInt(16) + 5;
+    rateOfJewels = random.nextInt(30) + 15;
   }
 
   boolean selectTower(final float x, final float y)
