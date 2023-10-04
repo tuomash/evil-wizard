@@ -2,6 +2,8 @@ package com.orbinski.wizard;
 
 class CameraState
 {
+  private static final float SPEED = 50.0f;
+
   boolean moving;
   float velocityX;
   float velocityY;
@@ -9,25 +11,25 @@ class CameraState
   void moveUp()
   {
     moving = true;
-    velocityY = 35.0f;
+    velocityY = SPEED;
   }
 
   void moveLeft()
   {
     moving = true;
-    velocityX = -35.0f;
+    velocityX = -SPEED;
   }
 
   void moveRight()
   {
     moving = true;
-    velocityX = 35.0f;
+    velocityX = SPEED;
   }
 
   void moveDown()
   {
     moving = true;
-    velocityY = -35.0f;
+    velocityY = -SPEED;
   }
 
   void reset()
