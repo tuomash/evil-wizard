@@ -59,12 +59,18 @@ class Controller
 
     if (Gdx.input.justTouched())
     {
-      /* if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
+      /*
+      if (UserInterface.hotBarIconMinotaur.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.selectVillain();
+      }
+       */
+
+      if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(0);
       }
-      else*/
-      if (UserInterface.hotBarIconGreaseSpell.contains((int) hudResult.x, (int) hudResult.y))
+      else if (UserInterface.hotBarIconGreaseSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(1);
       }

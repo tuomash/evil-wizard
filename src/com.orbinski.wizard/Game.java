@@ -117,6 +117,7 @@ class Game
     }
 
     // Only create new jewels when there is an active wave
+    /*
     if (!allEnemiesDead)
     {
       elapsedSinceLastJewel = elapsedSinceLastJewel + delta;
@@ -131,6 +132,7 @@ class Game
         randomizeRateOfJewels();
       }
     }
+     */
 
     for (int i = 0; i < jewels.length; i++)
     {
