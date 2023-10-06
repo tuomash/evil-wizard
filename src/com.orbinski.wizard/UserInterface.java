@@ -7,6 +7,7 @@ class UserInterface
   static Help help;
 
   static Icon hotBarIconTower;
+  static Icon hotBarIconFountain;
 
   static Icon hotBarIconMinotaur;
 
@@ -19,9 +20,13 @@ class UserInterface
   {
     help = new Help();
 
-    hotBarIconTower = new Icon(300, 60, Renderer.uiTowerIconTexture);
+    hotBarIconTower = new Icon(500, 60, Renderer.uiTowerIconTexture);
     hotBarIconTower.backgroundColor = Color.BLACK;
     hotBarIconTower.setOverlay(new Overlay());
+
+    hotBarIconFountain = new Icon(hotBarIconTower.getX() + hotBarIconTower.getWidth() + 10, 60, Renderer.uiFountainIconTexture);
+    hotBarIconFountain.backgroundColor = Color.BLACK;
+    hotBarIconFountain.setOverlay(new Overlay());
 
     /*
     hotBarIconMinotaur = new Icon(300, 60, Renderer.uiMinotaurIconTexture);
@@ -29,7 +34,7 @@ class UserInterface
     hotBarIconMinotaur.setOverlay(new Overlay());
      */
 
-    hotBarIconLightningSpell = new Icon(500, 60, Renderer.uiLightningBoltIconTexture);
+    hotBarIconLightningSpell = new Icon(700, 60, Renderer.uiLightningBoltIconTexture);
     hotBarIconLightningSpell.backgroundColor = Color.BLACK;
     hotBarIconLightningSpell.setOverlay(new Overlay());
 
@@ -44,7 +49,7 @@ class UserInterface
     startButton = new TextButton();
     startButton.textOffsetX = 20;
     startButton.textOffsetY = 40;
-    startButton.setX(800);
+    startButton.setX(900);
     startButton.setY(60);
     startButton.setWidth(160);
     startButton.setHeight(64);

@@ -60,6 +60,10 @@ class Controller
     {
       game.moveNewTower(result.x, result.y);
     }
+    else if (game.newFountain != null)
+    {
+      game.moveNewFountain(result.x, result.y);
+    }
 
     if (Gdx.input.justTouched())
     {
@@ -73,6 +77,10 @@ class Controller
       if (UserInterface.hotBarIconTower.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.createNewTower(result.x, result.y);
+      }
+      else if (UserInterface.hotBarIconFountain.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.createNewFountain(result.x, result.y);
       }
       else if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
@@ -103,6 +111,10 @@ class Controller
         {
           game.placeNewTower(result.x, result.y);
         }
+        else if (game.newFountain != null)
+        {
+          game.placeNewFountain(result.x, result.y);
+        }
         else if (game.selectedVillain != null)
         {
           if (game.selectBase(result.x, result.y))
@@ -127,6 +139,7 @@ class Controller
           else if (game.selectTower(result.x, result.y))
           {
           }
+          // TODO: implement select mana fountain
         }
       }
     }
@@ -180,6 +193,17 @@ class Controller
     else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
     {
       game.paused = !game.paused;
+    }
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL))
+    {
+      // TODO: implement selected tower deletion
+      if (game.newTower != null)
+      {
+      }
+      // TODO: implement selected fountain deletion
+      else if (game.newFountain != null)
+      {
+      }
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
     {

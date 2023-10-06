@@ -27,7 +27,7 @@ class Tower extends Entity
     canAttack = true;
     rateOfAttack = 1.1f;
     rateOfManaCost = 1.0f;
-    manaCost = 1;
+    manaCost = 5;
   }
 
   void update(final float delta, final Game game)

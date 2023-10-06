@@ -14,6 +14,7 @@ class Game
   final Jewel[] jewels;
   final List<Tree> trees;
   final List<Tower> towers;
+  final List<ManaFountain> fountains;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -27,16 +28,21 @@ class Game
   private int speed = 1;
   private int gold = 1000;
   private int mana = 10000;
+  private int manaRegen;
 
   Spell selectedSpell;
   int selectedSpellIndex;
   Villain selectedVillain;
   Tower newTower;
+  ManaFountain newFountain;
 
   int requiredMana = 50000;
   float timeLimitElapsed = 0.0f;
   int minutes = 15;
   int seconds = 0;
+  int regenSecondsTotal;
+  int regenMinutes;
+  int regenSeconds;
   float elapsedSinceLastJewel;
   float rateOfJewels;
   boolean gameOver;
@@ -52,6 +58,7 @@ class Game
     jewels = new Jewel[MAX_JEWELS];
     trees = new ArrayList<>();
     towers = new ArrayList<>();
+    fountains = new ArrayList<>();
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
@@ -63,6 +70,7 @@ class Game
     waves = new Waves(this);
 
     generateTrees();
+    createManaFountain();
     generateVillains();
     createSpells();
     randomizeRateOfJewels();
@@ -102,6 +110,15 @@ class Game
       }
     }
 
+    final int manaLeft = requiredMana - mana;
+
+    if (manaRegen > 0)
+    {
+      regenSecondsTotal = manaLeft / manaRegen;
+      regenMinutes = regenSecondsTotal / 60;
+      regenSeconds = regenSecondsTotal % 60;
+    }
+
     if (mana == requiredMana)
     {
       victory = true;
@@ -125,6 +142,12 @@ class Game
         projectiles.add(projectile);
         Audio.playSound(Audio.orb);
       }
+    }
+
+    for (int i = 0; i < fountains.size(); i++)
+    {
+      final ManaFountain fountain = fountains.get(i);
+      fountain.update(delta, this);
     }
 
     // Only create new jewels when there is an active wave
@@ -409,6 +432,13 @@ class Game
     }
   }
 
+  void createManaFountain()
+  {
+    final ManaFountain fountain = new ManaFountain(0.0f, -20.0f);
+    fountains.add(fountain);
+    calculateManaRegen(fountain);
+  }
+
   void generateVillains()
   {
     /*
@@ -679,21 +709,86 @@ class Game
       newTower.move(x, y);
       decreaseGold(Tower.GOLD_COST);
       towers.add(newTower);
+      calculateManaRegen(newTower);
       clearSelections();
     }
   }
 
-  public void clearSelections()
+  void createNewFountain(final float x, final float y)
+  {
+    if (newFountain == null && gold >= ManaFountain.GOLD_COST)
+    {
+      newFountain = new ManaFountain(x, y);
+    }
+  }
+
+  void moveNewFountain(final float x, final float y)
+  {
+    if (newFountain != null)
+    {
+      newFountain.move(x, y);
+    }
+  }
+
+  void placeNewFountain(final float x, final float y)
+  {
+    if (newFountain != null && gold >= ManaFountain.GOLD_COST)
+    {
+      for (int i = 0; i < fountains.size(); i++)
+      {
+        final ManaFountain existing = fountains.get(i);
+
+        if (Entity.overlaps(existing, newFountain))
+        {
+          return;
+        }
+      }
+
+      newFountain.move(x, y);
+      decreaseGold(ManaFountain.GOLD_COST);
+      fountains.add(newFountain);
+      calculateManaRegen(newFountain);
+      clearSelections();
+    }
+  }
+
+  public int getManaRegen()
+  {
+    return manaRegen;
+  }
+
+  private void calculateManaRegen(final ManaFountain fountain)
+  {
+    manaRegen = manaRegen + fountain.manaRegen;
+  }
+
+  private void calculateManaRegen(final Tower tower)
+  {
+    manaRegen = manaRegen - tower.manaCost;
+
+    if (manaRegen < 0)
+    {
+      manaRegen = 0;
+    }
+  }
+
+  void clearSelections()
   {
     base.selected = false;
     selectedSpell = null;
     selectedSpellIndex = -1;
     selectedVillain = null;
     newTower = null;
+    newFountain = null;
 
     for (int i = 0; i < towers.size(); i++)
     {
       towers.get(i).selected = false;
+    }
+
+    for (int i = 0; i < fountains.size(); i++)
+    {
+      fountains.get(i).selected = false;
     }
   }
 

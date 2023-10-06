@@ -12,7 +12,7 @@ class LightningBolt extends Spell
     canAttack = true;
     rateOfAttack = 2.5f;
     applyHeightOffset = false;
-    manaCost = 50;
+    manaCost = 250;
   }
 
   @Override

@@ -26,6 +26,7 @@ class Renderer
   static Texture minotaurTexture;
   static Texture baseTexture;
   static Texture towerTexture;
+  static Texture fountainTexture;
   static Texture orbTexture;
   static Texture tileTexture;
   static Texture jewelTexture;
@@ -34,6 +35,7 @@ class Renderer
   static Texture treeTexture;
 
   static Texture uiTowerIconTexture;
+  static Texture uiFountainIconTexture;
   static Texture uiMinotaurIconTexture;
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
@@ -87,6 +89,7 @@ class Renderer
     minotaurTexture = loadTexture("minotaur.png");
     baseTexture = loadTexture("tower.png");
     towerTexture = loadTexture("tower-2.png");
+    fountainTexture = loadTexture("well.png");
     orbTexture = loadTexture("orb.png");
     tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
@@ -95,6 +98,7 @@ class Renderer
     treeTexture = loadTexture("tree.png");
 
     uiTowerIconTexture = loadTexture("ui-tower-icon.png");
+    uiFountainIconTexture = loadTexture("ui-well-icon.png");
     uiMinotaurIconTexture = loadTexture("ui-villain-minotaur-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon-2.png");
@@ -163,11 +167,13 @@ class Renderer
       renderJewels();
       renderEnemies();
       renderTowers();
+      renderManaFountains();
       renderVillains();
       renderProjectiles();
       renderSpell();
       renderSpellEffects();
       renderNewTower();
+      renderNewFountain();
     }
 
     hudViewport.apply();
@@ -307,6 +313,20 @@ class Renderer
     }
   }
 
+  void renderManaFountains()
+  {
+    for (int i = 0; i < game.fountains.size(); i++)
+    {
+      final ManaFountain fountain = game.fountains.get(i);
+      renderEntity(fountain, fountainTexture);
+
+      if (fountain.selected)
+      {
+        renderEntityBorder(fountain, Color.WHITE);
+      }
+    }
+  }
+
   void renderVillains()
   {
     for (int i = 0; i < game.villains.size(); i++)
@@ -417,6 +437,19 @@ class Renderer
     }
   }
 
+  void renderNewFountain()
+  {
+    if (game.newFountain != null)
+    {
+      renderEntity(game.newFountain, fountainTexture);
+
+      if (game.newFountain.showBorder)
+      {
+        renderEntityBorder(game.newTower, Color.WHITE);
+      }
+    }
+  }
+
   void renderHealthBar(final HealthBar bar)
   {
     if (bar != null)
@@ -440,13 +473,17 @@ class Renderer
 
     if (game.paused)
     {
-      font24White.draw(hudSpriteBatch, "PAUSED", 5, 240);
+      font24White.draw(hudSpriteBatch, "PAUSED", 5, 280);
     }
 
-    font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 200);
-    font24White.draw(hudSpriteBatch, "Time: " + game.minutes + "m" + game.seconds + "s", 5, 160);
-    font24White.draw(hudSpriteBatch, "Gold: " + game.getGold(), 5, 120);
-    font24White.draw(hudSpriteBatch, "Mana: " + game.getMana() + "/" + game.requiredMana, 5, 80);
+    font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 240);
+    font24White.draw(hudSpriteBatch, "Time: " + game.minutes + "m" + game.seconds + "s", 5, 200);
+    font24White.draw(hudSpriteBatch, "Gold: " + game.getGold(), 5, 160);
+    font24White.draw(hudSpriteBatch, "Mana: " + game.getMana() + "/" + game.requiredMana, 5, 120);
+    font24White.draw(hudSpriteBatch,
+                     "Mana regen: " + game.getManaRegen() + "/s (req time: " + game.regenMinutes + "m" + game.regenSeconds + "s)",
+                     5,
+                     80);
 
     for (int i = 0; i < game.textEffects.size(); i++)
     {
@@ -457,6 +494,7 @@ class Renderer
     hudSpriteBatch.end();
 
     renderUIElement(UserInterface.hotBarIconTower);
+    renderUIElement(UserInterface.hotBarIconFountain);
     // renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     // renderUIElement(UserInterface.hotBarIconGreaseSpell);
