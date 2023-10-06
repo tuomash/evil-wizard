@@ -402,7 +402,7 @@ class Renderer
     }
 
     font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 160);
-    font24White.draw(hudSpriteBatch, "Wave " + game.waves.waveNumber + " / " + game.waves.maxWaves, 5, 120);
+    font24White.draw(hudSpriteBatch, "Time: " + game.timeLimit, 5, 120);
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
 
     for (int i = 0; i < game.textEffects.size(); i++)
@@ -416,7 +416,7 @@ class Renderer
     renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     renderUIElement(UserInterface.hotBarIconGreaseSpell);
-    renderTextButton(UserInterface.nextWaveButton);
+    renderTextButton(UserInterface.startButton);
   }
 
   void renderOverlay(final Overlay overlay)
@@ -452,9 +452,9 @@ class Renderer
       renderUIElement(button);
       hudSpriteBatch.begin();
       button.font.draw(hudSpriteBatch,
-                       UserInterface.nextWaveButton.text,
-                       UserInterface.nextWaveButton.getTextX(),
-                       UserInterface.nextWaveButton.getTextY());
+                       UserInterface.startButton.text,
+                       UserInterface.startButton.getTextX(),
+                       UserInterface.startButton.getTextY());
       hudSpriteBatch.end();
     }
   }

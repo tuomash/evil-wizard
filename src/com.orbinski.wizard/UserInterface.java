@@ -11,7 +11,7 @@ class UserInterface
   static Icon hotBarIconLightningSpell;
   static Icon hotBarIconGreaseSpell;
 
-  static TextButton nextWaveButton;
+  static TextButton startButton;
 
   static void create()
   {
@@ -31,16 +31,16 @@ class UserInterface
     hotBarIconGreaseSpell.backgroundColor = Color.WHITE;
     hotBarIconGreaseSpell.setOverlay(new Overlay());
 
-    nextWaveButton = new TextButton();
-    nextWaveButton.textOffsetX = 20;
-    nextWaveButton.textOffsetY = 40;
-    nextWaveButton.setX(800);
-    nextWaveButton.setY(60);
-    nextWaveButton.setWidth(160);
-    nextWaveButton.setHeight(64);
-    nextWaveButton.backgroundColor = Color.BLACK;
-    nextWaveButton.text = "NEXT WAVE";
-    nextWaveButton.font = Renderer.font24White;
-    nextWaveButton.visible = true;
+    startButton = new TextButton();
+    startButton.textOffsetX = 20;
+    startButton.textOffsetY = 40;
+    startButton.setX(800);
+    startButton.setY(60);
+    startButton.setWidth(160);
+    startButton.setHeight(64);
+    startButton.backgroundColor = Color.BLACK;
+    startButton.text = "START";
+    startButton.font = Renderer.font24White;
+    startButton.visible = true;
   }
 }

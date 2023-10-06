@@ -92,7 +92,7 @@ class Waves
 
     generateEnemies();
 
-    UserInterface.nextWaveButton.visible = false;
+    UserInterface.startButton.visible = false;
   }
 
   private void generateEnemies()

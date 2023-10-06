@@ -71,7 +71,7 @@ class Controller
       {
         game.selectSpell(1);
       }
-      else if (UserInterface.nextWaveButton.contains((int) hudResult.x, (int) hudResult.y))
+      else if (UserInterface.startButton.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.nextWave();
       }

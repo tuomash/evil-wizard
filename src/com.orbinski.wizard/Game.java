@@ -29,6 +29,8 @@ class Game
   int selectedSpellIndex;
   Villain selectedVillain;
   int gold;
+  float timeLimit = 1.0f * 60.0f * 15.0f;
+  String timeLimitStr = "";
   float elapsedSinceLastJewel;
   float rateOfJewels;
   boolean gameOver;
@@ -64,6 +66,13 @@ class Game
   void update(final float delta)
   {
     Audio.update(delta);
+
+    timeLimit = timeLimit - delta;
+
+    if (timeLimit <= 0.0f)
+    {
+      gameOver = true;
+    }
 
     if (gameOver || victory)
     {
@@ -231,7 +240,7 @@ class Game
       else
       {
         Audio.fadeOut = true;
-        UserInterface.nextWaveButton.visible = true;
+        UserInterface.startButton.visible = true;
       }
     }
 
@@ -636,10 +645,11 @@ class Game
     enemies.clear();
     gold = 500;
     elapsedSinceLastJewel = 0.0f;
+    timeLimit = 1.0f * 60.0f * 15.0f;
 
     villains.get(0).reset();
     waves.reset();
     allEnemiesDead = true;
-    UserInterface.nextWaveButton.visible = true;
+    UserInterface.startButton.visible = true;
   }
 }
