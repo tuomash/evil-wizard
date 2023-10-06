@@ -17,9 +17,11 @@ class UserInterface
   {
     help = new Help();
 
+    /*
     hotBarIconMinotaur = new Icon(300, 60, Renderer.uiMinotaurIconTexture);
     hotBarIconMinotaur.backgroundColor = Color.BLACK;
     hotBarIconMinotaur.setOverlay(new Overlay());
+     */
 
     hotBarIconLightningSpell = new Icon(500, 60, Renderer.uiLightningBoltIconTexture);
     hotBarIconLightningSpell.backgroundColor = Color.BLACK;

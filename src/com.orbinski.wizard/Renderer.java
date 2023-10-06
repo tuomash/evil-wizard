@@ -413,7 +413,7 @@ class Renderer
 
     hudSpriteBatch.end();
 
-    renderUIElement(UserInterface.hotBarIconMinotaur);
+    // renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     renderUIElement(UserInterface.hotBarIconGreaseSpell);
     renderTextButton(UserInterface.startButton);

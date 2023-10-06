@@ -396,11 +396,13 @@ class Game
 
   void generateVillains()
   {
+    /*
     final Villain villain = new Villain();
     villain.setX(-10.0f);
     villain.setY(tower.getY() - tower.getHeightOffset());
     villain.inAction = true;
     villains.add(villain);
+    */
   }
 
   void nextWave()
