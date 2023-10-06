@@ -33,6 +33,7 @@ class Renderer
   static Texture greaseTexture;
   static Texture treeTexture;
 
+  static Texture uiTowerIconTexture;
   static Texture uiMinotaurIconTexture;
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
@@ -93,6 +94,7 @@ class Renderer
     greaseTexture = loadTexture("grease2.png");
     treeTexture = loadTexture("tree.png");
 
+    uiTowerIconTexture = loadTexture("ui-tower-icon.png");
     uiMinotaurIconTexture = loadTexture("ui-villain-minotaur-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon-2.png");
@@ -165,6 +167,7 @@ class Renderer
       renderProjectiles();
       renderSpell();
       renderSpellEffects();
+      renderNewTower();
     }
 
     hudViewport.apply();
@@ -396,6 +399,24 @@ class Renderer
     }
   }
 
+  void renderNewTower()
+  {
+    if (game.newTower != null)
+    {
+      renderEntity(game.newTower, towerTexture);
+
+      if (game.newTower.showBorder)
+      {
+        renderEntityBorder(game.newTower, Color.WHITE);
+      }
+
+      renderCircle(game.newTower.range.x,
+                   game.newTower.range.y,
+                   game.newTower.range.radius,
+                   Color.RED);
+    }
+  }
+
   void renderHealthBar(final HealthBar bar)
   {
     if (bar != null)
@@ -435,6 +456,7 @@ class Renderer
 
     hudSpriteBatch.end();
 
+    renderUIElement(UserInterface.hotBarIconTower);
     // renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
     // renderUIElement(UserInterface.hotBarIconGreaseSpell);

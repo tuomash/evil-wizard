@@ -6,6 +6,8 @@ import java.util.List;
 
 class Tower extends Entity
 {
+  static final int GOLD_COST = 250;
+
   Enemy target;
   Circle range;
   boolean selected;
@@ -16,12 +18,12 @@ class Tower extends Entity
   float rateOfManaCost;
   int manaCost;
 
-  Tower()
+  Tower(final float x, final float y)
   {
     super(6.0f, 10.0f);
-    setX(0.0f);
-    setY(0.0f);
     range = new Circle(getX(), getY(), 20.0f);
+    setX(x);
+    setY(y);
     canAttack = true;
     rateOfAttack = 1.1f;
     rateOfManaCost = 1.0f;
@@ -114,6 +116,12 @@ class Tower extends Entity
     decreaseHealth(enemy.manaDamage);
     enemy.dead = true;
     Audio.playSound(Audio.manaDamage);
+  }
+
+  void move(final float x, final float y)
+  {
+    setX(x);
+    setY(y);
   }
 
   @Override

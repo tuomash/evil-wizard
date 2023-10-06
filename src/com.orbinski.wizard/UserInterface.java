@@ -6,6 +6,8 @@ class UserInterface
 {
   static Help help;
 
+  static Icon hotBarIconTower;
+
   static Icon hotBarIconMinotaur;
 
   static Icon hotBarIconLightningSpell;
@@ -16,6 +18,10 @@ class UserInterface
   static void create()
   {
     help = new Help();
+
+    hotBarIconTower = new Icon(300, 60, Renderer.uiTowerIconTexture);
+    hotBarIconTower.backgroundColor = Color.BLACK;
+    hotBarIconTower.setOverlay(new Overlay());
 
     /*
     hotBarIconMinotaur = new Icon(300, 60, Renderer.uiMinotaurIconTexture);

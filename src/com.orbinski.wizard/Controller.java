@@ -56,6 +56,10 @@ class Controller
     {
       game.moveSpell(result.x, result.y);
     }
+    else if (game.newTower != null)
+    {
+      game.moveNewTower(result.x, result.y);
+    }
 
     if (Gdx.input.justTouched())
     {
@@ -66,7 +70,11 @@ class Controller
       }
        */
 
-      if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
+      if (UserInterface.hotBarIconTower.contains((int) hudResult.x, (int) hudResult.y))
+      {
+        game.createNewTower(result.x, result.y);
+      }
+      else if (UserInterface.hotBarIconLightningSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(0);
       }
@@ -90,6 +98,10 @@ class Controller
         if (game.selectedSpell != null)
         {
           game.castSpell();
+        }
+        else if (game.newTower != null)
+        {
+          game.placeNewTower(result.x, result.y);
         }
         else if (game.selectedVillain != null)
         {

@@ -31,6 +31,8 @@ class Game
   Spell selectedSpell;
   int selectedSpellIndex;
   Villain selectedVillain;
+  Tower newTower;
+
   int requiredMana = 50000;
   float timeLimitElapsed = 0.0f;
   int minutes = 15;
@@ -61,7 +63,6 @@ class Game
     waves = new Waves(this);
 
     generateTrees();
-    generateTowers();
     generateVillains();
     createSpells();
     randomizeRateOfJewels();
@@ -408,41 +409,6 @@ class Game
     }
   }
 
-  void generateTowers()
-  {
-    // Top left tower
-    {
-      final Tower tower = new Tower();
-      tower.setX(-20.0f);
-      tower.setY(20.0f);
-      towers.add(tower);
-    }
-
-    // Top right tower
-    {
-      final Tower tower = new Tower();
-      tower.setX(20.0f);
-      tower.setY(20.0f);
-      towers.add(tower);
-    }
-
-    // Bottom left tower
-    {
-      final Tower tower = new Tower();
-      tower.setX(-20.0f);
-      tower.setY(-20.0f);
-      towers.add(tower);
-    }
-
-    // Bottom right tower
-    {
-      final Tower tower = new Tower();
-      tower.setX(20.0f);
-      tower.setY(-20.0f);
-      towers.add(tower);
-    }
-  }
-
   void generateVillains()
   {
     /*
@@ -680,12 +646,50 @@ class Game
     villain.setY(base.getY() - base.getHeightOffset());
   }
 
+  void createNewTower(final float x, final float y)
+  {
+    if (newTower == null && gold >= Tower.GOLD_COST)
+    {
+      newTower = new Tower(x, y);
+    }
+  }
+
+  void moveNewTower(final float x, final float y)
+  {
+    if (newTower != null)
+    {
+      newTower.move(x, y);
+    }
+  }
+
+  void placeNewTower(final float x, final float y)
+  {
+    if (newTower != null && gold >= Tower.GOLD_COST)
+    {
+      for (int i = 0; i < towers.size(); i++)
+      {
+        final Tower existing = towers.get(i);
+
+        if (Entity.overlaps(existing, newTower))
+        {
+          return;
+        }
+      }
+
+      newTower.move(x, y);
+      decreaseGold(Tower.GOLD_COST);
+      towers.add(newTower);
+      clearSelections();
+    }
+  }
+
   public void clearSelections()
   {
     base.selected = false;
     selectedSpell = null;
     selectedSpellIndex = -1;
     selectedVillain = null;
+    newTower = null;
 
     for (int i = 0; i < towers.size(); i++)
     {
