@@ -29,8 +29,9 @@ class Game
   int selectedSpellIndex;
   Villain selectedVillain;
   int gold;
-  float timeLimit = 1.0f * 60.0f * 15.0f;
-  String timeLimitStr = "";
+  float timeLimitElapsed = 0.0f;
+  int minutes = 15;
+  int seconds = 0;
   float elapsedSinceLastJewel;
   float rateOfJewels;
   boolean gameOver;
@@ -38,6 +39,7 @@ class Game
   boolean allEnemiesDead = true;
   boolean help;
   boolean paused;
+  boolean started;
 
   Game()
   {
@@ -67,13 +69,6 @@ class Game
   {
     Audio.update(delta);
 
-    timeLimit = timeLimit - delta;
-
-    if (timeLimit <= 0.0f)
-    {
-      gameOver = true;
-    }
-
     if (gameOver || victory)
     {
       return;
@@ -82,6 +77,31 @@ class Game
     {
       updateCameraState(delta);
       return;
+    }
+
+    if (started)
+    {
+      timeLimitElapsed = timeLimitElapsed + delta;
+
+      if (timeLimitElapsed >= 1.0f)
+      {
+        timeLimitElapsed = 0.0f;
+
+        if (seconds == 0 && minutes >= 1)
+        {
+          seconds = 59;
+          minutes = minutes - 1;
+        }
+        else if (seconds > 0)
+        {
+          seconds = seconds - 1;
+        }
+      }
+
+      if (minutes == 0 && seconds == 0)
+      {
+        gameOver = true;
+      }
     }
 
     tower.update(delta);
@@ -638,14 +658,17 @@ class Game
   {
     gameOver = false;
     victory = false;
+    started = false;
     tower.target = null;
     tower.reset();
     clearJewels();
     projectiles.clear();
     enemies.clear();
-    gold = 500;
+    gold = 1000;
     elapsedSinceLastJewel = 0.0f;
-    timeLimit = 1.0f * 60.0f * 15.0f;
+    timeLimitElapsed = 0.0f;
+    minutes = 15;
+    seconds = 0;
 
     villains.get(0).reset();
     waves.reset();

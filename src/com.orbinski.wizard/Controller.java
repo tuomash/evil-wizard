@@ -73,6 +73,11 @@ class Controller
       }
       else if (UserInterface.startButton.contains((int) hudResult.x, (int) hudResult.y))
       {
+        if (!game.started)
+        {
+          game.started = true;
+        }
+
         game.nextWave();
       }
       else

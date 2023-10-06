@@ -402,7 +402,7 @@ class Renderer
     }
 
     font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 160);
-    font24White.draw(hudSpriteBatch, "Time: " + game.timeLimit, 5, 120);
+    font24White.draw(hudSpriteBatch, "Time: " + game.minutes + "m" + game.seconds + "s", 5, 120);
     font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
 
     for (int i = 0; i < game.textEffects.size(); i++)
