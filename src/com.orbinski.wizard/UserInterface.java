@@ -27,11 +27,13 @@ class UserInterface
     hotBarIconLightningSpell.backgroundColor = Color.BLACK;
     hotBarIconLightningSpell.setOverlay(new Overlay());
 
+    /*
     hotBarIconGreaseSpell = new Icon(hotBarIconLightningSpell.getX() + hotBarIconLightningSpell.getWidth() + 10,
                                      hotBarIconLightningSpell.getY(),
                                      Renderer.uiGreaseIconTexture);
     hotBarIconGreaseSpell.backgroundColor = Color.WHITE;
     hotBarIconGreaseSpell.setOverlay(new Overlay());
+     */
 
     startButton = new TextButton();
     startButton.textOffsetX = 20;

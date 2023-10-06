@@ -70,10 +70,12 @@ class Controller
       {
         game.selectSpell(0);
       }
+      /*
       else if (UserInterface.hotBarIconGreaseSpell.contains((int) hudResult.x, (int) hudResult.y))
       {
         game.selectSpell(1);
       }
+       */
       else if (UserInterface.startButton.contains((int) hudResult.x, (int) hudResult.y))
       {
         if (!game.started)
@@ -87,7 +89,7 @@ class Controller
       {
         if (game.selectedSpell != null)
         {
-          game.shootSpell();
+          game.castSpell();
         }
         else if (game.selectedVillain != null)
         {
@@ -110,8 +112,10 @@ class Controller
           else if (game.selectBase(result.x, result.y))
           {
           }
+          else if (game.selectTower(result.x, result.y))
+          {
+          }
         }
-
       }
     }
 

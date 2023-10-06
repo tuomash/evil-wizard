@@ -12,6 +12,7 @@ class LightningBolt extends Spell
     canAttack = true;
     rateOfAttack = 2.5f;
     applyHeightOffset = false;
+    manaCost = 50;
   }
 
   @Override
@@ -21,9 +22,14 @@ class LightningBolt extends Spell
     {
       final Enemy enemy = game.enemies.get(i);
 
-      if (Entity.overlaps(range, enemy))
+      if (!enemy.dead && Entity.overlaps(range, enemy))
       {
         enemy.decreaseHealth(getDamage().calculate());
+
+        if (enemy.dead)
+        {
+          game.increaseGold(enemy.bounty);
+        }
       }
     }
 

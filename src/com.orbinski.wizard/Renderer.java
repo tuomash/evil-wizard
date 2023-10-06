@@ -25,6 +25,7 @@ class Renderer
   static Texture knightTexture;
   static Texture minotaurTexture;
   static Texture baseTexture;
+  static Texture towerTexture;
   static Texture orbTexture;
   static Texture tileTexture;
   static Texture jewelTexture;
@@ -84,6 +85,7 @@ class Renderer
     knightTexture = loadTexture("knight.png");
     minotaurTexture = loadTexture("minotaur.png");
     baseTexture = loadTexture("tower.png");
+    towerTexture = loadTexture("tower-2.png");
     orbTexture = loadTexture("orb.png");
     tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
@@ -158,6 +160,7 @@ class Renderer
       renderBase();
       renderJewels();
       renderEnemies();
+      renderTowers();
       renderVillains();
       renderProjectiles();
       renderSpell();
@@ -245,7 +248,7 @@ class Renderer
   void renderBase()
   {
     renderEntity(game.base, baseTexture);
-    renderHealthBar(game.base.getHealthBar());
+    // renderHealthBar(game.base.getHealthBar());
 
     if (game.base.selected)
     {
@@ -279,6 +282,24 @@ class Renderer
                      effect.area.y,
                      effect.area.radius,
                      Color.BLACK);
+      }
+    }
+  }
+
+  void renderTowers()
+  {
+    for (int i = 0; i < game.towers.size(); i++)
+    {
+      final Tower tower = game.towers.get(i);
+      renderEntity(tower, towerTexture);
+
+      if (tower.selected)
+      {
+        renderEntityBorder(tower, Color.WHITE);
+        renderCircle(tower.range.x,
+                     tower.range.y,
+                     tower.range.radius,
+                     Color.RED);
       }
     }
   }
@@ -398,12 +419,13 @@ class Renderer
 
     if (game.paused)
     {
-      font24White.draw(hudSpriteBatch, "PAUSED", 5, 200);
+      font24White.draw(hudSpriteBatch, "PAUSED", 5, 240);
     }
 
-    font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 160);
-    font24White.draw(hudSpriteBatch, "Time: " + game.minutes + "m" + game.seconds + "s", 5, 120);
-    font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
+    font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 200);
+    font24White.draw(hudSpriteBatch, "Time: " + game.minutes + "m" + game.seconds + "s", 5, 160);
+    font24White.draw(hudSpriteBatch, "Gold: " + game.getGold(), 5, 120);
+    font24White.draw(hudSpriteBatch, "Mana: " + game.getMana() + "/" + game.requiredMana, 5, 80);
 
     for (int i = 0; i < game.textEffects.size(); i++)
     {
@@ -415,7 +437,7 @@ class Renderer
 
     // renderUIElement(UserInterface.hotBarIconMinotaur);
     renderUIElement(UserInterface.hotBarIconLightningSpell);
-    renderUIElement(UserInterface.hotBarIconGreaseSpell);
+    // renderUIElement(UserInterface.hotBarIconGreaseSpell);
     renderTextButton(UserInterface.startButton);
   }
 

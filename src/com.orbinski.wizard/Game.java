@@ -13,6 +13,7 @@ class Game
   final Base base;
   final Jewel[] jewels;
   final List<Tree> trees;
+  final List<Tower> towers;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -24,11 +25,13 @@ class Game
   final CameraState cameraState;
 
   private int speed = 1;
+  private int gold = 1000;
+  private int mana = 10000;
 
   Spell selectedSpell;
   int selectedSpellIndex;
   Villain selectedVillain;
-  int gold;
+  int requiredMana = 50000;
   float timeLimitElapsed = 0.0f;
   int minutes = 15;
   int seconds = 0;
@@ -46,6 +49,7 @@ class Game
     base = new Base();
     jewels = new Jewel[MAX_JEWELS];
     trees = new ArrayList<>();
+    towers = new ArrayList<>();
     villains = new ArrayList<>();
     enemies = new ArrayList<>();
     projectiles = new ArrayList<>();
@@ -55,9 +59,9 @@ class Game
     textEffects = new ArrayList<>();
     cameraState = new CameraState();
     waves = new Waves(this);
-    gold = 1000;
 
     generateTrees();
+    generateTowers();
     generateVillains();
     createSpells();
     randomizeRateOfJewels();
@@ -73,41 +77,43 @@ class Game
     {
       return;
     }
-    else if (paused)
+    // Allow camera movement for paused and not started states
+    else if (paused || !started)
     {
       updateCameraState(delta);
       return;
     }
 
-    if (started)
+    timeLimitElapsed = timeLimitElapsed + delta;
+
+    if (timeLimitElapsed >= 1.0f)
     {
-      timeLimitElapsed = timeLimitElapsed + delta;
+      timeLimitElapsed = 0.0f;
 
-      if (timeLimitElapsed >= 1.0f)
+      if (seconds == 0 && minutes >= 1)
       {
-        timeLimitElapsed = 0.0f;
-
-        if (seconds == 0 && minutes >= 1)
-        {
-          seconds = 59;
-          minutes = minutes - 1;
-        }
-        else if (seconds > 0)
-        {
-          seconds = seconds - 1;
-        }
+        seconds = 59;
+        minutes = minutes - 1;
       }
-
-      if (minutes == 0 && seconds == 0)
+      else if (seconds > 0)
       {
-        gameOver = true;
+        seconds = seconds - 1;
       }
+    }
+
+    if (minutes == 0 && seconds == 0)
+    {
+      gameOver = true;
+      Audio.fadeOut = true;
     }
 
     base.update(delta);
 
+    for (int i = 0; i < towers.size(); i++)
     {
-      final Projectile projectile = base.findAndFireAtTarget(enemies);
+      final Tower tower = towers.get(i);
+      tower.update(delta, this);
+      final Projectile projectile = tower.findAndFireAtTarget(enemies);
 
       if (projectile != null)
       {
@@ -240,13 +246,15 @@ class Game
 
         if (Entity.overlaps(base, enemy))
         {
-          base.doEnemyAttack(enemy);
+          enemy.dead = true;
+          mana = mana - enemy.manaDamage;
 
-          if (base.getHealth() <= 0)
+          if (mana < 0)
           {
-            gameOver = true;
-            Audio.fadeOut = true;
+            mana = 0;
           }
+
+          Audio.playSound(Audio.manaDamage);
         }
       }
     }
@@ -280,7 +288,7 @@ class Game
 
           if (projectile.target.dead)
           {
-            gold = gold + projectile.target.bounty;
+            increaseGold(projectile.target.bounty);
           }
 
           projectile.dead = true;
@@ -396,6 +404,41 @@ class Game
     }
   }
 
+  void generateTowers()
+  {
+    // Top left tower
+    {
+      final Tower tower = new Tower();
+      tower.setX(-20.0f);
+      tower.setY(20.0f);
+      towers.add(tower);
+    }
+
+    // Top right tower
+    {
+      final Tower tower = new Tower();
+      tower.setX(20.0f);
+      tower.setY(20.0f);
+      towers.add(tower);
+    }
+
+    // Bottom left tower
+    {
+      final Tower tower = new Tower();
+      tower.setX(-20.0f);
+      tower.setY(-20.0f);
+      towers.add(tower);
+    }
+
+    // Bottom right tower
+    {
+      final Tower tower = new Tower();
+      tower.setX(20.0f);
+      tower.setY(-20.0f);
+      towers.add(tower);
+    }
+  }
+
   void generateVillains()
   {
     /*
@@ -448,8 +491,10 @@ class Game
     final Spell lightningBolt = new LightningBolt();
     spells.add(lightningBolt);
 
+    /*
     final Spell grease = new Grease();
     spells.add(grease);
+     */
   }
 
   int canAddJewel()
@@ -503,6 +548,23 @@ class Game
     return false;
   }
 
+  boolean selectTower(final float x, final float y)
+  {
+    for (int i = 0; i < towers.size(); i++)
+    {
+      final Tower tower = towers.get(i);
+
+      if (Entity.contains(tower, x, y))
+      {
+        clearSelections();
+        tower.selected = true;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   boolean selectSpell(final int index)
   {
     if (selectedSpellIndex != index)
@@ -530,11 +592,12 @@ class Game
     }
   }
 
-  void shootSpell()
+  void castSpell()
   {
     if (!paused && selectedSpell != null)
     {
       selectedSpell.attack(this);
+      decreaseMana(selectedSpell.manaCost);
       clearSelections();
     }
   }
@@ -619,6 +682,11 @@ class Game
     selectedSpell = null;
     selectedSpellIndex = -1;
     selectedVillain = null;
+
+    for (int i = 0; i < towers.size(); i++)
+    {
+      towers.get(i).selected = false;
+    }
   }
 
   void addAreaEffect(final AreaEffect effect)
@@ -658,6 +726,41 @@ class Game
     }
   }
 
+  public int getGold()
+  {
+    return gold;
+  }
+
+  void increaseGold(final int gold)
+  {
+    this.gold = this.gold + gold;
+  }
+
+  void decreaseGold(final int gold)
+  {
+    this.gold = this.gold - gold;
+
+    if (this.gold < 0)
+    {
+      this.gold = 0;
+    }
+  }
+
+  int getMana()
+  {
+    return mana;
+  }
+
+  void decreaseMana(final int mana)
+  {
+    this.mana = this.mana - mana;
+
+    if (this.mana < 0)
+    {
+      this.mana = 0;
+    }
+  }
+
   void reset()
   {
     gameOver = false;
@@ -669,6 +772,7 @@ class Game
     projectiles.clear();
     enemies.clear();
     gold = 1000;
+    mana = 10000;
     elapsedSinceLastJewel = 0.0f;
     timeLimitElapsed = 0.0f;
     minutes = 15;

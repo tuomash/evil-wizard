@@ -21,7 +21,7 @@ class Audio
   static Sound minotaurGrowl;
   static Sound orb;
   static Sound deathNoise;
-  static Sound baseDamage;
+  static Sound manaDamage;
   static Sound jewelPickup;
 
   static Music preparation;
@@ -34,7 +34,7 @@ class Audio
     minotaurGrowl = loadSound("minotaur-growl.wav");
     orb = loadSound("orb.wav");
     deathNoise = loadSound("death-noise-male.wav");
-    baseDamage = loadSound("tower-damage.wav");
+    manaDamage = loadSound("tower-damage.wav");
     jewelPickup = loadSound("jewel-pickup.wav");
 
     preparation = loadMusic("preparation.mp3");

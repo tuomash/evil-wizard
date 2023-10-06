@@ -10,6 +10,7 @@ abstract class Spell extends Entity
   boolean canAttack;
   float elapsedSinceLastAttack;
   float rateOfAttack;
+  int manaCost;
   Texture texture;
   Icon hotBarIcon;
 
