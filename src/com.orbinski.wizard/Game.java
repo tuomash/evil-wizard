@@ -70,7 +70,7 @@ class Game
     waves = new Waves(this);
 
     generateTrees();
-    createManaFountain();
+    createDefaultManaFountain();
     generateVillains();
     createSpells();
     randomizeRateOfJewels();
@@ -432,7 +432,7 @@ class Game
     }
   }
 
-  void createManaFountain()
+  void createDefaultManaFountain()
   {
     final ManaFountain fountain = new ManaFountain(0.0f, -20.0f);
     fountains.add(fountain);
@@ -892,6 +892,11 @@ class Game
     seconds = 0;
 
     // villains.get(0).reset();
+    towers.clear();
+    fountains.clear();
+    manaRegen = 0;
+    createDefaultManaFountain();
+
     waves.reset();
     allEnemiesDead = true;
     UserInterface.startButton.visible = true;

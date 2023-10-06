@@ -15,7 +15,7 @@ class ManaFountain extends Entity
     setX(x);
     setY(y);
     rateOfManaRegen = 1.0f;
-    manaRegen = 50;
+    manaRegen = 40;
   }
 
   void update(final float delta, final Game game)
