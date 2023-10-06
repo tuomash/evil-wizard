@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Circle;
 
 import java.util.List;
 
-class Tower extends Entity
+class Base extends Entity
 {
   Enemy target;
   Circle range;
@@ -13,7 +13,7 @@ class Tower extends Entity
   float elapsedSinceLastAttack;
   float rateOfAttack;
 
-  Tower()
+  Base()
   {
     super(8.0f, 30.0f);
     setX(0.0f);
@@ -106,9 +106,9 @@ class Tower extends Entity
 
   void doEnemyAttack(final Enemy enemy)
   {
-    decreaseHealth(enemy.towerDamage);
+    decreaseHealth(enemy.baseDamage);
     enemy.dead = true;
-    Audio.playSound(Audio.towerDamage);
+    Audio.playSound(Audio.baseDamage);
   }
 
   void reset()

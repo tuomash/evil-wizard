@@ -16,7 +16,7 @@ class Help
       text.text = "Press SPACE to pause the game";
       text.font = Renderer.font24White;
       text.setX(20);
-      text.setY(240);
+      text.setY(200);
       texts.add(text);
     }
 
@@ -25,7 +25,7 @@ class Help
       text.text = "Press N to decrease game speed and M to increase it";
       text.font = Renderer.font24White;
       text.setX(20);
-      text.setY(200);
+      text.setY(160);
       texts.add(text);
     }
 
@@ -34,22 +34,13 @@ class Help
       text.text = "Use WASD or number keys to control the camera";
       text.font = Renderer.font24White;
       text.setX(20);
-      text.setY(160);
-      texts.add(text);
-    }
-
-    {
-      final Text text = new Text();
-      text.text = "Use mouse to select towers, villains and spells";
-      text.font = Renderer.font24White;
-      text.setX(20);
       text.setY(120);
       texts.add(text);
     }
 
     {
       final Text text = new Text();
-      text.text = "Use numbers from 1 to 9 to quick select spells";
+      text.text = "Use mouse to select base and spells";
       text.font = Renderer.font24White;
       text.setX(20);
       text.setY(80);
@@ -58,7 +49,7 @@ class Help
 
     {
       final Text text = new Text();
-      text.text = "Press H to quick select villain";
+      text.text = "Use numbers from 1 to 9 to quick select spells";
       text.font = Renderer.font24White;
       text.setX(20);
       text.setY(40);

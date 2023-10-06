@@ -10,7 +10,7 @@ class Game
 {
   static final int MAX_JEWELS = 10;
 
-  final Tower tower;
+  final Base base;
   final Jewel[] jewels;
   final List<Tree> trees;
   final List<Villain> villains;
@@ -43,7 +43,7 @@ class Game
 
   Game()
   {
-    tower = new Tower();
+    base = new Base();
     jewels = new Jewel[MAX_JEWELS];
     trees = new ArrayList<>();
     villains = new ArrayList<>();
@@ -104,10 +104,10 @@ class Game
       }
     }
 
-    tower.update(delta);
+    base.update(delta);
 
     {
-      final Projectile projectile = tower.findAndFireAtTarget(enemies);
+      final Projectile projectile = base.findAndFireAtTarget(enemies);
 
       if (projectile != null)
       {
@@ -238,11 +238,11 @@ class Game
           }
         }
 
-        if (Entity.overlaps(tower, enemy))
+        if (Entity.overlaps(base, enemy))
         {
-          tower.doEnemyAttack(enemy);
+          base.doEnemyAttack(enemy);
 
-          if (tower.getHealth() <= 0)
+          if (base.getHealth() <= 0)
           {
             gameOver = true;
             Audio.fadeOut = true;
@@ -347,7 +347,7 @@ class Game
 
   void generateTrees()
   {
-    // Top left side of tower
+    // Top left side of the base
     for (int x = -100; x < -25; x = x + 4)
     {
       for (int y = 100; y > 25; y = y - 4)
@@ -359,7 +359,7 @@ class Game
       }
     }
 
-    // Top right side of tower
+    // Top right side of the base
     for (int x = 25; x < 125; x = x + 4)
     {
       for (int y = 100; y > 25; y = y - 4)
@@ -371,7 +371,7 @@ class Game
       }
     }
 
-    // Bottom left side of tower
+    // Bottom left side of the base
     for (int x = -100; x < -25; x = x + 4)
     {
       for (int y = -25; y > -100; y = y - 4)
@@ -383,7 +383,7 @@ class Game
       }
     }
 
-    // Bottom right side of tower
+    // Bottom right side of the base
     for (int x = 25; x < 125; x = x + 4)
     {
       for (int y = -25; y > -100; y = y - 4)
@@ -401,7 +401,7 @@ class Game
     /*
     final Villain villain = new Villain();
     villain.setX(-10.0f);
-    villain.setY(tower.getY() - tower.getHeightOffset());
+    villain.setY(base.getY() - base.getHeightOffset());
     villain.inAction = true;
     villains.add(villain);
     */
@@ -491,12 +491,12 @@ class Game
     rateOfJewels = random.nextInt(30) + 15;
   }
 
-  boolean selectTower(final float x, final float y)
+  boolean selectBase(final float x, final float y)
   {
-    if (Entity.contains(tower, x, y))
+    if (Entity.contains(base, x, y))
     {
       clearSelections();
-      tower.selected = true;
+      base.selected = true;
       return true;
     }
 
@@ -610,12 +610,12 @@ class Game
   {
     villain.inAction = true;
     villain.setX(-10.0f);
-    villain.setY(tower.getY() - tower.getHeightOffset());
+    villain.setY(base.getY() - base.getHeightOffset());
   }
 
   public void clearSelections()
   {
-    tower.selected = false;
+    base.selected = false;
     selectedSpell = null;
     selectedSpellIndex = -1;
     selectedVillain = null;
@@ -663,8 +663,8 @@ class Game
     gameOver = false;
     victory = false;
     started = false;
-    tower.target = null;
-    tower.reset();
+    base.target = null;
+    base.reset();
     clearJewels();
     projectiles.clear();
     enemies.clear();

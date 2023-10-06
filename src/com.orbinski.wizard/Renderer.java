@@ -24,7 +24,7 @@ class Renderer
 
   static Texture knightTexture;
   static Texture minotaurTexture;
-  static Texture towerTexture;
+  static Texture baseTexture;
   static Texture orbTexture;
   static Texture tileTexture;
   static Texture jewelTexture;
@@ -83,7 +83,7 @@ class Renderer
 
     knightTexture = loadTexture("knight.png");
     minotaurTexture = loadTexture("minotaur.png");
-    towerTexture = loadTexture("tower.png");
+    baseTexture = loadTexture("tower.png");
     orbTexture = loadTexture("orb.png");
     tileTexture = loadTexture("tileable_grass_00.png");
     jewelTexture = loadTexture("jewel.png");
@@ -155,7 +155,7 @@ class Renderer
       renderBackground();
       renderAreaEffects();
       renderTrees();
-      renderTower();
+      renderBase();
       renderJewels();
       renderEnemies();
       renderVillains();
@@ -242,17 +242,17 @@ class Renderer
     spriteBatch.end();
   }
 
-  void renderTower()
+  void renderBase()
   {
-    renderEntity(game.tower, towerTexture);
-    renderHealthBar(game.tower.getHealthBar());
+    renderEntity(game.base, baseTexture);
+    renderHealthBar(game.base.getHealthBar());
 
-    if (game.tower.selected)
+    if (game.base.selected)
     {
-      renderEntityBorder(game.tower, Color.WHITE);
-      renderCircle(game.tower.range.x,
-                   game.tower.range.y,
-                   game.tower.range.radius,
+      renderEntityBorder(game.base, Color.WHITE);
+      renderCircle(game.base.range.x,
+                   game.base.range.y,
+                   game.base.range.radius,
                    Color.RED);
     }
   }

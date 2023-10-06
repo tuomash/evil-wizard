@@ -91,7 +91,7 @@ class Controller
         }
         else if (game.selectedVillain != null)
         {
-          if (game.selectTower(result.x, result.y))
+          if (game.selectBase(result.x, result.y))
           {
             game.selectedVillain = null;
           }
@@ -107,7 +107,7 @@ class Controller
           if (game.selectVillain(result.x, result.y))
           {
           }
-          else if (game.selectTower(result.x, result.y))
+          else if (game.selectBase(result.x, result.y))
           {
           }
         }

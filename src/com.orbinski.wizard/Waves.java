@@ -231,8 +231,8 @@ class Waves
       final Point randomPoint = side.get(random.nextInt(side.size()));
       enemy.setX(randomPoint.x);
       enemy.setY(randomPoint.y);
-      enemy.targetX = game.tower.getX();
-      enemy.targetY = game.tower.getY() - game.tower.getHeightOffset();
+      enemy.targetX = game.base.getX();
+      enemy.targetY = game.base.getY() - game.base.getHeightOffset();
       enemy.moving = true;
       game.enemies.add(enemy);
     }

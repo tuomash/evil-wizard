@@ -2,7 +2,7 @@ package com.orbinski.wizard;
 
 class Enemy extends Entity
 {
-  int towerDamage;
+  int baseDamage;
   Villain villainTarget;
   boolean canAttack;
   float elapsedSinceLastAttack;
@@ -16,7 +16,7 @@ class Enemy extends Entity
     velocityX = 2.25f;
     velocityY = 2.25f;
     bounty = 5;
-    towerDamage = 50;
+    baseDamage = 50;
     setHealth(10);
     setMaxHealth(10);
     setHealthBar(new HealthBar(-getWidthOffset(),
