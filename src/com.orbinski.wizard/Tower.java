@@ -102,7 +102,7 @@ class Tower extends Entity
       projectile.target = target;
       projectile.targetX = target.getX();
       projectile.targetY = target.getY();
-      projectile.setDamage(7, 10);
+      projectile.setDamage(6, 8);
       return projectile;
     }
 

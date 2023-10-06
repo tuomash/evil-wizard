@@ -101,7 +101,11 @@ class Game
       }
     }
 
-    if (minutes == 0 && seconds == 0)
+    if (mana == requiredMana)
+    {
+      victory = true;
+    }
+    else if (minutes == 0 && seconds == 0)
     {
       gameOver = true;
       Audio.fadeOut = true;
@@ -751,6 +755,16 @@ class Game
     return mana;
   }
 
+  void increaseMana(final int mana)
+  {
+    this.mana = this.mana + mana;
+
+    if (this.mana > requiredMana)
+    {
+      this.mana = requiredMana;
+    }
+  }
+
   void decreaseMana(final int mana)
   {
     this.mana = this.mana - mana;
@@ -778,7 +792,7 @@ class Game
     minutes = 15;
     seconds = 0;
 
-    villains.get(0).reset();
+    // villains.get(0).reset();
     waves.reset();
     allEnemiesDead = true;
     UserInterface.startButton.visible = true;

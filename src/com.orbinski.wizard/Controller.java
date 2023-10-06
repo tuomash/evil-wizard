@@ -130,6 +130,7 @@ class Controller
         game.moveSpell(result.x, result.y);
       }
     }
+    /*
     else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2))
     {
       if (game.selectSpell(1))
@@ -137,6 +138,7 @@ class Controller
         game.moveSpell(result.x, result.y);
       }
     }
+     */
     else if (Gdx.input.isKeyJustPressed(Input.Keys.C))
     {
       game.centerCamera();
@@ -145,10 +147,12 @@ class Controller
     {
       game.pickUpVillain();
     }
+    /*
     else if (Gdx.input.isKeyJustPressed(Input.Keys.H))
     {
       game.selectVillain();
     }
+     */
     else if (Gdx.input.isKeyJustPressed(Input.Keys.R))
     {
       game.reset();
