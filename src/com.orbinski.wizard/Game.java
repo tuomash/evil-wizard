@@ -131,6 +131,7 @@ class Game
       Audio.fadeOut = true;
     }
 
+    waves.update(delta);
     base.update(delta);
 
     for (int i = 0; i < towers.size(); i++)
@@ -292,16 +293,8 @@ class Game
     if (allEnemiesDead && !this.allEnemiesDead && !enemies.isEmpty())
     {
       this.allEnemiesDead = true;
-
-      if (waves.isFinished())
-      {
-        victory = true;
-      }
-      else
-      {
-        Audio.fadeOut = true;
-        UserInterface.startButton.visible = true;
-      }
+      Audio.fadeOut = true;
+      UserInterface.startButton.visible = true;
     }
 
     for (int i = 0; i < projectiles.size(); i++)
@@ -385,8 +378,8 @@ class Game
 
   void generateTrees()
   {
-    // Top left side of the base
-    for (int x = -100; x < -25; x = x + 4)
+    // Top side of the base
+    for (int x = -100; x < 125; x = x + 4)
     {
       for (int y = 100; y > 25; y = y - 4)
       {
@@ -398,6 +391,7 @@ class Game
     }
 
     // Top right side of the base
+    /*
     for (int x = 25; x < 125; x = x + 4)
     {
       for (int y = 100; y > 25; y = y - 4)
@@ -408,11 +402,24 @@ class Game
         trees.add(tree);
       }
     }
+     */
 
-    // Bottom left side of the base
-    for (int x = -100; x < -25; x = x + 4)
+    // Bottom side of the base
+    for (int x = -100; x < 125; x = x + 4)
     {
-      for (int y = -25; y > -100; y = y - 4)
+      for (int y = -40; y > -100; y = y - 4)
+      {
+        final Tree tree = new Tree();
+        tree.setX(x);
+        tree.setY(y);
+        trees.add(tree);
+      }
+    }
+
+    // Behind the base
+    for (int x = 85; x < 120; x = x + 4)
+    {
+      for (int y = -35; y < 28; y = y + 4)
       {
         final Tree tree = new Tree();
         tree.setX(x);
@@ -422,9 +429,10 @@ class Game
     }
 
     // Bottom right side of the base
+    /*
     for (int x = 25; x < 125; x = x + 4)
     {
-      for (int y = -25; y > -100; y = y - 4)
+      for (int y = -40; y > -100; y = y - 4)
       {
         final Tree tree = new Tree();
         tree.setX(x);
@@ -432,11 +440,12 @@ class Game
         trees.add(tree);
       }
     }
+     */
   }
 
   void createDefaultManaFountain()
   {
-    final ManaFountain fountain = new ManaFountain(0.0f, -20.0f);
+    final ManaFountain fountain = new ManaFountain(base.getX(), base.getY() -20.0f);
     fountain.defaultFountain = true;
     addFountain(fountain, false);
   }
@@ -458,7 +467,7 @@ class Game
     {
       Audio.stopPreparation();
       Audio.playBattle();
-      waves.nextWave();
+      waves.start();
     }
   }
 
@@ -608,8 +617,17 @@ class Game
     {
       clearSelections();
       selectedSpell = spells.get(index);
-      selectedSpellIndex = index;
-      return true;
+
+      if (mana >= selectedSpell.manaCost)
+      {
+        selectedSpellIndex = index;
+        return true;
+      }
+      else
+      {
+        selectedSpell = null;
+        selectedSpellIndex = -1;
+      }
     }
 
     return false;

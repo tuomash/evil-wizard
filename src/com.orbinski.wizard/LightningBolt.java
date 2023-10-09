@@ -7,12 +7,12 @@ class LightningBolt extends Spell
   LightningBolt()
   {
     super(8.0f, 30.0f);
-    range = new Circle(getX(), getY(), 5.0f);
+    range = new Circle(getX(), getY(), 25.0f);
     setDamage(6, 10);
     canAttack = true;
     rateOfAttack = 2.5f;
     applyHeightOffset = false;
-    manaCost = 250;
+    manaCost = 2500;
   }
 
   @Override

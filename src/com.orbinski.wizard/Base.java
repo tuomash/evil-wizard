@@ -13,7 +13,7 @@ class Base extends Entity
   Base()
   {
     super(8.0f, 30.0f);
-    setX(0.0f);
+    setX(65.0f);
     setY(0.0f);
     range = new Circle(getX(), getY(), 40.0f);
   }

@@ -12,15 +12,14 @@ class Waves
   final java.util.List<Point> rightSide = new ArrayList<>();
   final java.util.List<Point> topSide = new ArrayList<>();
   final java.util.List<Point> bottomSide = new ArrayList<>();
-  final int maxWaves;
 
-  int waveNumber;
+  boolean started;
+  float totalElapsed;
+  float elapsedWave;
 
   Waves(final Game game)
   {
     this.game = game;
-    waveNumber = 0;
-    maxWaves = 10;
 
     {
       for (int x = -20; x < 20; x++)
@@ -50,7 +49,7 @@ class Waves
       {
         for (int x = -100; x > -150; x--)
         {
-          for (int y = 20; y > -20; y--)
+          for (int y = 25; y > -25; y--)
           {
             final Point point = new Point();
             point.x = x;
@@ -75,152 +74,52 @@ class Waves
     }
   }
 
-  void nextWave()
+  void update(final float delta)
   {
-    if (isFinished() || !game.allEnemiesDead)
+    if (!started)
     {
       return;
     }
 
-    waveNumber++;
-    game.allEnemiesDead = false;
+    totalElapsed = totalElapsed + delta;
+    elapsedWave = elapsedWave + delta;
 
-    if (waveNumber > maxWaves)
+    if (elapsedWave > 1.0f)
     {
-      waveNumber = maxWaves;
+      elapsedWave = 0.0f;
+
+      if (totalElapsed < 30.0f)
+      {
+        generate(leftSide, 2);
+      }
+      else if (totalElapsed > 70.0f && totalElapsed < 100.0f)
+      {
+        generate(leftSide, 4);
+      }
+      else if (totalElapsed > 115.0f && totalElapsed < 140.0f)
+      {
+        generate(leftSide, 8);
+      }
+      else if (totalElapsed > 155.0f && totalElapsed < 185.0f)
+      {
+        generate(leftSide, 10);
+      }
+      else if (totalElapsed > 200.0f && totalElapsed < 230.0f)
+      {
+        generate(leftSide, 12);
+      }
     }
-
-    generateEnemies();
-
-    UserInterface.startButton.visible = false;
   }
 
-  private void generateEnemies()
+  void start()
   {
-    game.enemies.clear();
-
-    final int topSideCount;
-    final int bottomSideCount;
-    final int leftSideCount;
-    final int rightSideCount;
-
-    switch (waveNumber)
+    if (started)
     {
-      case 1:
-      {
-        topSideCount = 0;
-        bottomSideCount = 0;
-        leftSideCount = 0;
-        rightSideCount = 10;
-
-        break;
-      }
-
-      case 2:
-      {
-        topSideCount = 0;
-        bottomSideCount = 0;
-        leftSideCount = 10;
-        rightSideCount = 10;
-
-        break;
-      }
-
-      case 3:
-      {
-        topSideCount = 10;
-        bottomSideCount = 0;
-        leftSideCount = 10;
-        rightSideCount = 10;
-
-        break;
-      }
-
-      case 4:
-      {
-        topSideCount = 10;
-        bottomSideCount = 10;
-        leftSideCount = 10;
-        rightSideCount = 10;
-
-        break;
-      }
-
-      case 5:
-      {
-        topSideCount = 15;
-        bottomSideCount = 15;
-        leftSideCount = 15;
-        rightSideCount = 15;
-
-        break;
-      }
-
-      case 6:
-      {
-        topSideCount = 20;
-        bottomSideCount = 20;
-        leftSideCount = 20;
-        rightSideCount = 20;
-
-        break;
-      }
-
-      case 7:
-      {
-        topSideCount = 25;
-        bottomSideCount = 25;
-        leftSideCount = 25;
-        rightSideCount = 25;
-
-        break;
-      }
-
-      case 8:
-      {
-        topSideCount = 30;
-        bottomSideCount = 30;
-        leftSideCount = 30;
-        rightSideCount = 30;
-
-        break;
-      }
-
-      case 9:
-      {
-        topSideCount = 40;
-        bottomSideCount = 40;
-        leftSideCount = 40;
-        rightSideCount = 40;
-
-        break;
-      }
-
-      case 10:
-      {
-        topSideCount = 45;
-        bottomSideCount = 45;
-        leftSideCount = 45;
-        rightSideCount = 45;
-
-        break;
-      }
-
-      default:
-      {
-        topSideCount = 5;
-        bottomSideCount = 5;
-        leftSideCount = 5;
-        rightSideCount = 5;
-
-        break;
-      }
+      return;
     }
 
-    generate(topSide, topSideCount);
-    generate(bottomSide, bottomSideCount);
-    generate(leftSide, leftSideCount);
-    generate(rightSide, rightSideCount);
+    started = true;
+    UserInterface.startButton.visible = false;
   }
 
   private void generate(final java.util.List<Point> side, final int count)
@@ -240,11 +139,8 @@ class Waves
 
   void reset()
   {
-    waveNumber = 0;
-  }
-
-  boolean isFinished()
-  {
-    return waveNumber == maxWaves;
+    started = false;
+    totalElapsed = 0.0f;
+    elapsedWave = 0.0f;
   }
 }
