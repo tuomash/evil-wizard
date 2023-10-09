@@ -11,49 +11,26 @@ class Help
   {
     texts = new ArrayList<>();
 
-    {
-      final Text text = new Text();
-      text.text = "Press SPACE to pause the game";
-      text.font = Renderer.font24White;
-      text.setX(20);
-      text.setY(200);
-      texts.add(text);
-    }
+    add("Your objective is to get to max mana before the time ends.", 20, 500);
+    add("Build towers for constant DPS. Towers reduce mana regen.", 20, 460);
+    add("Build mana fountains for increased mana regen.", 20, 420);
+    add("Cast spells to inflict massive damage. Spells cost mana.", 20, 380);
+    add("Enemies take away mana when they reach your base.", 20, 340);
 
-    {
-      final Text text = new Text();
-      text.text = "Press N to decrease game speed and M to increase it";
-      text.font = Renderer.font24White;
-      text.setX(20);
-      text.setY(160);
-      texts.add(text);
-    }
+    add("Press D to delete tower or fountain", 20, 200);
+    add("Press SPACE to pause the game", 20, 160);
+    add("Press N to decrease game speed and M to increase it", 20, 120);
+    add("Use mouse to select base, towers, fountains, and spells", 20, 80);
+    add("Use numbers from 1 to 9 to quick select spells", 20, 40);
+  }
 
-    {
-      final Text text = new Text();
-      text.text = "Use WASD or number keys to control the camera";
-      text.font = Renderer.font24White;
-      text.setX(20);
-      text.setY(120);
-      texts.add(text);
-    }
-
-    {
-      final Text text = new Text();
-      text.text = "Use mouse to select base and spells";
-      text.font = Renderer.font24White;
-      text.setX(20);
-      text.setY(80);
-      texts.add(text);
-    }
-
-    {
-      final Text text = new Text();
-      text.text = "Use numbers from 1 to 9 to quick select spells";
-      text.font = Renderer.font24White;
-      text.setX(20);
-      text.setY(40);
-      texts.add(text);
-    }
+  private void add(final String text, final int x, final int y)
+  {
+    final Text textObj = new Text();
+    textObj.text = text;
+    textObj.font = Renderer.font24White;
+    textObj.setX(x);
+    textObj.setY(y);
+    texts.add(textObj);
   }
 }
