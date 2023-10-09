@@ -139,7 +139,9 @@ class Controller
           else if (game.selectTower(result.x, result.y))
           {
           }
-          // TODO: implement select mana fountain
+          else if (game.selectFountain(result.x, result.y))
+          {
+          }
         }
       }
     }
@@ -164,9 +166,15 @@ class Controller
       }
     }
      */
+    /*
     else if (Gdx.input.isKeyJustPressed(Input.Keys.C))
     {
       game.centerCamera();
+    }
+     */
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.D))
+    {
+      game.deleteSelectedEntity();
     }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.E))
     {
@@ -194,17 +202,6 @@ class Controller
     {
       game.paused = !game.paused;
     }
-    else if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL))
-    {
-      // TODO: implement selected tower deletion
-      if (game.newTower != null)
-      {
-      }
-      // TODO: implement selected fountain deletion
-      else if (game.newFountain != null)
-      {
-      }
-    }
     else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
     {
       game.clearSelections();
@@ -217,6 +214,7 @@ class Controller
 
     // Camera controls
 
+    /*
     if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP))
     {
       game.cameraState.moveUp();
@@ -234,5 +232,6 @@ class Controller
     {
       game.cameraState.moveRight();
     }
+     */
   }
 }

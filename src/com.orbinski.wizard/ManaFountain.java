@@ -8,6 +8,7 @@ class ManaFountain extends Entity
   float rateOfManaRegen;
   int manaRegen;
   boolean selected;
+  boolean defaultFountain;
 
   ManaFountain(final float x, final float y)
   {

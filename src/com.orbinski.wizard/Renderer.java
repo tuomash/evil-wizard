@@ -297,9 +297,9 @@ class Renderer
 
   void renderTowers()
   {
-    for (int i = 0; i < game.towers.size(); i++)
+    for (int i = 0; i < game.getTowers().size(); i++)
     {
-      final Tower tower = game.towers.get(i);
+      final Tower tower = game.getTowers().get(i);
       renderEntity(tower, towerTexture);
 
       if (tower.selected)
@@ -315,9 +315,9 @@ class Renderer
 
   void renderManaFountains()
   {
-    for (int i = 0; i < game.fountains.size(); i++)
+    for (int i = 0; i < game.getFountains().size(); i++)
     {
-      final ManaFountain fountain = game.fountains.get(i);
+      final ManaFountain fountain = game.getFountains().get(i);
       renderEntity(fountain, fountainTexture);
 
       if (fountain.selected)

@@ -13,8 +13,8 @@ class Game
   final Base base;
   final Jewel[] jewels;
   final List<Tree> trees;
-  final List<Tower> towers;
-  final List<ManaFountain> fountains;
+  private final List<Tower> towers;
+  private final List<ManaFountain> fountains;
   final List<Villain> villains;
   final List<Enemy> enemies;
   final List<Projectile> projectiles;
@@ -35,6 +35,8 @@ class Game
   Villain selectedVillain;
   Tower newTower;
   ManaFountain newFountain;
+  int selectedTowerIndex = -1;
+  int selectedFountainIndex = -1;
 
   int requiredMana = 50000;
   float timeLimitElapsed = 0.0f;
@@ -435,8 +437,8 @@ class Game
   void createDefaultManaFountain()
   {
     final ManaFountain fountain = new ManaFountain(0.0f, -20.0f);
-    fountains.add(fountain);
-    calculateManaRegen(fountain);
+    fountain.defaultFountain = true;
+    addFountain(fountain, false);
   }
 
   void generateVillains()
@@ -558,8 +560,43 @@ class Game
       {
         clearSelections();
         tower.selected = true;
+        selectedTowerIndex = i;
         return true;
       }
+    }
+
+    return false;
+  }
+
+  boolean selectFountain(final float x, final float y)
+  {
+    for (int i = 0; i < fountains.size(); i++)
+    {
+      final ManaFountain fountain = fountains.get(i);
+
+      if (Entity.contains(fountain, x, y))
+      {
+        clearSelections();
+        fountain.selected = true;
+        selectedFountainIndex = i;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  boolean deleteSelectedEntity()
+  {
+    if (removeTower())
+    {
+      clearSelections();
+      return true;
+    }
+    else if (removeFountain())
+    {
+      clearSelections();
+      return true;
     }
 
     return false;
@@ -707,9 +744,7 @@ class Game
       }
 
       newTower.move(x, y);
-      decreaseGold(Tower.GOLD_COST);
-      towers.add(newTower);
-      calculateManaRegen(newTower);
+      addTower(newTower);
       clearSelections();
     }
   }
@@ -745,9 +780,7 @@ class Game
       }
 
       newFountain.move(x, y);
-      decreaseGold(ManaFountain.GOLD_COST);
-      fountains.add(newFountain);
-      calculateManaRegen(newFountain);
+      addFountain(newFountain);
       clearSelections();
     }
   }
@@ -757,14 +790,21 @@ class Game
     return manaRegen;
   }
 
-  private void calculateManaRegen(final ManaFountain fountain)
+  private void calculateManaRegen()
   {
-    manaRegen = manaRegen + fountain.manaRegen;
-  }
+    manaRegen = 0;
 
-  private void calculateManaRegen(final Tower tower)
-  {
-    manaRegen = manaRegen - tower.manaCost;
+    for (int i = 0; i < fountains.size(); i++)
+    {
+      final ManaFountain fountain = fountains.get(i);
+      manaRegen = manaRegen + fountain.manaRegen;
+    }
+
+    for (int i = 0; i < towers.size(); i++)
+    {
+      final Tower tower = towers.get(i);
+      manaRegen = manaRegen - tower.manaCost;
+    }
 
     if (manaRegen < 0)
     {
@@ -780,6 +820,8 @@ class Game
     selectedVillain = null;
     newTower = null;
     newFountain = null;
+    selectedTowerIndex = -1;
+    selectedFountainIndex = -1;
 
     for (int i = 0; i < towers.size(); i++)
     {
@@ -872,6 +914,75 @@ class Game
     {
       this.mana = 0;
     }
+  }
+
+  List<Tower> getTowers()
+  {
+    return towers;
+  }
+
+  void addTower(final Tower tower)
+  {
+    towers.add(tower);
+    decreaseGold(Tower.GOLD_COST);
+    calculateManaRegen();
+  }
+
+  boolean removeTower()
+  {
+    if (selectedTowerIndex != -1)
+    {
+      towers.remove(selectedTowerIndex);
+      increaseGold(Tower.GOLD_COST / 2);
+      calculateManaRegen();
+      selectedTowerIndex = -1;
+      return true;
+    }
+
+    return false;
+  }
+
+  List<ManaFountain> getFountains()
+  {
+    return fountains;
+  }
+
+  void addFountain(final ManaFountain fountain)
+  {
+    addFountain(fountain, true);
+  }
+
+  void addFountain(final ManaFountain fountain, final boolean applyGoldCost)
+  {
+    fountains.add(fountain);
+
+    if (applyGoldCost)
+    {
+      decreaseGold(ManaFountain.GOLD_COST);
+    }
+
+    calculateManaRegen();
+  }
+
+  boolean removeFountain()
+  {
+    if (selectedFountainIndex != -1)
+    {
+      final ManaFountain fountain = fountains.get(selectedFountainIndex);
+
+      // Don't allow default mana fountain removal
+      if (fountain.defaultFountain)
+      {
+        return false;
+      }
+
+      fountains.remove(selectedFountainIndex);
+      selectedFountainIndex = -1;
+      calculateManaRegen();
+      return true;
+    }
+
+    return false;
   }
 
   void reset()
