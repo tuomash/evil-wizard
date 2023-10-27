@@ -12,11 +12,11 @@ class HealthBar extends Entity
   private float greenBarWidth;
 
   HealthBar(final float offsetX,
-                   final float offsetY,
-                   final float width,
-                   final float height,
-                   final int health,
-                   final int maxHealth)
+            final float offsetY,
+            final float width,
+            final float height,
+            final int health,
+            final int maxHealth)
   {
     super(width, height);
     this.offsetX = offsetX;
