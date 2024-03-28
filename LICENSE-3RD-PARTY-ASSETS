@@ -2,30 +2,34 @@
 
 CC0 1.0 Deed CC0 1.0 Universal (https://creativecommons.org/publicdomain/zero/1.0/)
 
-graphics/block.png ("Square Block Textures" by etqws3: https://opengameart.org/content/square-block-textures)
-graphics/candle.png ("candles, oil lamp and eye with varied stands" by vk: https://opengameart.org/content/candles-oil-lamp-and-eye-with-varied-stands)
+music/battle.mp3 (Battle Theme A by The Cynic Project / cynicmusic.com / pixelsphere.org: https://opengameart.org/content/battle-theme-a)
+music/preparation.mp3 (Dark Forest Theme by The Cynic Project / cynicmusic.com / pixelsphere.org: https://opengameart.org/content/dark-forest-theme)
+
+sfx/death-noise-male.wav (Cheesy Death Noise - (Male) by Christopherderp: https://freesound.org/people/Christopherderp/sounds/342232/)
+sfx/minotaur-growl.wav (Growl by fiezewarthog: https://freesound.org/people/fiezewarthog/sounds/504919/)
+sfx/tower-damage.wav (low thump.wav by Reitanna: https://freesound.org/people/Reitanna/sounds/332670/)
 
 -------------------------------------------------------------------------------
 
 CC BY-SA 3.0 DEED ATTRIBUTION-SHAREALIKE 3.0 UNPORTED (https://creativecommons.org/licenses/by-sa/3.0/)
 
-graphics/door.png ("LPC Windows & Doors" by bluecarrot16, Lanea Zimmerman (Sharm) and Daniel Armstrong (HughSpectrum), Casper Nilsson, Anamaris, Krusmira, Keith Karnage, Guido Bos, and Talosaurus. License: CC-BY-SA 3.0 / GPL 3.0+: https://opengameart.org/content/lpc-windows-doors)
+-------------------------------------------------------------------------------
+
+CC BY 3.0 DEED ATTRIBUTION 3.0 UNPORTED (https://creativecommons.org/licenses/by/3.0/)
+
+sfx/orb.wav (Fire Ball Release by CTCollab: https://freesound.org/people/CTCollab/sounds/223611/)
 
 -------------------------------------------------------------------------------
 
 CC BY 4.0 DEED ATTRIBUTION 4.0 INTERNATIONAL (https://creativecommons.org/licenses/by/4.0/)
 
-graphics/player-air-spin-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-idle-left.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-idle-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-jump-left.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-jump-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-land-left.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-land-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-roll-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-wall-land-left.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-graphics/player-wall-land-right.png ("FREE-2D Pixel Art Character Asset Pack" by ZeggyGames: https://zegley.itch.io/2d-platformermetroidvania-asset-pack)
-music/brute_force_loop.mp3 ("Vitalezzz - Brute Force" by vitalezz: https://opengameart.org/content/brute-force)
+sfx/grease.wav (Glugjug_01.wav by Department64: https://freesound.org/people/Department64/sounds/607781/)
+
+-------------------------------------------------------------------------------
+
+PERSONAL USE
+
+sfx/lightning-bolt.wav (Thunder 1 by Partners in Rhyme: https://www.freesoundeffects.com/free-track/donnerre2-428687/)
 
 -------------------------------------------------------------------------------
 
@@ -59,21 +63,4 @@ Well by Hansjörg Malthaner - http://opengameart.org/users/varkalandar: https://
 
 SFX:
 
-Growl by fiezewarthog: https://freesound.org/people/fiezewarthog/sounds/504919/
-
-Glugjug_01.wav by Department64: https://freesound.org/people/Department64/sounds/607781/
-
-Thunder 1 by Partners in Rhyme: https://www.freesoundeffects.com/free-track/donnerre2-428687/
-
-Fire Ball Release by CTCollab: https://freesound.org/people/CTCollab/sounds/223611/
-
-Cheesy Death Noise - (Male) by Christopherderp: https://freesound.org/people/Christopherderp/sounds/342232/
-
-low thump.wav by Reitanna: https://freesound.org/people/Reitanna/sounds/332670/
-
-Music:
-
-Dark Forest Theme by The Cynic Project / cynicmusic.com / pixelsphere.org: https://opengameart.org/content/dark-forest-theme
-
-Battle Theme A by The Cynic Project / cynicmusic.com / pixelsphere.org: https://opengameart.org/content/battle-theme-a
-
+sfx/jewel-pickup.wav where is this from?
