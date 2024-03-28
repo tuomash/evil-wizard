@@ -2,7 +2,7 @@
 
 Evil Wizard is a tower defense game where the focus is on casting spells and summoning monsters.
 
-You can download the latest build from: https://curbyourcode.itch.io/evil-wizard.
+You can download the latest build from: https://curbyourcode.itch.io/evil-wizard (not working yet).
 
 ## Building and running on Windows with IntelliJ
 
