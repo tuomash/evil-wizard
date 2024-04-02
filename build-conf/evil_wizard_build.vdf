@@ -1,6 +1,6 @@
 "AppBuild"
 {
-	"AppID" "1682370"
+	"AppID" "123456789"
 	"Desc" "Evil Wizard Steam build"
 
 	"ContentRoot" "..\..\..\..\..\dist\"

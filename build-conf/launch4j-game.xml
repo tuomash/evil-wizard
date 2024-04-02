@@ -2,7 +2,7 @@
     <headerType>gui</headerType>
     <errTitle>Evil Wizard error</errTitle>
     <chdir></chdir>
-    <supportUrl>https://curbyourcode.com</supportUrl>
+    <supportUrl>https://google.com</supportUrl>
     <stayAlive>false</stayAlive>
     <icon>evil-wizard.ico</icon>
     <jre>
@@ -18,11 +18,11 @@
         <fileVersion>0.1.0.0</fileVersion>
         <txtFileVersion>0.1.0b</txtFileVersion>
         <fileDescription>Evil Wizard executable</fileDescription>
-        <copyright>Copyright 2023 Curb Your Code Oy</copyright>
+        <copyright>Copyright 2024 Evil Wizard</copyright>
         <productVersion>0.1.0.0</productVersion>
         <txtProductVersion>0.1.0b</txtProductVersion>
         <productName>Evil Wizard</productName>
-        <companyName>Curb Your Code Oy</companyName>
+        <companyName>Evil Wizard</companyName>
         <internalName>EvilWizard</internalName>
         <originalFilename>EvilWizard.exe</originalFilename>
     </versionInfo>
