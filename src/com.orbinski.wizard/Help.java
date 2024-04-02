@@ -49,7 +49,7 @@ class Help
 
     {
       final Text text = new Text();
-      text.text = "Use numbers from 1 to 9 to quick select spells";
+      text.text = "Press 1 and 2 to quick select spells";
       text.font = Renderer.font24White;
       text.setX(20);
       text.setY(80);
@@ -58,7 +58,7 @@ class Help
 
     {
       final Text text = new Text();
-      text.text = "Press H to quick select villain";
+      text.text = "Press 3 or H to quick select villain";
       text.font = Renderer.font24White;
       text.setX(20);
       text.setY(40);

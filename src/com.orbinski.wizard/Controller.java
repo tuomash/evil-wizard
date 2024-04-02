@@ -133,7 +133,7 @@ class Controller
     {
       game.pickUpVillain();
     }
-    else if (Gdx.input.isKeyJustPressed(Input.Keys.H))
+    else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3) || Gdx.input.isKeyJustPressed(Input.Keys.H))
     {
       game.selectVillain();
     }
