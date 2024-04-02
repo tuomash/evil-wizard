@@ -61,6 +61,12 @@
         <mkdir dir="${dist}/music"/>
         <mkdir dir="${dist}/sfx"/>
 
+        <copy todir="${dist}">
+            <file name="LICENSE"/>
+            <file name="LICENSE-3RD-PARTY-ASSETS"/>
+            <file name="LICENSE-3RD-PARTY-LIBRARIES"/>
+        </copy>
+
         <property name="executable.ref" value="${inst.jdk}/bin/javac"/>
         <javac srcdir="${src}"
                destdir="${build}"
