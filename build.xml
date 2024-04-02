@@ -6,8 +6,8 @@
     <property name="src" location="src"/>
     <property name="build" location="build"/>
     <property name="inst" location="inst"/>
-    <property name="inst.jdk" location="${inst}/jdk-17.0.6+10"/>
-    <property name="inst.jre" location="${inst}/jdk-17.0.8.1+1-jre"/>
+    <property name="inst.jdk" location="${inst}/jdk"/>
+    <property name="inst.jre" location="${inst}/jre"/>
     <property name="dist" location="dist"/>
     <property name="dist-zip" location="dist-zip"/>
     <property name="lib" location="lib"/>
