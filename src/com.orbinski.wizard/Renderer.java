@@ -26,7 +26,7 @@ class Renderer
   static Viewport hudViewportRef;
 
   static Texture knightTexture;
-  static Texture minotaurTexture;
+  static Texture trollTexture;
   static Texture towerTexture;
   static Texture orbTexture;
   static Texture tileTexture;
@@ -35,7 +35,7 @@ class Renderer
   static Texture greaseTexture;
   static Texture treeTexture;
 
-  static Texture uiMinotaurIconTexture;
+  static Texture uiTrollIconTexture;
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
 
@@ -85,7 +85,7 @@ class Renderer
     hudShapeRenderer.setAutoShapeType(true);
 
     knightTexture = loadTexture("knight.png");
-    minotaurTexture = loadTexture("minotaur.png");
+    trollTexture = loadTexture("troll_1.png");
     towerTexture = loadTexture("tower.png");
     orbTexture = loadTexture("orb.png");
     tileTexture = loadTexture("tileable_grass_00.png");
@@ -94,7 +94,7 @@ class Renderer
     greaseTexture = loadTexture("grease2.png");
     treeTexture = loadTexture("tree.png");
 
-    uiMinotaurIconTexture = loadTexture("ui-villain-minotaur-icon.png");
+    uiTrollIconTexture = loadTexture("ui-villain-troll-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon-2.png");
 
@@ -285,7 +285,7 @@ class Renderer
 
       if (!villain.dead && villain.inAction)
       {
-        renderEntity(villain, minotaurTexture);
+        renderEntity(villain, trollTexture);
         renderHealthBar(villain.getHealthBar());
         // renderEntityBorder(villain, Color.BLUE);
 

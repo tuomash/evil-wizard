@@ -17,7 +17,7 @@ class UserInterface
   {
     help = new Help();
 
-    hotBarIconMinotaur = new Icon(300, 60, Renderer.uiMinotaurIconTexture);
+    hotBarIconMinotaur = new Icon(300, 60, Renderer.uiTrollIconTexture);
     hotBarIconMinotaur.backgroundColor = Color.BLACK;
     hotBarIconMinotaur.setOverlay(new Overlay());
 
