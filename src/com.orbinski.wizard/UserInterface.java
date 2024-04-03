@@ -60,7 +60,5 @@ class UserInterface
         y = y - 34;
       }
     }
-
-
   }
 }

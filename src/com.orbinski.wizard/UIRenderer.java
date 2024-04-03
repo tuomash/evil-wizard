@@ -121,8 +121,6 @@ class UIRenderer
     }
   }
 
-
-
   void renderHud()
   {
     spriteBatch.begin();
