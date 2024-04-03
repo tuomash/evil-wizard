@@ -45,7 +45,7 @@ class Controller
     hudMouseScreen.y = Gdx.input.getY();
 
     final Vector2 result = Renderer.unproject(mouseScreen);
-    final Vector2 hudResult = Renderer.hudUnproject(hudMouseScreen);
+    final Vector2 hudResult = UIRenderer.unproject(hudMouseScreen);
 
     if (result == null || hudResult == null)
     {

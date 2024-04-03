@@ -40,7 +40,7 @@ class UserInterface
     nextWaveButton.setHeight(64);
     nextWaveButton.backgroundColor = Color.BLACK;
     nextWaveButton.text = "NEXT WAVE";
-    nextWaveButton.font = Renderer.font24White;
+    nextWaveButton.font = UIRenderer.font24White;
     nextWaveButton.visible = true;
   }
 }

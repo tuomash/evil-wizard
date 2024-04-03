@@ -142,7 +142,7 @@ class Game
         {
           gold = gold + jewel.bounty;
           jewels[z] = null;
-          textEffects.add(new TextEffect(jewel.getX(), jewel.getY(), 1.9f, jewel.bounty + "G", Renderer.font12Yellow));
+          textEffects.add(new TextEffect(jewel.getX(), jewel.getY(), 1.9f, jewel.bounty + "G", UIRenderer.font12Yellow));
           Audio.playSound(Audio.jewelPickup);
         }
       }

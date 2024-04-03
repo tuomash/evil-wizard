@@ -5,14 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.io.File;
@@ -23,7 +20,6 @@ import static com.orbinski.wizard.Globals.WORLD_WIDTH;
 class Renderer
 {
   static Viewport gameViewportRef;
-  static Viewport hudViewportRef;
 
   static Texture knightTexture;
   static Texture trollTexture;
@@ -39,19 +35,12 @@ class Renderer
   static Texture uiLightningBoltIconTexture;
   static Texture uiGreaseIconTexture;
 
-  static BitmapFont font24White;
-  static BitmapFont font16White;
-  static BitmapFont font12Yellow;
-
   final Game game;
   final OrthographicCamera camera;
   final Viewport viewport;
   final ShapeRenderer shapeRenderer;
   final SpriteBatch spriteBatch;
-  final OrthographicCamera hudCamera;
-  final ScreenViewport hudViewport;
-  final ShapeRenderer hudShapeRenderer;
-  final SpriteBatch hudSpriteBatch;
+
   final Color background;
 
   Renderer(final Game game)
@@ -71,19 +60,6 @@ class Renderer
     spriteBatch = new SpriteBatch();
     spriteBatch.setProjectionMatrix(camera.combined);
 
-    hudCamera = new OrthographicCamera();
-    hudCamera.update();
-
-    hudViewport = new ScreenViewport(hudCamera);
-    hudViewportRef = hudViewport;
-
-    hudSpriteBatch = new SpriteBatch();
-    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
-
-    hudShapeRenderer = new ShapeRenderer();
-    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
-    hudShapeRenderer.setAutoShapeType(true);
-
     knightTexture = loadTexture("knight.png");
     trollTexture = loadTexture("troll_1.png");
     towerTexture = loadTexture("tower.png");
@@ -97,31 +73,6 @@ class Renderer
     uiTrollIconTexture = loadTexture("ui-villain-troll-icon.png");
     uiLightningBoltIconTexture = loadTexture("ui-spell-lightning-bolt-icon.png");
     uiGreaseIconTexture = loadTexture("ui-spell-grease-icon-2.png");
-
-    font24White = new BitmapFont(true);
-    font24White.setColor(Color.RED);
-
-    final File file = new File(System.getProperty("user.dir")
-                                   + File.separator
-                                   + "graphics"
-                                   + File.separator
-                                   + "lunchds.ttf");
-    final FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(file.getAbsolutePath()));
-
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    parameter.size = 24;
-    parameter.color = com.badlogic.gdx.graphics.Color.WHITE;
-    font24White = generator.generateFont(parameter);
-
-    parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    parameter.size = 16;
-    parameter.color = Color.WHITE;
-    font16White = generator.generateFont(parameter);
-
-    parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    parameter.size = 18;
-    parameter.color = Color.YELLOW;
-    font12Yellow = generator.generateFont(parameter);
 
     background = new Color(173.0f / 255.0f, 216.0f / 255.0f, 230.0f / 255.0f, 1.0f);
   }
@@ -156,52 +107,6 @@ class Renderer
       renderProjectiles();
       renderSpell();
       renderSpellEffects();
-    }
-
-    hudViewport.apply();
-    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
-    hudSpriteBatch.setProjectionMatrix(hudCamera.combined);
-
-    if (!game.help)
-    {
-      if (game.paused)
-      {
-        renderHudDimBackground();
-      }
-
-      renderHud();
-
-      if (game.gameOver)
-      {
-        renderHudDimBackground();
-
-        hudSpriteBatch.begin();
-        font24White.draw(hudSpriteBatch, "GAME OVER", 100, 400);
-        font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
-        hudSpriteBatch.end();
-      }
-      else if (game.victory)
-      {
-        renderHudDimBackground();
-
-        hudSpriteBatch.begin();
-        font24White.draw(hudSpriteBatch, "CONGRATULATIONS! YOU HAVE DESTROYED THE FORCES OF GOOD.", 100, 400);
-        font24White.draw(hudSpriteBatch, "Press R to restart", 100, 320);
-        hudSpriteBatch.end();
-      }
-    }
-    else
-    {
-      renderHelp();
-    }
-  }
-
-  void renderHelp()
-  {
-    for (int i = 0; i < UserInterface.help.texts.size(); i++)
-    {
-      final Text text = UserInterface.help.texts.get(i);
-      renderText(text);
     }
   }
 
@@ -383,100 +288,6 @@ class Renderer
                        bar.getGreenBarWidth(),
                        bar.getHeight(),
                        Color.GREEN);
-    }
-  }
-
-  void renderHud()
-  {
-    hudSpriteBatch.begin();
-
-    if (game.paused)
-    {
-      font24White.draw(hudSpriteBatch, "PAUSED", 5, 200);
-    }
-
-    font24White.draw(hudSpriteBatch, "Speed " + game.getSpeed() + "x", 5, 160);
-    font24White.draw(hudSpriteBatch, "Wave " + game.waves.waveNumber + " / " + game.waves.maxWaves, 5, 120);
-    font24White.draw(hudSpriteBatch, "Gold: " + game.gold, 5, 80);
-
-    for (int i = 0; i < game.textEffects.size(); i++)
-    {
-      final TextEffect effect = game.textEffects.get(i);
-      effect.font.draw(hudSpriteBatch, effect.text, effect.screen.x, effect.screen.y);
-    }
-
-    hudSpriteBatch.end();
-
-    renderUIElement(UserInterface.hotBarIconMinotaur);
-    renderUIElement(UserInterface.hotBarIconLightningSpell);
-    renderUIElement(UserInterface.hotBarIconGreaseSpell);
-    renderTextButton(UserInterface.nextWaveButton);
-  }
-
-  void renderOverlay(final Overlay overlay)
-  {
-    if (overlay != null && overlay.visible)
-    {
-      renderHudFilledQuad(overlay.getX(),
-                          overlay.getY(),
-                          overlay.getWidth(),
-                          overlay.getHeight(),
-                          overlay.color);
-    }
-  }
-
-  void renderText(final Text text)
-  {
-    if (text != null && text.visible && text.font != null && text.text != null && !text.text.isEmpty())
-    {
-      renderUIElement(text);
-      hudSpriteBatch.begin();
-      text.font.draw(hudSpriteBatch,
-                     text.text,
-                     text.getX(),
-                     text.getY());
-      hudSpriteBatch.end();
-    }
-  }
-
-  void renderTextButton(final TextButton button)
-  {
-    if (button != null && button.visible)
-    {
-      renderUIElement(button);
-      hudSpriteBatch.begin();
-      button.font.draw(hudSpriteBatch,
-                       UserInterface.nextWaveButton.text,
-                       UserInterface.nextWaveButton.getTextX(),
-                       UserInterface.nextWaveButton.getTextY());
-      hudSpriteBatch.end();
-    }
-  }
-
-  void renderUIElement(final UIElement element)
-  {
-    if (element != null)
-    {
-      if (element.backgroundColor != null)
-      {
-        renderHudFilledQuad(element.getX(),
-                            element.getY(),
-                            element.getWidth(),
-                            element.getHeight(),
-                            element.backgroundColor);
-      }
-
-      if (element.texture != null)
-      {
-        hudSpriteBatch.begin();
-        hudSpriteBatch.draw(element.texture, element.getX(), element.getY(), element.getWidth(), element.getHeight());
-        hudSpriteBatch.end();
-      }
-
-      if (element.getOverlay() != null)
-      {
-        renderOverlay(element.getOverlay());
-      }
     }
   }
 
@@ -697,128 +508,6 @@ class Renderer
     Gdx.gl.glDisable(GL20.GL_BLEND);
   }
 
-  private void renderHudDimBackground()
-  {
-    renderHudFilledQuad(0,
-                        0,
-                        Globals.SCREEN_WIDTH,
-                        Globals.SCREEN_HEIGHT,
-                        Color.BLACK.r,
-                        Color.BLACK.g,
-                        Color.BLACK.b,
-                        100 / 255.0f);
-  }
-
-  void renderHudTexture(final float x,
-                        final float y,
-                        final float width,
-                        final float height,
-                        final Texture texture)
-  {
-    hudSpriteBatch.begin();
-    hudSpriteBatch.draw(texture,
-                        x,
-                        y,
-                        width,
-                        height);
-    hudSpriteBatch.end();
-  }
-
-  void renderHudQuad(final float x,
-                     final float y,
-                     final float width,
-                     final float height,
-                     final Color color)
-  {
-    renderHudQuad(x,
-                  y,
-                  width,
-                  height,
-                  color.r,
-                  color.g,
-                  color.b,
-                  color.a);
-  }
-
-  void renderHudQuad(final float x,
-                     final float y,
-                     final float width,
-                     final float height,
-                     final float red,
-                     final float green,
-                     final float blue,
-                     final float alpha)
-  {
-    renderHudQuad(x,
-                  y,
-                  width,
-                  height,
-                  red,
-                  green,
-                  blue,
-                  alpha,
-                  ShapeRenderer.ShapeType.Line);
-  }
-
-  void renderHudFilledQuad(final float x,
-                           final float y,
-                           final float width,
-                           final float height,
-                           final Color color)
-  {
-    renderHudFilledQuad(x,
-                        y,
-                        width,
-                        height,
-                        color.r,
-                        color.g,
-                        color.b,
-                        color.a);
-  }
-
-  void renderHudFilledQuad(final float x,
-                           final float y,
-                           final float width,
-                           final float height,
-                           final float red,
-                           final float green,
-                           final float blue,
-                           final float alpha)
-  {
-    renderHudQuad(x,
-                  y,
-                  width,
-                  height,
-                  red,
-                  green,
-                  blue,
-                  alpha,
-                  ShapeRenderer.ShapeType.Filled);
-  }
-
-
-  void renderHudQuad(final float x,
-                     final float y,
-                     final float width,
-                     final float height,
-                     final float red,
-                     final float green,
-                     final float blue,
-                     final float alpha,
-                     final ShapeRenderer.ShapeType type)
-  {
-    Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-    hudShapeRenderer.setProjectionMatrix(hudCamera.combined);
-    hudShapeRenderer.begin(type);
-    hudShapeRenderer.setColor(red, green, blue, alpha);
-    hudShapeRenderer.rect(x, y, width, height);
-    hudShapeRenderer.end();
-
-    Gdx.gl.glDisable(GL20.GL_BLEND);
-  }
-
   void dispose()
   {
     if (shapeRenderer != null)
@@ -829,16 +518,6 @@ class Renderer
     if (spriteBatch != null)
     {
       spriteBatch.dispose();
-    }
-
-    if (hudSpriteBatch != null)
-    {
-      hudSpriteBatch.dispose();
-    }
-
-    if (hudShapeRenderer != null)
-    {
-      hudShapeRenderer.dispose();
     }
   }
 
@@ -857,16 +536,6 @@ class Renderer
     if (gameViewportRef != null)
     {
       return gameViewportRef.project(world);
-    }
-
-    return null;
-  }
-
-  public static Vector2 hudUnproject(final Vector2 screen)
-  {
-    if (hudViewportRef != null)
-    {
-      return hudViewportRef.unproject(screen);
     }
 
     return null;
