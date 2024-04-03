@@ -43,4 +43,24 @@ class UserInterface
     nextWaveButton.font = UIRenderer.font24White;
     nextWaveButton.visible = true;
   }
+
+  static void layout(final int width, final int height)
+  {
+    if (help != null)
+    {
+      int x = 20;
+      int y = height - 20;
+
+      for (int i = 0; i < help.texts.size(); i++)
+      {
+        final Text text = help.texts.get(i);
+        text.setX(x);
+        text.setY(y);
+
+        y = y - 34;
+      }
+    }
+
+
+  }
 }
