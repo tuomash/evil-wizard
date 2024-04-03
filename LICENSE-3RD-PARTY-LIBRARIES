@@ -62,6 +62,12 @@ lib/lwjgl-stb-3.3.1-natives-windows-x86.jar
 
 -------------------------------------------------------------------------------
 
+GNU GENERAL PUBLIC LICENSE (GPL), VERSION 2 WITH THE CLASSPATH EXCEPTION (https://github.com/adoptium/jdk/blob/master/LICENSE)
+
+jre/*
+
+-------------------------------------------------------------------------------
+
 GNU LESSER GENERAL PUBLIC LICENSE (LGPL), VERSION 2.1 (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt)
 
 lib/jlayer-1.0.1-gdx.jar
