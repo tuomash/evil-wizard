@@ -4,6 +4,12 @@ Evil Wizard is a tower defense game where the focus is on casting spells and sum
 
 You can download the latest build from: https://curbyourcode.itch.io/evil-wizard.
 
+## Tech stack
+
+- Java 17
+- LibGDX
+- Ant
+
 ## Building and running on Windows with IntelliJ
 
 - Install Java JDK 17
